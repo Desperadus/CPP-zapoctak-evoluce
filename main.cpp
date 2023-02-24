@@ -227,8 +227,7 @@ public:
             int energy = 5;
             int color = rand() % 255;
             int id = i;
-            auto food = Food(x, y, size, energy, color, id);
-            grid.addFood(food);
+            grid.addFood(Food(x, y, size, energy, color, id));
 
 
             x = rand() % width;
@@ -238,8 +237,7 @@ public:
             energy = 5;
             color = rand() % 255;
             id = i;
-            auto food2 = Food(x, y, size, energy, color, id);
-            grid.addFood(food2);
+            grid.addFood(Food(x, y, size, energy, color, id));
 
          }
       }
@@ -274,12 +272,6 @@ public:
    }
 
 
-   void draw_objects() {
-      for (int i = 0; i < gw.organisms.size(); i++) {
-         window.draw(gw.organisms[i].shape);
-      }
-   }
-
    void InitializeWindow() {
 
       sf::RenderWindow window(sf::VideoMode(width, height), "Evolution game!");
@@ -304,7 +296,18 @@ public:
             
          }
          window.clear();
-         draw_objects();
+         
+         for (int i = 0; i < gw.organisms.size(); i++) {
+         window.draw(gw.organisms[i].shape);
+         }
+         for (int i = 0; i < gw.grid.grid.size(); i++) {
+            for (int j = 0; j < gw.grid.grid[i].size(); j++) {
+               for (int k = 0; k < gw.grid.grid[i][j].size(); k++) {
+                  window.draw(gw.grid.grid[i][j][k].shape);
+               }
+            }
+         }
+
          window.display();
       }
    }
