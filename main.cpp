@@ -20,6 +20,63 @@ int sum_of_vector(vector<int> & v) {
    return sum;
 }
 
+
+bool distance(int x1, int y1, int x2, int y2, int distance) {
+   if (abs(x1 - x2) < distance && abs(y1 - y2) < distance) {
+      return true;
+   }
+   return false;
+}
+
+class Food{
+public:
+   int x;
+   int y;
+   int size;
+   int energy;
+   int color;
+   int id;
+   sf::CircleShape shape;
+   Food(int x, int y, int size, int energy, int color, int id) {
+      this->x = x;
+      this->y = y;
+      this->size = size;
+      this->energy = energy;
+      this->color = color;
+      this->id = id;
+      create_shape();
+   }
+
+   void create_shape() {
+      shape = sf::CircleShape(size);
+      shape.setFillColor(sf::Color::Yellow);
+      shape.setPosition(x, y);
+   }
+};
+
+
+
+class Grid {
+public:
+    int width, height, grid_size;
+    std::vector<std::vector<std::vector<Food>>> grid;
+
+    Grid(int width, int height, int grid_size) : 
+        width(width), height(height), grid_size(grid_size) {
+        // Initialize the grid with empty vectors
+        grid.resize(height/grid_size, std::vector<std::vector<Food>>(width/grid_size));
+    }
+
+    void addFood(const Food& food) {
+        int x = food.x / grid_size;
+        int y = food.y / grid_size;
+
+        if (x >= 0 && x < width/grid_size && y >= 0 && y < height/grid_size) {
+            grid[y][x].push_back(food);
+        }
+    }
+};
+
 class Organism{
 public:
    int height;
@@ -66,9 +123,10 @@ public:
       for (int i = 0; i < 4; i++) {
          if (random_number < chances[i]) {
             if (i == 0) {
-               x += speed;
+               
                if (x > 0 && x < width && y > 0 && y < height) 
                {
+                  x += speed;
                   shape.move(speed, 0);
                }
                else {
@@ -77,9 +135,10 @@ public:
                }
             }
             else if (i == 1) {
-               x -= speed;
+               
                if (x > 0 && x < width && y > 0 && y < height)
                {
+                  x -= speed;
                   shape.move(-speed, 0);
                }
                else {
@@ -88,9 +147,10 @@ public:
                }
             }
             else if (i == 2) {
-               y += speed;
+               
                if (x > 0 && x < width && y > 0 && y < height)
                {
+                  y += speed;
                   shape.move(0, speed);
                }
                else {
@@ -99,9 +159,10 @@ public:
                }
             }
             else if (i == 3) {
-               y -= speed;
+               
                if (x > 0 && x < width && y > 0 && y < height)
                {
+                  y -= speed;
                   shape.move(0, -speed);
                }
                else {
@@ -116,65 +177,29 @@ public:
          }
       }
    }
-
-    
-};
-
-
-class Food{
-public:
-   int x;
-   int y;
-   int size;
-   int energy;
-   int color;
-   int id;
-   sf::CircleShape shape;
-   Food(int x, int y, int size, int energy, int color, int id) {
-      this->x = x;
-      this->y = y;
-      this->size = size;
-      this->energy = energy;
-      this->color = color;
-      this->id = id;
-      create_shape();
+   void try_to_eat(Grid & grid) {
+      int x = this->x / grid.grid_size;
+      int y = this->y / grid.grid_size;
+      if (x >= 0 && x < width / grid.grid_size && y >= 0 && y < height / grid.grid_size) {
+         for (int i = 0; i < grid.grid[y][x].size(); i++) {
+            if (distance(this->x, this->y, grid.grid[y][x][i].x, grid.grid[y][x][i].y, size*2)) {
+               this->energy += grid.grid[y][x][i].energy;
+               grid.grid[y][x].erase(grid.grid[y][x].begin() + i);
+               break;
+            }
+         }
+      }
    }
-
-   void create_shape() {
-      shape = sf::CircleShape(size);
-      shape.setFillColor(sf::Color::Yellow);
-      shape.setPosition(x, y);
-   }
+      
 };
 
-
-class Grid {
-public:
-    int width, height, grid_size;
-    std::vector<std::vector<std::vector<Food>>> grid;
-
-    Grid(int width, int height, int grid_size) : 
-        width(width), height(height), grid_size(grid_size) {
-        // Initialize the grid with empty vectors
-        grid.resize(height/grid_size, std::vector<std::vector<Food>>(width/grid_size));
-    }
-
-    void addFood(const Food& food) {
-        int x = food.x / grid_size;
-        int y = food.y / grid_size;
-
-        if (x >= 0 && x < width/grid_size && y >= 0 && y < height/grid_size) {
-            grid[y][x].push_back(food);
-        }
-    }
-};
 
 class GameWorld{
 public:
    int height;
    int width;
    int org_size;
-   int grid_size = 10;
+   int grid_size = 23;
    std::vector<Organism> organisms;
    Grid grid;
    GameWorld(int height, int width, int org_size) : grid(height, width, grid_size) {
@@ -188,9 +213,9 @@ public:
          int x = rand() % width;
          int y = rand() % height;
          int size = org_size;
-         int speed = rand() % 20;
-         if (speed < 5) {
-            speed = 5;
+         int speed = rand() % org_size;
+         if (speed < 1) {
+            speed = 1;
          }
 
          int energy = 100;
@@ -253,9 +278,10 @@ public:
    int width = 1800;
    int amount = 50;
    int org_size = 10;
+   int game_speed = 10; // in milliseconds
    size_t tick_counter = 0;
 
-   int game_speed = 30; // in milliseconds
+   
    GameWorld gw = GameWorld(height, width, org_size);
    sf::RenderWindow window;
 
@@ -268,6 +294,7 @@ public:
       tick_counter++;
       for (int i = 0; i < gw.organisms.size(); i++) {
          gw.organisms[i].move();
+         gw.organisms[i].try_to_eat(gw.grid);
       }
    }
 
