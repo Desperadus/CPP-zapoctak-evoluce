@@ -92,6 +92,9 @@ public:
    int color;
    int id;
 
+   int max_size;
+   int mutation_rate = 3;
+
    sf::CircleShape shape;
 
    vector<int> chances;
@@ -108,23 +111,25 @@ public:
 
       this->chances = chances;
 
+      this->max_size = size*2;
       create_shape();
    }
 
    void create_shape() {
       shape = sf::CircleShape(size);
       shape.setFillColor(sf::Color::Green);
-      shape.setPosition(x, y);
+      shape.setPosition(x+size/2, y+size/2);
    }
 
    void move() {
       //chances = { 100, 0, 0, 0 };
+      energy -= 1;
       int random_number = rand() % 100;
       for (int i = 0; i < 4; i++) {
          if (random_number < chances[i]) {
             if (i == 0) {
                
-               if (x > 0 && x < width && y > 0 && y < height) 
+               if (x < width) 
                {
                   x += speed;
                   shape.move(speed, 0);
@@ -136,7 +141,7 @@ public:
             }
             else if (i == 1) {
                
-               if (x > 0 && x < width && y > 0 && y < height)
+               if (x > 0)
                {
                   x -= speed;
                   shape.move(-speed, 0);
@@ -148,7 +153,7 @@ public:
             }
             else if (i == 2) {
                
-               if (x > 0 && x < width && y > 0 && y < height)
+               if (y < height)
                {
                   y += speed;
                   shape.move(0, speed);
@@ -160,7 +165,7 @@ public:
             }
             else if (i == 3) {
                
-               if (x > 0 && x < width && y > 0 && y < height)
+               if (y > 0)
                {
                   y -= speed;
                   shape.move(0, -speed);
@@ -182,7 +187,7 @@ public:
       int y = this->y / grid.grid_size;
       if (x >= 0 && x < width / grid.grid_size && y >= 0 && y < height / grid.grid_size) {
          for (int i = 0; i < grid.grid[y][x].size(); i++) {
-            if (distance(this->x, this->y, grid.grid[y][x][i].x, grid.grid[y][x][i].y, size*2)) {
+            if (distance(this->x, this->y, grid.grid[y][x][i].x, grid.grid[y][x][i].y, size*1)) {
                this->energy += grid.grid[y][x][i].energy;
                grid.grid[y][x].erase(grid.grid[y][x].begin() + i);
                break;
@@ -190,6 +195,70 @@ public:
          }
       }
    }
+
+   void try_mitosis(vector<Organism> & organisms) {
+      if (energy > 200) {
+         energy -= 100;
+         int x = this->x;
+         int y = this->y;
+         int size = this->size;
+         int speed = this->speed;
+         int energy = 100;
+         int color = this->color;
+         int id = this->id;
+         vector<int> chances = this->chances;
+         organisms.push_back(Organism(x, y, size, speed, energy, color, id, chances, height, width));
+         
+         mutate();
+         organisms[organisms.size() - 1].mutate();
+      }
+   }
+
+   void mutate() {
+      int random_number = rand() % 100;
+      if (random_number < 90) {
+         return;
+      }
+      random_number = rand() % 4;
+      if (random_number == 0) {
+         if (chances[0] > mutation_rate) {
+            chances[0] -= mutation_rate;
+            chances[rand() % 4] += mutation_rate;
+         }
+      }
+      else if (random_number == 1) {
+         if (chances[1] > 0) {
+            chances[1] -= 1;
+            chances[rand() % 4] += mutation_rate;
+         }
+      }
+      else if (random_number == 2) {
+         if (chances[2] > 0) {
+            chances[2] -= mutation_rate;
+            chances[rand() % 4] += mutation_rate;
+         }
+      }
+      else if (random_number == 3) {
+         if (chances[3] > 0) {
+            chances[3] -= mutation_rate;
+            chances[rand() % 4] += mutation_rate;
+         }
+      }
+      if (random_number == 0 && speed > 1) {
+         int rand2 = rand() % 2;
+         if (rand2 == 0) {
+            speed -= 1;
+         }
+         if (rand2 == 1) {
+            speed+=1;
+            if (speed > size) {
+               size = speed;
+               shape = sf::CircleShape(size);
+            }
+         }
+      }
+   }
+      
       
 };
 
@@ -199,7 +268,7 @@ public:
    int height;
    int width;
    int org_size;
-   int grid_size = 23;
+   int grid_size = 100;
    std::vector<Organism> organisms;
    Grid grid;
    GameWorld(int height, int width, int org_size) : grid(height, width, grid_size) {
@@ -241,7 +310,7 @@ public:
 
    }
 
-   void spawn_food_in_lines(int amount_of_lines, int amount_of_food_in_line) {
+   void spawn_food_in_lines(int amount_of_lines, int amount_of_food_in_line, int food_energy) {
       grid = Grid(width, height, grid_size);
       for (int i = 1; i < amount_of_lines; i++) {
          for (int j = 0; j < amount_of_food_in_line; j++) {
@@ -249,7 +318,7 @@ public:
             int y = rand() % height;
 
             int size = 2;
-            int energy = 5;
+            int energy = food_energy;
             int color = rand() % 255;
             int id = i;
             grid.addFood(Food(x, y, size, energy, color, id));
@@ -268,6 +337,31 @@ public:
       }
       
    }
+   void respawn_food_in_lines(int amount_of_lines, int amount_of_food_in_line, int food_energy, int rate) {
+      for (int i = 1; i < amount_of_lines; i++) {
+         for (int j = 0; j < rate; j++) {
+            int x = (width / amount_of_lines) * i;
+            int y = rand() % height;
+
+            int size = 2;
+            int energy = food_energy;
+            int color = rand() % 255;
+            int id = i;
+            grid.addFood(Food(x, y, size, energy, color, id));
+
+
+            x = rand() % width;
+            y = (height / amount_of_lines) * i;
+
+            size = 2;
+            energy = 5;
+            color = rand() % 255;
+            id = i;
+            grid.addFood(Food(x, y, size, energy, color, id));
+
+         }
+      }
+   }
 
 };
 
@@ -279,6 +373,7 @@ public:
    int amount = 50;
    int org_size = 10;
    int game_speed = 10; // in milliseconds
+   int food_energy = 34;
    size_t tick_counter = 0;
 
    
@@ -287,7 +382,15 @@ public:
 
    void start_game() {
       gw.spawn_organisms(amount);
-      gw.spawn_food_in_lines(10, 100);
+      gw.spawn_food_in_lines(10, 100, food_energy);
+   }
+
+   void natural_selection() {
+      for (int i = 0; i < gw.organisms.size(); i++) {
+         if (gw.organisms[i].energy <= 0) {
+            gw.organisms.erase(gw.organisms.begin() + i);
+         }
+      }
    }
 
    void game_tick() {
@@ -295,6 +398,11 @@ public:
       for (int i = 0; i < gw.organisms.size(); i++) {
          gw.organisms[i].move();
          gw.organisms[i].try_to_eat(gw.grid);
+         gw.organisms[i].try_mitosis(gw.organisms);
+      }
+      if (tick_counter % 10 == 0) {
+         gw.respawn_food_in_lines(10, 100, food_energy, 1);
+         natural_selection();
       }
    }
 
@@ -322,6 +430,19 @@ public:
             timer.restart();
             
          }
+
+         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::P))
+         {
+            cout << "Game speed: " << game_speed << endl;
+            game_speed -= 3;
+            if(game_speed < 1)
+               game_speed = 1;
+         }
+         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::O))
+         {
+            game_speed += 3;
+         }
+
          window.clear();
          
          for (int i = 0; i < gw.organisms.size(); i++) {
