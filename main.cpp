@@ -11,7 +11,7 @@
 #include <cmath>
 using namespace std;
 
-//TODO : add posibility of set seed, another maps, gui for settings, make evolution better and faster, Fix keystrokes for speed/slowing the game
+//TODO : add posibility of set seed, another maps, gui for settings, make evolution better and faster, Fix keystrokes for speed/slowing the game, add antibiotic
 //Linux compile with g++ -c main.cpp && g++ main.o -o sfml-app -lsfml-graphics -lsfml-window -lsfml-system && ./sfml-app
 
 
@@ -62,26 +62,26 @@ public:
 class Grid {
 public:
     int width, height, grid_size;
-    std::vector<std::vector<std::vector<Food>>> grid;
+    std::vector<std::vector<std::vector<shared_ptr<Food> > > > grid;
     size_t amount_of_food = 0;
 
     Grid(int width, int height, int grid_size) : 
         width(width), height(height), grid_size(grid_size) {
         // Initialize the grid with empty vectors
-        grid.resize(height/grid_size, std::vector<std::vector<Food>>(width/grid_size));
+        grid.resize(height/grid_size, std::vector<std::vector<shared_ptr<Food>>>(width/grid_size));
     }
 
-    void addFood(const Food& food) {
-        int x = food.x / grid_size;
-        int y = food.y / grid_size;
-
-        if (x >= 0 && x < width/grid_size && y >= 0 && y < height/grid_size) {
-            grid[y][x].push_back(food);
-            amount_of_food++;
-        }
-        else {
-            std::cout << "Food out of bounds" << std::endl;
-        }
+    void addFood(int x, int y, int size, int energy, int color, int id) {
+      int xgrid = x / grid_size;
+      int ygrid = y / grid_size;
+      //std::cout << x << " " << y << std::endl;
+      if (xgrid >= 0 && xgrid < width/grid_size && ygrid >= 0 && ygrid < height/grid_size) {
+         grid[ygrid][xgrid].push_back(make_shared<Food>(x, y, size, energy, color, id));
+         amount_of_food++;
+      }
+      else {
+         std::cout << x << " " << y << std::endl;
+      }
     }
 };
 
@@ -197,8 +197,8 @@ public:
       int y = this->y / grid.grid_size;
       if (x >= 0 && x < width / grid.grid_size && y >= 0 && y < height / grid.grid_size) {
          for (int i = 0; i < grid.grid[y][x].size(); i++) {
-            if (distance(this->x, this->y, grid.grid[y][x][i].x, grid.grid[y][x][i].y, this->size)) {
-               this->energy += grid.grid[y][x][i].energy;
+            if (distance(this->x, this->y, grid.grid[y][x][i]->x, grid.grid[y][x][i]->y, this->size)) {
+               this->energy += grid.grid[y][x][i]->energy;
                grid.grid[y][x].erase(grid.grid[y][x].begin() + i);
                grid.amount_of_food--;
             }
@@ -206,7 +206,7 @@ public:
       }
    }
 
-   void try_mitosis(vector<Organism> & organisms, int needed_energy) {
+   void try_mitosis(vector<unique_ptr<Organism> > & organisms, int needed_energy) {
       if (energy > needed_energy) {
          energy -= needed_energy/2;
          int x = this->x;
@@ -217,10 +217,10 @@ public:
          int color = this->color;
          int id = this->id;
          vector<int> chances = this->chances;
-         organisms.push_back(Organism(x, y, size, speed, new_energy, color, id, chances, height, width));
+         organisms.push_back(make_unique<Organism>(x, y, size, speed, new_energy, color, id, chances, height, width));
          
          mutate();
-         organisms[organisms.size() - 1].mutate();
+         organisms[organisms.size() - 1]->mutate();
       }
    }
 
@@ -282,7 +282,7 @@ public:
    int width;
    int org_size;
    int grid_size = 50;
-   std::vector<Organism> organisms;
+   std::vector<unique_ptr<Organism> > organisms;
    Grid grid;
    GameWorld(int height, int width, int org_size) : grid(height, width, grid_size) {
       this->height = height;
@@ -316,8 +316,7 @@ public:
             chances[0] += 100 - sum2;
          }
       
-         Organism organism(x, y, size, speed, energy, color, id, chances, height, width);
-         organisms.push_back(organism);
+         organisms.push_back(make_unique<Organism>(x, y, size, speed, energy, color, id, chances, height, width));
       }
 
    }
@@ -335,7 +334,7 @@ public:
             int energy = food_energy;
             int color = rand() % 255;
             int id = i;
-            grid.addFood(Food(x, y, size, energy, color, id));
+            grid.addFood(x, y, size, energy, color, id);
 
 
             x = rand() % width;
@@ -345,7 +344,7 @@ public:
             energy = 5;
             color = rand() % 255;
             id = i;
-            grid.addFood(Food(x, y, size, energy, color, id));
+            grid.addFood(x, y, size, energy, color, id);
 
          }
       }
@@ -363,7 +362,7 @@ public:
          int energy = food_energy;
          int color = rand() % 255;
          int id = i;
-         grid.addFood(Food(x, y, size, energy, color, id));
+         grid.addFood(x, y, size, energy, color, id);
       }
    }
 
@@ -381,7 +380,7 @@ public:
             int energy = food_energy;
             int color = rand() % 255;
             int id = i;
-            grid.addFood(Food(x, y, size, energy, color, id));
+            grid.addFood(x, y, size, energy, color, id);
 
 
             x = rand() % width;
@@ -391,7 +390,7 @@ public:
             energy = 5;
             color = rand() % 255;
             id = i;
-            grid.addFood(Food(x, y, size, energy, color, id));
+            grid.addFood(x, y, size, energy, color, id);
 
          }
       }
@@ -410,7 +409,7 @@ public:
          int energy = food_energy;
          int color = rand() % 255;
          int id = i;
-         grid.addFood(Food(x, y, size, energy, color, id));
+         grid.addFood(x, y, size, energy, color, id);
       }
    }
 
@@ -443,7 +442,7 @@ public:
 
    void natural_selection() {
       for (int i = 0; i < gw.organisms.size(); i++) {
-         if (gw.organisms[i].energy <= 0) {
+         if (gw.organisms[i]->energy <= 0) {
             gw.organisms.erase(gw.organisms.begin() + i);
          }
       }
@@ -452,9 +451,9 @@ public:
    void game_tick() {
       tick_counter++;
       for (int i = 0; i < gw.organisms.size(); i++) {
-         gw.organisms[i].move();
-         gw.organisms[i].try_to_eat(gw.grid);
-         gw.organisms[i].try_mitosis(gw.organisms, reproduction_energy);
+         gw.organisms[i]->move();
+         gw.organisms[i]->try_to_eat(gw.grid);
+         gw.organisms[i]->try_mitosis(gw.organisms, reproduction_energy);
       }
       if (tick_counter % 10 == 0) {
          gw.respawn_food_in_lines(amount_of_lines, 100, food_energy, 7);
@@ -503,12 +502,12 @@ public:
          window.clear();
          
          for (int i = 0; i < gw.organisms.size(); i++) {
-         window.draw(gw.organisms[i].shape);
+         window.draw(gw.organisms[i]->shape);
          }
          for (int i = 0; i < gw.grid.grid.size(); i++) {
             for (int j = 0; j < gw.grid.grid[i].size(); j++) {
                for (int k = 0; k < gw.grid.grid[i][j].size(); k++) {
-                  window.draw(gw.grid.grid[i][j][k].shape);
+                  window.draw(gw.grid.grid[i][j][k]->shape);
                }
             }
          }
