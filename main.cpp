@@ -1,4 +1,6 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
+#include <sstream>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -12,7 +14,11 @@
 using namespace std;
 
 //TODO : add posibility of set seed, another maps, gui for settings, make evolution better and faster, Fix keystrokes for speed/slowing the game, add antibiotic
-//Linux compile with g++ -c main.cpp && g++ main.o -o sfml-app -lsfml-graphics -lsfml-window -lsfml-system && ./sfml-app
+//Linux compile with:
+// g++ -c main.cpp && g++ main.o -o sfml-app -lsfml-graphics -lsfml-window -lsfml-system && ./sfml-app
+
+const int WINDOW_WIDTH_GUI = 800;
+const int WINDOW_HEIGHT_GUI = 600;
 
 
 int sum_of_vector(vector<int> & v) {
@@ -516,9 +522,139 @@ public:
    }
 };
 
+
+class InputBox
+{
+public:
+    InputBox(const std::string& label, sf::Font& font, sf::Vector2f position)
+    {
+        // Create label
+        m_label.setFont(font);
+        m_label.setString(label);
+        m_label.setCharacterSize(24);
+        m_label.setFillColor(sf::Color::Black);
+        m_label.setPosition(position);
+
+        // Create text box
+        m_textBox.setSize(sf::Vector2f(200, 30));
+        m_textBox.setOutlineThickness(2.f);
+        m_textBox.setOutlineColor(sf::Color::Black);
+        m_textBox.setPosition(position + sf::Vector2f(150, 0));
+
+        // Create text object
+        m_text.setFont(font);
+        m_text.setCharacterSize(24);
+        m_text.setFillColor(sf::Color::Black);
+        m_text.setPosition(position + sf::Vector2f(155, 5));
+    }
+
+    void draw(sf::RenderWindow& window) const
+    {
+        window.draw(m_label);
+        window.draw(m_textBox);
+        window.draw(m_text);
+    }
+
+    void handleEvent(sf::Event event, sf::RenderWindow& window)
+    {
+        if (event.type == sf::Event::MouseButtonPressed)
+        {
+            // Check if the mouse click is inside the text box
+            sf::Vector2f mousePosition = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
+            sf::FloatRect bounds = m_textBox.getGlobalBounds();
+            if (bounds.contains(mousePosition))
+            {
+                isSelected = true;
+            }
+            else
+            {
+                isSelected = false;
+            }
+        }
+        else if (event.type == sf::Event::TextEntered && isSelected)
+        {
+            if (event.text.unicode == 8) // Backspace
+            {
+                if (m_input.size() > 0)
+                {
+                    m_input.pop_back();
+                }
+            }
+            else if (event.text.unicode < 128)
+            {
+                m_input += static_cast<char>(event.text.unicode);
+            }
+            m_text.setString(m_input);
+        }
+    }
+
+private:
+    std::string m_input;
+    sf::Text m_label;
+    sf::RectangleShape m_textBox;
+    sf::Text m_text;
+    bool isSelected = false;
+};
+
+class GUI {
+public:
+   int setup()
+   {
+         // Create window
+      sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH_GUI, WINDOW_HEIGHT_GUI), "SFML Input Boxes");
+
+      // Load font
+      sf::Font font;
+      if (!font.loadFromFile("ariblk.ttf"))
+      {
+         return EXIT_FAILURE;
+      }
+
+      // Create input boxes
+      std::vector<InputBox> inputBoxes;
+      inputBoxes.emplace_back("Name:", font, sf::Vector2f(100, 100));
+      inputBoxes.emplace_back("Age:", font, sf::Vector2f(100, 200));
+      inputBoxes.emplace_back("Email:", font, sf::Vector2f(100, 300));
+
+      // Main loop
+      while (window.isOpen())
+      {
+         // Handle events
+         sf::Event event;
+         while (window.pollEvent(event))
+         {
+               if (event.type == sf::Event::Closed)
+               {
+                  window.close();
+               }
+               else if (event.type == sf::Event::TextEntered || event.type == sf::Event::MouseButtonPressed)
+               {   
+                  for (auto & inputBox : inputBoxes)
+                  {
+                     inputBox.handleEvent(event, window);
+                  }
+               }
+         }
+
+         // Draw input boxes
+         window.clear(sf::Color::White);
+         for (const auto & inputBox : inputBoxes)
+         {
+               inputBox.draw(window);
+         }
+         window.display();
+      }
+      return 0;
+   }
+};
+
+
+
 int main()
 {
-    GraphicalInterface gui;
-    gui.InitializeWindow();
+    GraphicalInterface game;
+    GUI gui;
+    game.InitializeWindow();
+    gui.setup();
     return 0;
 }
