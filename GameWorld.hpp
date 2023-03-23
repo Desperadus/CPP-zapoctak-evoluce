@@ -2,14 +2,14 @@ using namespace std;
 
 class GameWorld{
 public:
-   int height;
-   int width;
-   int org_size;
+   int& height;
+   int& width;
+   int& org_size;
    int grid_size = 250;
    int number_of_food = 5000;
    std::vector<unique_ptr<Organism> > organisms;
    Grid grid;
-   GameWorld(int height, int width, int org_size) : grid(height, width, grid_size) {
+   GameWorld(int& height, int& width, int& org_size) : grid(height, width, grid_size), height(height), width(width), org_size(org_size) {
       this->height = height;
       this->width = width;
       this->org_size = org_size;
