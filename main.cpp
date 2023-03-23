@@ -38,18 +38,95 @@ int ORGANISM_MAX_SIZE = 10;
 int ORGANISM_MAX_SPEED = 10;
 
 int NUMBER_OF_ORGANISMS = 50;
-int NUMBER_OF_FOOD = 3000;
+int NUMBER_OF_FOOD = 5500;
 int NUMBER_OF_LINES = 7;
 
 int ORGANISM_ENERGY = 200;
 int REPRODUCTION_ENERGY = 300;
 int FOOD_ENERGY = 5;
 
-int SPAWN_RATE = 10;
+int SPAWN_RATE = 20;
 int RANDOM_SPAWN_RATE = 7;
 
-int MAP = 2;
+int MAP = 1;
 
+
+
+class Text {
+public:
+    sf::Text text;
+    sf::Font& font;
+    Text(sf::Font& font, std::string txt, int x, int y, int font_size, sf::Color color) : font(font) {
+      text.setFont(font);
+      text.setCharacterSize(font_size);
+      text.setFillColor(color);
+      text.setPosition(x, y);
+      text.setString(txt);
+    }
+    void draw(sf::RenderWindow& window) {
+      window.draw(text);
+    }
+};
+
+class Statistics {
+public:
+   sf::RenderWindow window;
+   sf::Font& font;
+
+   std::vector<Text> texts;
+   std::vector<Text> bac_stats; 
+
+
+   Statistics(sf::Font& font) : font(font) {
+      window.create(sf::VideoMode(500, 250), "Statistics");
+      
+      texts.emplace_back(font, "Statistics:", 10, 10, 24, sf::Color::Green);
+      texts.emplace_back(font, "Number of organisms alive: ", 10, 40, 14, sf::Color::White);
+      texts.emplace_back(font, "Number of food: ", 10, 60, 14, sf::Color::White);
+      texts.emplace_back(font, "Most successful bacteria stats: ", 10, 100, 14, sf::Color::Cyan);
+      texts.emplace_back(font, "Size: ", 10, 120, 14, sf::Color::White);
+      texts.emplace_back(font, "Speed: ", 10, 140, 14, sf::Color::White);
+      texts.emplace_back(font, "Chance of moving in right direction: ", 10, 160, 14, sf::Color::White);
+      texts.emplace_back(font, "Chance of moving in left direction: ", 10, 180, 14, sf::Color::White);
+      texts.emplace_back(font, "Chance of moving in down direction: ", 10, 200, 14, sf::Color::White);
+      texts.emplace_back(font, "Chance of moving in up direction: ", 10, 220, 14, sf::Color::White);
+
+      bac_stats.emplace_back(font, "0", 80, 120, 14, sf::Color::White);
+      bac_stats.emplace_back(font, "0", 80, 140, 14, sf::Color::White);
+      bac_stats.emplace_back(font, "0", 320, 160, 14, sf::Color::White);
+      bac_stats.emplace_back(font, "0", 320, 180, 14, sf::Color::White);
+      bac_stats.emplace_back(font, "0", 320, 200, 14, sf::Color::White);
+      bac_stats.emplace_back(font, "0", 320, 220, 14, sf::Color::White);
+
+
+
+   }
+
+   void HandleEvents() {
+   sf::Event event;
+   while (window.pollEvent(event))
+   {
+      if (event.type == sf::Event::Closed)
+      {
+         window.close();
+      }
+
+   }
+   }
+
+   void RenderScene() {
+      for (auto && text : texts) {
+         text.draw(window);
+      }
+      for (auto && bac_stat : bac_stats) {
+         bac_stat.draw(window);
+      }
+   }
+
+
+
+
+};
 
 
 class Game{
@@ -66,17 +143,23 @@ public:
    int& reproduction_energy = REPRODUCTION_ENERGY;
 
    bool paused = false;
+   bool stats_win_is_open = false;
+
+   int highest_generation = 0;
 
    size_t tick_counter = 0;
 
    
    GameWorld& gw;
+   unique_ptr<Statistics> stats;
    sf::RenderWindow window;
    sf::Clock timer;
+
+
    
    Game(GameWorld& gw) : gw(gw), window(sf::VideoMode(WINDOW_WIDTH_GAME, WINDOW_HEIGHT_GAME), "Evolution") {
       start_game();
-      window.setFramerateLimit(60);
+      //window.setFramerateLimit(60);
    }
 
 
@@ -96,11 +179,42 @@ public:
    }
 
    void natural_selection() {
+      highest_generation = 0;
+      bool updated = false;
       for (int i = 0; i < gw.organisms.size(); i++) {
+         if (gw.organisms[i]->generation > highest_generation) {
+            highest_generation = gw.organisms[i]->generation;
+         }
+
          if (gw.organisms[i]->energy <= 0) {
             gw.organisms.erase(gw.organisms.begin() + i);
          }
       }
+
+      for (int i = 0; i < gw.organisms.size(); i++) {
+         gw.organisms[i]->shape.setFillColor(sf::Color::Green);
+         if (gw.organisms[i]->generation == highest_generation) {
+            gw.organisms[i]->shape.setFillColor(sf::Color::Red);
+         }
+         if (!updated) {
+            update_stats(*gw.organisms[i]);
+            updated = true;
+         }
+
+      }
+   }
+
+   void update_stats(Organism& org) {
+      if (!stats_win_is_open) return;
+      stats->texts[1].text.setString("Number of organisms alive: " + to_string(gw.organisms.size()));
+      stats->texts[2].text.setString("Number of food: " + to_string(gw.grid.amount_of_food));
+      stats->bac_stats[0].text.setString(to_string(org.size));
+      stats->bac_stats[1].text.setString(to_string(org.speed));
+      stats->bac_stats[2].text.setString(to_string(org.chances[0]));
+      stats->bac_stats[3].text.setString(to_string(org.chances[1]));
+      stats->bac_stats[4].text.setString(to_string(org.chances[2]));
+      stats->bac_stats[5].text.setString(to_string(org.chances[3]));
+   
    }
 
    void game_tick() {
@@ -129,7 +243,8 @@ public:
    void clear_game() {
       gw.organisms.clear();
       gw.grid.grid.clear();
-      gw.grid = Grid(width, height, gw.grid_size);
+      gw.grid.grid.resize(gw.grid.height/gw.grid.grid_size, std::vector<std::vector<shared_ptr<Food>>>(gw.grid.width/gw.grid.grid_size));
+      //gw.grid = Grid(width, height, gw.grid_size);
       gw.grid.amount_of_food = 0;
    }
 
@@ -181,6 +296,12 @@ public:
       window.create(sf::VideoMode(width, height), "Evolution game!");
 
    }
+
+   void draw_stats(sf::Font& font) {
+      stats_win_is_open = true;
+      stats = make_unique<Statistics>(font);
+   }
+
 };
 
 
@@ -197,6 +318,7 @@ public:
 
    GameWorld& gw;
    Game& game;
+   //unique_ptr<Statistics> stats;
 
    Button(float x, float y, float width, float height,
       sf::Font& font, const std::string text, sf::Color Color, GameWorld& gw, Game& game, int id) : font(font), gw(gw), game(game)
@@ -253,6 +375,9 @@ public:
                if (game.game_speed < 1)
                   game.game_speed = 1;
             }
+            if (id == 5) {
+               game.draw_stats(font);
+            }
          }
       }
    }
@@ -273,7 +398,7 @@ public:
       m_label.setFont(font);
       m_label.setString(label);
       m_label.setCharacterSize(16);
-      m_label.setFillColor(sf::Color::Black);
+      m_label.setFillColor(sf::Color::White);
       m_label.setPosition(position);
 
       // Create text box
@@ -391,6 +516,8 @@ public:
       inputBoxes.emplace_back("Spawn rate:", font, sf::Vector2f(10, 250), 170, SPAWN_RATE);
       inputBoxes.emplace_back("Rand spawn rate:", font, sf::Vector2f(10, 300), 170, RANDOM_SPAWN_RATE);
       inputBoxes.emplace_back("Number of org:", font, sf::Vector2f(10, 350), 170, NUMBER_OF_ORGANISMS);
+      inputBoxes.emplace_back("Food energy:", font, sf::Vector2f(10, 400), 170, FOOD_ENERGY);
+      inputBoxes.emplace_back("Max num of food:", font, sf::Vector2f(10, 450), 170, NUMBER_OF_FOOD);
 
       // Create buttons
       buttons.emplace_back(550, 36, 100, 50, font, "Start", sf::Color::Green, gw, game, 0);
@@ -398,6 +525,7 @@ public:
       buttons.emplace_back(550, 164, 170, 50, font, "Add organisms", sf::Color::Green, gw, game, 2);
       buttons.emplace_back(550, 334, 170, 50, font, "Speed up", sf::Color::Green, gw, game, 3);
       buttons.emplace_back(550, 390, 170, 50, font, "Slow down", sf::Color::Red, gw, game, 4);
+      buttons.emplace_back(550, 500, 170, 50, font, "Show stats", sf::Color::Cyan, gw, game, 5);
 
 
 
@@ -428,7 +556,7 @@ public:
 
    void RenderScene() {
       // Draw input boxes
-      window.clear(sf::Color::White);
+      window.clear(sf::Color::Black);
       for (const auto & inputBox : inputBoxes)
       {
          inputBox.draw(window);
@@ -442,9 +570,12 @@ public:
 
 
 
+
+
+
 int main()
 {
-   GameWorld gw(WINDOW_HEIGHT_GAME, WINDOW_WIDTH_GAME, ORGANISM_SIZE);
+   GameWorld gw(WINDOW_HEIGHT_GAME, WINDOW_WIDTH_GAME, ORGANISM_SIZE, NUMBER_OF_FOOD);
    Game game(gw);
    //game.InitializeWindow();
    GUI gui(gw, game);
@@ -463,6 +594,13 @@ int main()
       game.window.clear();
       game.RenderScene(game.window);
       game.window.display();
+
+      if (game.stats_win_is_open == true) {
+         game.stats->window.clear();
+         game.stats->HandleEvents();
+         game.stats->RenderScene();
+         game.stats->window.display();
+      }
    }
 
    return 0;

@@ -1,3 +1,6 @@
+#pragma once
+
+
 using namespace std;
 
 class Organism{
@@ -12,10 +15,12 @@ public:
 
    int max_size, max_speed, mutation_rate = 3;
 
+   int generation;
+
    sf::CircleShape shape;
 
    vector<int> chances;
-   Organism(int x, int y, int size, int speed, int energy, int color, int id, vector<int> chances, int height, int width) {
+   Organism(int x, int y, int size, int speed, int energy, int color, int id, vector<int> chances, int height, int width, int generation = 0) {
       this->x = x;
       this->y = y;
       this->size = size;
@@ -29,7 +34,9 @@ public:
       this->chances = chances;
 
       this->max_size = size*1.25;
-      this->max_speed = 10;
+      this->max_speed = max_size;
+      this->generation = generation;
+
       create_shape();
    }
 
@@ -142,8 +149,9 @@ public:
          int color = this->color;
          int id = this->id;
          vector<int> chances = this->chances;
-         organisms.push_back(make_unique<Organism>(x, y, size, speed, new_energy, color, id, chances, height, width));
-         
+         organisms.push_back(make_unique<Organism>(x, y, size, speed, new_energy, color, id, chances, height, width, generation + 1));
+         generation += 1;
+
          mutate();
          organisms[organisms.size() - 1]->mutate();
       }
@@ -155,31 +163,21 @@ public:
          return;
       }
       random_number = rand() % 4;
-      if (random_number == 0) {
-         if (chances[0] > mutation_rate) {
-            chances[0] -= mutation_rate;
+      
+      for (int i = 0; i < 4; i++) {
+         if (chances[i] - mutation_rate >= 0) {
+            //cout << "mutate " << chances[i] <<endl;
+            chances[i] -= mutation_rate;
             chances[rand() % 4] += mutation_rate;
          }
-      }
-      else if (random_number == 1) {
-         if (chances[1] > 0) {
-            chances[1] -= 1;
-            chances[rand() % 4] += mutation_rate;
+         else {
+            chances[rand() % 4] += mutation_rate - chances[i];
+            chances[i] = 0;
          }
       }
-      else if (random_number == 2) {
-         if (chances[2] > 0) {
-            chances[2] -= mutation_rate;
-            chances[rand() % 4] += mutation_rate;
-         }
-      }
-      else if (random_number == 3) {
-         if (chances[3] > 0) {
-            chances[3] -= mutation_rate;
-            chances[rand() % 4] += mutation_rate;
-         }
-      }
+
       if (random_number == 0 && speed > 1) {
+         //cout << "mutate speed" << endl;
          int rand2 = rand() % 2;
          if (rand2 == 0) {
             speed -= 1;

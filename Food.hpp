@@ -1,3 +1,6 @@
+#pragma once
+
+
 class Food{
 public:
    int x, y;

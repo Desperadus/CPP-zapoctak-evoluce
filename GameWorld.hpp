@@ -1,3 +1,5 @@
+#pragma once
+
 using namespace std;
 
 class GameWorld{
@@ -6,10 +8,10 @@ public:
    int& width;
    int& org_size;
    int grid_size = 250;
-   int number_of_food = 5000;
+   int& number_of_food;
    std::vector<unique_ptr<Organism> > organisms;
    Grid grid;
-   GameWorld(int& height, int& width, int& org_size) : grid(height, width, grid_size), height(height), width(width), org_size(org_size) {
+   GameWorld(int& height, int& width, int& org_size, int& number_of_food) : grid(height, width, grid_size), height(height), width(width), org_size(org_size), number_of_food(number_of_food) {
       this->height = height;
       this->width = width;
       this->org_size = org_size;
@@ -49,20 +51,19 @@ public:
          if (sum2 != 100) {
             chances[0] += 100 - sum2;
          }
-      
+         
+         //chances = {100,0,0,0};
+         //y = 143;
          organisms.push_back(make_unique<Organism>(x, y, size, speed, energy, color, id, chances, height, width));
+         //break;
       }
 
    }
 
-   void spawn_food_in_lines(int amount_of_lines, int amount_of_food_in_line, int food_energy) {
-    //   if (grid.amount_of_food == 0) {
-    //      grid = Grid(height, width, grid_size);
-    //   }
-        if (number_of_food < grid.amount_of_food) return;
-    
+   void spawn_food_in_lines(int amount_of_lines, int amount_of_food_in_line, int food_energy) {    
         for (int i = 1; i < amount_of_lines; i++) {
             for (int j = 0; j < amount_of_food_in_line; j++) {
+            if (number_of_food < grid.amount_of_food) return;
             int x = (width / amount_of_lines) * i;
             int y = rand() % height;
 
@@ -87,11 +88,8 @@ public:
    }
       
    void spawn_random_food(int amount_of_food, int food_energy) {
-    //   if (grid.amount_of_food == 0) {
-    //      grid = Grid(height, width, grid_size);
-    //   }
-        if (number_of_food < grid.amount_of_food) return;
         for (int i = 0; i < amount_of_food; i++) {
+            if (number_of_food < grid.amount_of_food) return;
             int x = rand() % width;
             int y = rand() % height;
 
@@ -104,9 +102,8 @@ public:
    }
 
    void spawn_food_in_rectangle(int amout_of_food, int food_energy) {
-
-        if (number_of_food < grid.amount_of_food) return;
         for (int i = 0; i < amout_of_food; i++) {
+            if (number_of_food < grid.amount_of_food) return;
             int x = rand() % (width / 2) + width / 4;
             int y = rand() % (height / 2) + height / 4;
 
