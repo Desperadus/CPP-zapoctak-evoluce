@@ -20,7 +20,7 @@ public:
    sf::CircleShape shape;
 
    vector<int> chances;
-   Organism(int x, int y, int size, int speed, int energy, int color, int id, vector<int> chances, int height, int width, int generation = 0) {
+   Organism(int x, int y, int size, int speed, int energy, int color, int id, vector<int> chances, int height, int width, int max_size, int generation = 0) {
       this->x = x;
       this->y = y;
       this->size = size;
@@ -33,7 +33,7 @@ public:
 
       this->chances = chances;
 
-      this->max_size = size*1.25;
+      this->max_size = max_size;
       this->max_speed = max_size;
       this->generation = generation;
 
@@ -130,9 +130,11 @@ public:
       if (x >= 0 && x < width / grid.grid_size && y >= 0 && y < height / grid.grid_size) {
          for (int i = 0; i < grid.grid[y][x].size(); i++) {
             if (distance(this->x, this->y, grid.grid[y][x][i]->x, grid.grid[y][x][i]->y, this->size)) {
-               this->energy += grid.grid[y][x][i]->energy;
+               int food_energy = grid.grid[y][x][i]->energy;
+               this->energy += food_energy;
                grid.grid[y][x].erase(grid.grid[y][x].begin() + i);
-               grid.amount_of_food--;
+               if (food_energy > 0) grid.amount_of_food--;
+               if (food_energy < 0) grid.amount_of_antibiotic--;
             }
          }
       }
@@ -149,7 +151,7 @@ public:
          int color = this->color;
          int id = this->id;
          vector<int> chances = this->chances;
-         organisms.push_back(make_unique<Organism>(x, y, size, speed, new_energy, color, id, chances, height, width, generation + 1));
+         organisms.push_back(make_unique<Organism>(x, y, size, speed, new_energy, color, id, chances, height, width, max_size ,generation + 1));
          generation += 1;
 
          mutate();
@@ -187,6 +189,7 @@ public:
          }
          if (rand2 == 1 && speed < max_speed) {
             speed+=1;
+            //cout << speed << " " << max_speed << endl;
             if (speed > size && size < max_size) {
                size +=1;
                shape = sf::CircleShape(size);

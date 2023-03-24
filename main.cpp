@@ -26,7 +26,7 @@ using namespace std;
 // g++ -c main.cpp && g++ main.o -o sfml-app -lsfml-graphics -lsfml-window -lsfml-system && ./sfml-app
 
 int WINDOW_WIDTH_GUI = 800;
-int WINDOW_HEIGHT_GUI = 600;
+int WINDOW_HEIGHT_GUI = 800;
 
 int WINDOW_WIDTH_GAME = 1000;
 int WINDOW_HEIGHT_GAME = 1000;
@@ -40,13 +40,16 @@ int ORGANISM_MAX_SPEED = 10;
 int NUMBER_OF_ORGANISMS = 50;
 int NUMBER_OF_FOOD = 5500;
 int NUMBER_OF_LINES = 7;
+int NUMBER_OF_ANTIBIOTIC = 1000;
 
 int ORGANISM_ENERGY = 200;
 int REPRODUCTION_ENERGY = 300;
 int FOOD_ENERGY = 5;
+int ANTIBIOTIC_ENERGY = -3;
 
 int SPAWN_RATE = 20;
 int RANDOM_SPAWN_RATE = 7;
+int ANTIBIOTIC_SPAWN_RATE = 20;
 
 int MAP = 1;
 
@@ -176,6 +179,7 @@ public:
          gw.spawn_food_in_rectangle(NUMBER_OF_FOOD / 2, food_energy);
          gw.spawn_random_food(NUMBER_OF_FOOD / 3, food_energy);
       }
+
    }
 
    void natural_selection() {
@@ -237,10 +241,15 @@ public:
             gw.spawn_random_food(RANDOM_SPAWN_RATE, food_energy);
          }
          natural_selection();
+
+         if (gw.antibiotic_block_coords.size() > 0) {
+            gw.spawn_antibiotics(NUMBER_OF_LINES, ANTIBIOTIC_SPAWN_RATE, ANTIBIOTIC_ENERGY);
+         }
       }
    }
 
    void clear_game() {
+      gw.antibiotic_block_coords.clear();
       gw.organisms.clear();
       gw.grid.grid.clear();
       gw.grid.grid.resize(gw.grid.height/gw.grid.grid_size, std::vector<std::vector<shared_ptr<Food>>>(gw.grid.width/gw.grid.grid_size));
@@ -276,8 +285,11 @@ public:
       sf::Event event;
       while (window.pollEvent(event))
       {
-         if (event.type == sf::Event::Closed)
-            window.close();
+         if (event.type == sf::Event::Closed) window.close();
+         else if (event.type == sf::Event::MouseButtonPressed)
+         {
+            gw.create_antibiotic_block(ANTIBIOTIC_ENERGY,event.mouseButton.x, event.mouseButton.y, amount_of_lines);
+         }
       }
       if (paused) return;
       
@@ -287,6 +299,8 @@ public:
          timer.restart();
          
       }
+
+
    }
 
 
@@ -333,10 +347,15 @@ public:
       this->text.setFillColor(sf::Color::Black);
       this->text.setCharacterSize(20);
       this->text.setPosition(
-         this->shape.getPosition().x + this->shape.getGlobalBounds().width / 2.f - this->text.getGlobalBounds().width / 2.f,
-         this->shape.getPosition().y + this->shape.getGlobalBounds().height / 2.f - this->text.getGlobalBounds().height / 2.f
+      this->shape.getPosition().x + this->shape.getGlobalBounds().width / 2.f - this->text.getGlobalBounds().width / 2.f,
+      this->shape.getPosition().y + this->shape.getGlobalBounds().height / 2.f - this->text.getGlobalBounds().height / 2.f
       );
       this->id = id;
+
+      if (id == 6) {
+         shape.setOutlineThickness(4.f);
+         shape.setOutlineColor(sf::Color::Red);
+      }
 
    }
 
@@ -377,6 +396,17 @@ public:
             }
             if (id == 5) {
                game.draw_stats(font);
+            }
+
+            if (id == 6) {
+               if (gw.adding_antibiotics) {
+                  gw.adding_antibiotics = false;
+                  shape.setOutlineColor(sf::Color::Red);
+               }
+               else {
+                  gw.adding_antibiotics = true;
+                  shape.setOutlineColor(sf::Color::Green);
+               }
             }
          }
       }
@@ -518,6 +548,9 @@ public:
       inputBoxes.emplace_back("Number of org:", font, sf::Vector2f(10, 350), 170, NUMBER_OF_ORGANISMS);
       inputBoxes.emplace_back("Food energy:", font, sf::Vector2f(10, 400), 170, FOOD_ENERGY);
       inputBoxes.emplace_back("Max num of food:", font, sf::Vector2f(10, 450), 170, NUMBER_OF_FOOD);
+      inputBoxes.emplace_back("Anitibiotic dmg:", font, sf::Vector2f(10, 500), 170, ANTIBIOTIC_ENERGY);
+      inputBoxes.emplace_back("Anti spawn rate:", font, sf::Vector2f(10, 550), 170, ANTIBIOTIC_SPAWN_RATE);
+      inputBoxes.emplace_back("Max num of anti:", font, sf::Vector2f(10, 600), 170, NUMBER_OF_ANTIBIOTIC);
 
       // Create buttons
       buttons.emplace_back(550, 36, 100, 50, font, "Start", sf::Color::Green, gw, game, 0);
@@ -526,6 +559,8 @@ public:
       buttons.emplace_back(550, 334, 170, 50, font, "Speed up", sf::Color::Green, gw, game, 3);
       buttons.emplace_back(550, 390, 170, 50, font, "Slow down", sf::Color::Red, gw, game, 4);
       buttons.emplace_back(550, 500, 170, 50, font, "Show stats", sf::Color::Cyan, gw, game, 5);
+      buttons.emplace_back(550, 600, 170, 50, font, "Add anti", sf::Color::White, gw, game, 6);
+
 
 
 
@@ -575,7 +610,7 @@ public:
 
 int main()
 {
-   GameWorld gw(WINDOW_HEIGHT_GAME, WINDOW_WIDTH_GAME, ORGANISM_SIZE, NUMBER_OF_FOOD);
+   GameWorld gw(WINDOW_HEIGHT_GAME, WINDOW_WIDTH_GAME, ORGANISM_SIZE, NUMBER_OF_FOOD, NUMBER_OF_ANTIBIOTIC);
    Game game(gw);
    //game.InitializeWindow();
    GUI gui(gw, game);
