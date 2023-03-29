@@ -129,17 +129,19 @@ public:
    }
 
    void spawn_antibiotics(int amount_of_lines, int amount_of_antibiotics, int antibiotic_energy) {
-         for (int j = 0; j < antibiotic_block_coords.size(); j++) {
-            for (int i = 0; i < amount_of_antibiotics; i++) {
-               if (number_of_antibiotic < grid.amount_of_antibiotic) return;
-               int sx = get<0>(antibiotic_block_coords[j]);
-               int sy = get<1>(antibiotic_block_coords[j]);
-               int x = rand() % (width / amount_of_lines) + sx;
-               int y = rand() % (height / amount_of_lines) + sy;
-               int size = 2;
-               int energy = antibiotic_energy;
-               int id = i;
-               grid.addAntibiotic(x, y, size, energy, id, sf::Color::White);
+      std::shuffle(antibiotic_block_coords.begin(), antibiotic_block_coords.end(), std::default_random_engine(0));
+
+      for (int j = 0; j < antibiotic_block_coords.size(); j++) {
+         for (int i = 0; i < amount_of_antibiotics; i++) {
+            if (number_of_antibiotic < grid.amount_of_antibiotic) return;
+            int sx = get<0>(antibiotic_block_coords[j]);
+            int sy = get<1>(antibiotic_block_coords[j]);
+            int x = rand() % (width / amount_of_lines) + sx;
+            int y = rand() % (height / amount_of_lines) + sy;
+            int size = 2;
+            int energy = antibiotic_energy;
+            int id = i;
+            grid.addAntibiotic(x, y, size, energy, id, sf::Color::White);
          }
       }
    }

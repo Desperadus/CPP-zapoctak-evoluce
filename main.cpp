@@ -255,6 +255,7 @@ public:
       gw.grid.grid.resize(gw.grid.height/gw.grid.grid_size, std::vector<std::vector<shared_ptr<Food>>>(gw.grid.width/gw.grid.grid_size));
       //gw.grid = Grid(width, height, gw.grid_size);
       gw.grid.amount_of_food = 0;
+      gw.grid.amount_of_antibiotic = 0;
    }
 
    void pause_game() {
