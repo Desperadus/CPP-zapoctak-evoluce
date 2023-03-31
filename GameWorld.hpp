@@ -119,6 +119,20 @@ public:
         }
    }
 
+   void spawn_food_in_thick_line(int amount_of_lines, int amount_of_food, int food_energy) {
+         for (int i = 0; i < amount_of_food; i++) {
+            if (number_of_food < grid.amount_of_food) return;
+               int x = rand() % (width / amount_of_lines) + width / 2 - width / (amount_of_lines * 2);
+               int y = rand() % height;
+
+               int size = 2;
+               int energy = food_energy;
+               int color = rand() % 255;
+               int id = i;
+               grid.addFood(x, y, size, energy, id, sf::Color::Yellow);
+        }
+   }
+
    void create_antibiotic_block(int antibiotic_energy, int click_x, int click_y, int amount_of_lines) {
       if (adding_antibiotics == false) return;
       int x = (click_x / (width / amount_of_lines)) * (width / amount_of_lines);

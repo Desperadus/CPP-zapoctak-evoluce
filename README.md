@@ -41,7 +41,7 @@ Na levé straně vidíte názvy parametrů a vedle nich máte input boxy, kde je
 
 ### Parametry:
 
-**Map:** 1 - je default mapa s lajnama a 2 - je mapa s obdélníkem uprostřed.
+**Map:** 1 - je default mapa s lajnama, 2 - je mapa s obdélníkem uprostřed, 3 - tenky pruh, ktery je sirkou dependentní na *Num of lines*
 
 **Number of lines:"** Kolik lajn bude v mapě 1, taká ovlivninuje velikost antibiotického bloku (viz později).
 

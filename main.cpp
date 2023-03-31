@@ -97,6 +97,11 @@ public:
          gw.spawn_food_in_rectangle(NUMBER_OF_FOOD / 2, food_energy);
          gw.spawn_random_food(NUMBER_OF_FOOD / 3, food_energy);
       }
+      if (MAP == 3) {
+         gw.spawn_organisms(amount, org_energy);
+         gw.spawn_food_in_thick_line(NUMBER_OF_LINES ,NUMBER_OF_FOOD / 2, food_energy);
+         gw.spawn_random_food(NUMBER_OF_FOOD / 3, food_energy);
+      }
 
    }
 
@@ -156,6 +161,10 @@ public:
          
          if (MAP == 2) {
             gw.spawn_food_in_rectangle(SPAWN_RATE*10, food_energy);
+            gw.spawn_random_food(RANDOM_SPAWN_RATE, food_energy);
+         }
+         if (MAP == 3) {
+            gw.spawn_food_in_thick_line(NUMBER_OF_LINES, SPAWN_RATE*10, food_energy);
             gw.spawn_random_food(RANDOM_SPAWN_RATE, food_energy);
          }
          natural_selection();
