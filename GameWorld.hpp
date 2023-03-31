@@ -7,7 +7,7 @@ public:
    int& height;
    int& width;
    int& org_size;
-   int grid_size = 250;
+   int grid_size = 66;
    int& number_of_food;
    int& number_of_antibiotic;
    bool adding_antibiotics = false;

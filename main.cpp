@@ -16,20 +16,20 @@
 #include "Grid.hpp"
 #include "Organism.hpp"
 #include "GameWorld.hpp"
+#include "Stats.hpp"
 
 
 
 using namespace std;
 
-//TODO : add posibility of set seed, another maps, gui for settings, make evolution better and faster, Fix keystrokes for speed/slowing the game, add antibiotic
 //Linux compile with:
-// g++ -c main.cpp && g++ main.o -o sfml-app -lsfml-graphics -lsfml-window -lsfml-system && ./sfml-app
+// g++ -c main.cpp && g++ main.o -o game -lsfml-graphics -lsfml-window -lsfml-system && ./game
 
-int WINDOW_WIDTH_GUI = 800;
-int WINDOW_HEIGHT_GUI = 800;
+int WINDOW_WIDTH_GUI = 750;
+int WINDOW_HEIGHT_GUI = 700;
 
-int WINDOW_WIDTH_GAME = 1000;
-int WINDOW_HEIGHT_GAME = 1000;
+int WINDOW_WIDTH_GAME = 1000; //Change these values to lower values if the game doesnt fit on your screen
+int WINDOW_HEIGHT_GAME = 1000; //Change these values to lower values if the game doesnt fit on your screen
 
 int ORGANISM_SIZE = 8;
 int ORGANISM_SPEED = 1;
@@ -47,89 +47,11 @@ int REPRODUCTION_ENERGY = 300;
 int FOOD_ENERGY = 5;
 int ANTIBIOTIC_ENERGY = -3;
 
-int SPAWN_RATE = 20;
+int SPAWN_RATE = 25;
 int RANDOM_SPAWN_RATE = 7;
 int ANTIBIOTIC_SPAWN_RATE = 20;
 
 int MAP = 1;
-
-
-
-class Text {
-public:
-    sf::Text text;
-    sf::Font& font;
-    Text(sf::Font& font, std::string txt, int x, int y, int font_size, sf::Color color) : font(font) {
-      text.setFont(font);
-      text.setCharacterSize(font_size);
-      text.setFillColor(color);
-      text.setPosition(x, y);
-      text.setString(txt);
-    }
-    void draw(sf::RenderWindow& window) {
-      window.draw(text);
-    }
-};
-
-class Statistics {
-public:
-   sf::RenderWindow window;
-   sf::Font& font;
-
-   std::vector<Text> texts;
-   std::vector<Text> bac_stats; 
-
-
-   Statistics(sf::Font& font) : font(font) {
-      window.create(sf::VideoMode(500, 250), "Statistics");
-      
-      texts.emplace_back(font, "Statistics:", 10, 10, 24, sf::Color::Green);
-      texts.emplace_back(font, "Number of organisms alive: ", 10, 40, 14, sf::Color::White);
-      texts.emplace_back(font, "Number of food: ", 10, 60, 14, sf::Color::White);
-      texts.emplace_back(font, "Most successful bacteria stats: ", 10, 100, 14, sf::Color::Cyan);
-      texts.emplace_back(font, "Size: ", 10, 120, 14, sf::Color::White);
-      texts.emplace_back(font, "Speed: ", 10, 140, 14, sf::Color::White);
-      texts.emplace_back(font, "Chance of moving in right direction: ", 10, 160, 14, sf::Color::White);
-      texts.emplace_back(font, "Chance of moving in left direction: ", 10, 180, 14, sf::Color::White);
-      texts.emplace_back(font, "Chance of moving in down direction: ", 10, 200, 14, sf::Color::White);
-      texts.emplace_back(font, "Chance of moving in up direction: ", 10, 220, 14, sf::Color::White);
-
-      bac_stats.emplace_back(font, "0", 80, 120, 14, sf::Color::White);
-      bac_stats.emplace_back(font, "0", 80, 140, 14, sf::Color::White);
-      bac_stats.emplace_back(font, "0", 320, 160, 14, sf::Color::White);
-      bac_stats.emplace_back(font, "0", 320, 180, 14, sf::Color::White);
-      bac_stats.emplace_back(font, "0", 320, 200, 14, sf::Color::White);
-      bac_stats.emplace_back(font, "0", 320, 220, 14, sf::Color::White);
-
-
-
-   }
-
-   void HandleEvents() {
-   sf::Event event;
-   while (window.pollEvent(event))
-   {
-      if (event.type == sf::Event::Closed)
-      {
-         window.close();
-      }
-
-   }
-   }
-
-   void RenderScene() {
-      for (auto && text : texts) {
-         text.draw(window);
-      }
-      for (auto && bac_stat : bac_stats) {
-         bac_stat.draw(window);
-      }
-   }
-
-
-
-
-};
 
 
 class Game{
@@ -151,21 +73,17 @@ public:
    int highest_generation = 0;
 
    size_t tick_counter = 0;
-
    
    GameWorld& gw;
    unique_ptr<Statistics> stats;
    sf::RenderWindow window;
    sf::Clock timer;
 
-
    
    Game(GameWorld& gw) : gw(gw), window(sf::VideoMode(WINDOW_WIDTH_GAME, WINDOW_HEIGHT_GAME), "Evolution") {
       start_game();
       //window.setFramerateLimit(60);
    }
-
-
 
    void start_game() {
       if (MAP == 1) {
@@ -301,7 +219,6 @@ public:
          
       }
 
-
    }
 
 
@@ -318,7 +235,6 @@ public:
    }
 
 };
-
 
 
 class Button {
@@ -414,7 +330,6 @@ public:
    }
 
 };
-
 
 
 class InputBox
@@ -540,7 +455,7 @@ public:
       }
 
       // Create input boxes
-      inputBoxes.emplace_back("Map: (1,2,3)", font, sf::Vector2f(10, 50), 170, MAP);
+      inputBoxes.emplace_back("Map: (1,2)", font, sf::Vector2f(10, 50), 170, MAP);
       inputBoxes.emplace_back("Number of lines:", font, sf::Vector2f(10, 100), 170, NUMBER_OF_LINES);
       inputBoxes.emplace_back("Organism size:", font, sf::Vector2f(10, 150), 170, ORGANISM_SIZE);
       inputBoxes.emplace_back("Reroduction E:", font, sf::Vector2f(10, 200), 170, REPRODUCTION_ENERGY);
