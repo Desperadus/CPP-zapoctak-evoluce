@@ -65,15 +65,14 @@ public:
    }
 
    void spawn_food_in_lines(int amount_of_lines, int amount_of_food_in_line, int food_energy) {    
-        for (int i = 1; i < amount_of_lines; i++) {
-            for (int j = 0; j < amount_of_food_in_line; j++) {
+      for (int i = 1; i < amount_of_lines; i++) {
+         for (int j = 0; j < amount_of_food_in_line; j++) {
             if (number_of_food < grid.amount_of_food) return;
             int x = (width / amount_of_lines) * i;
             int y = rand() % height;
 
             int size = 2;
             int energy = food_energy;
-            int color = rand() % 255;
             int id = i;
             grid.addFood(x, y, size, energy, id, sf::Color::Yellow);
 
@@ -83,12 +82,11 @@ public:
 
             size = 2;
             energy = 5;
-            color = rand() % 255;
             id = i;
             grid.addFood(x, y, size, energy, id, sf::Color::Yellow);
 
             }
-        }
+      }
    }
       
    void spawn_random_food(int amount_of_food, int food_energy) {
