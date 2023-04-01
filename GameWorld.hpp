@@ -2,6 +2,15 @@
 
 using namespace std;
 
+
+std::vector<int> createVector(int N) {
+    std::vector<int> vec;
+    for(int i=1; i<=N; i++) {
+        vec.push_back(i);
+    }
+    return vec;
+}
+
 class GameWorld{
 public:
    int& height;
@@ -64,8 +73,11 @@ public:
 
    }
 
-   void spawn_food_in_lines(int amount_of_lines, int amount_of_food_in_line, int food_energy) {    
-      for (int i = 1; i < amount_of_lines; i++) {
+   void spawn_food_in_lines(int amount_of_lines, int amount_of_food_in_line, int food_energy) { 
+      vector<int> vec1 = createVector(amount_of_lines);
+      random_shuffle(vec1.begin(), vec1.end());
+
+      for (int i : vec1) {
          for (int j = 0; j < amount_of_food_in_line; j++) {
             if (number_of_food < grid.amount_of_food) return;
             int x = (width / amount_of_lines) * i;
