@@ -1,7 +1,5 @@
 #pragma once
 
-using namespace std;
-
 class Game{
 public:
 
@@ -22,7 +20,7 @@ public:
    size_t tick_counter = 0;
    
    GameWorld& gw;
-   unique_ptr<Statistics> stats;
+   std::unique_ptr<Statistics> stats;
    sf::RenderWindow window;
    sf::Clock timer;
 
@@ -80,14 +78,14 @@ public:
 
    void update_stats(const Organism& org) const {
       if (!stats_win_is_open) return;
-      stats->texts[1].text.setString("Number of organisms alive: " + to_string(gw.organisms.size()));
-      stats->texts[2].text.setString("Number of food: " + to_string(gw.grid.amount_of_food));
-      stats->bac_stats[0].text.setString(to_string(org.size));
-      stats->bac_stats[1].text.setString(to_string(org.speed));
-      stats->bac_stats[2].text.setString(to_string(org.chances[0]));
-      stats->bac_stats[3].text.setString(to_string(org.chances[1]));
-      stats->bac_stats[4].text.setString(to_string(org.chances[2]));
-      stats->bac_stats[5].text.setString(to_string(org.chances[3]));
+      stats->texts[1].text.setString("Number of organisms alive: " + std::to_string(gw.organisms.size()));
+      stats->texts[2].text.setString("Number of food: " + std::to_string(gw.grid.amount_of_food));
+      stats->bac_stats[0].text.setString(std::to_string(org.size));
+      stats->bac_stats[1].text.setString(std::to_string(org.speed));
+      stats->bac_stats[2].text.setString(std::to_string(org.chances[0]));
+      stats->bac_stats[3].text.setString(std::to_string(org.chances[1]));
+      stats->bac_stats[4].text.setString(std::to_string(org.chances[2]));
+      stats->bac_stats[5].text.setString(std::to_string(org.chances[3]));
    
    }
 
@@ -126,7 +124,7 @@ public:
       gw.antibiotic_block_coords.clear();
       gw.organisms.clear();
       gw.grid.grid.clear();
-      gw.grid.grid.resize(gw.grid.height/gw.grid.grid_size, std::vector<std::vector<shared_ptr<Food>>>(gw.grid.width/gw.grid.grid_size));
+      gw.grid.grid.resize(gw.grid.height/gw.grid.grid_size, std::vector<std::vector<std::shared_ptr<Food>>>(gw.grid.width/gw.grid.grid_size));
       //gw.grid = Grid(width, height, gw.grid_size);
       gw.grid.amount_of_food = 0;
       gw.grid.amount_of_antibiotic = 0;
@@ -157,16 +155,17 @@ public:
    }
 
    void HandleEvents(sf::RenderWindow& window, sf::Clock& timer) {
+      if (paused) return;
+
       sf::Event event;
       while (window.pollEvent(event))
       {
          if (event.type == sf::Event::Closed) window.close();
-         else if (event.type == sf::Event::MouseButtonPressed)
+         else if (event.type == sf::Event::MouseButtonPressed) //creates antibiotic block
          {
             gw.create_antibiotic_block(ANTIBIOTIC_ENERGY,event.mouseButton.x, event.mouseButton.y, amount_of_lines);
          }
       }
-      if (paused) return;
       
       if (timer.getElapsedTime().asMilliseconds() >= game_speed)
       {
@@ -187,7 +186,7 @@ public:
 
    void draw_stats(sf::Font& font) {
       stats_win_is_open = true;
-      stats = make_unique<Statistics>(font);
+      stats = std::make_unique<Statistics>(font);
    }
 
 };

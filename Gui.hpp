@@ -99,7 +99,7 @@ public:
 class InputBox
 {
 public:
-   string value;
+   std::string value;
    int& asociated_var;
    int font_size = 16;
    
@@ -120,7 +120,7 @@ public:
 
       // Create text object
       m_text.setFont(font);
-      m_text.setString(to_string(asociated_var));
+      m_text.setString(std::to_string(asociated_var));
       m_text.setCharacterSize(font_size);
       m_text.setFillColor(sf::Color::Black);
       m_text.setPosition(position + sf::Vector2f(offset + 3, 2));
@@ -181,7 +181,7 @@ public:
                   asociated_var = stoi(m_input);
                }
                catch (const std::exception& e) {
-                  cout << "Invalid input" << endl;
+                  std::cout << "Invalid input" << std::endl;
                }
          }
          

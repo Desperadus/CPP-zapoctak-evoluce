@@ -19,6 +19,7 @@ public:
         }
     }
 
+    
     void addFood(int x, int y, int size, int energy, const sf::Color color) {
       int xgrid = x / grid_size;
       int ygrid = y / grid_size;
@@ -32,6 +33,7 @@ public:
       }
     }
 
+    
     void addAntibiotic(int x, int y, int size, int energy, const sf::Color color) {
       int xgrid = x / grid_size;
       int ygrid = y / grid_size;

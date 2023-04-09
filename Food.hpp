@@ -5,6 +5,7 @@ public:
    int x, y;
    int size, energy, id;
    sf::CircleShape shape;
+   
    Food(int x, int y, int size, int energy, const sf::Color& color) {
       this->x = x;
       this->y = y;

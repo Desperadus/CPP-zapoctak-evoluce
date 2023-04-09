@@ -127,12 +127,14 @@ public:
          }
       }
    }
+   
+   
    void try_to_eat(Grid & grid) {
       int x = this->x / grid.grid_size;
       int y = this->y / grid.grid_size;
       if (x >= 0 && x < width / grid.grid_size && y >= 0 && y < height / grid.grid_size) {
          for (int i = 0; i < grid.grid[y][x].size(); i++) {
-            if (distance(this->x, this->y, grid.grid[y][x][i]->x, grid.grid[y][x][i]->y, this->size)) {
+            if (distance2(this->x, this->y, grid.grid[y][x][i]->x, grid.grid[y][x][i]->y, this->size)) {
                int food_energy = grid.grid[y][x][i]->energy;
                this->energy += food_energy;
                grid.grid[y][x].erase(grid.grid[y][x].begin() + i);
@@ -143,6 +145,7 @@ public:
       }
    }
 
+   
    void try_mitosis(std::vector<std::unique_ptr<Organism> > & organisms, int needed_energy) {
       if (energy > needed_energy) {
          energy -= needed_energy/2;
@@ -160,6 +163,7 @@ public:
       }
    }
 
+   
    void mutate() {
       int random_number = rand() % 100;
       if (random_number < 100 - CHANCE_OF_MUTATION) {

@@ -8,6 +8,8 @@ const int WINDOW_HEIGHT_GAME = 1000;
 
 const int MUTATION_RATE = 3;
 
+const float MAX_SIZE_MULTIPLIER = 1.5f;
+
 int ORGANISM_SIZE = 8;
 int ORGANISM_SPEED = 1;
 
