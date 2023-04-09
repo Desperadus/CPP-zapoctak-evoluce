@@ -30,20 +30,17 @@ public:
       //window.setFramerateLimit(60);
    }
 
-   void start_game() const{
+   void start_game() const{ //Initialize the game
+      gw.spawn_organisms(amount, org_energy);
       if (MAP == 1) {
-         gw.spawn_organisms(amount, org_energy);
          gw.spawn_food_in_lines(amount_of_lines, NUMBER_OF_FOOD / NUMBER_OF_LINES / 3, food_energy);
          gw.spawn_random_food(NUMBER_OF_FOOD / NUMBER_OF_LINES / 6, food_energy);
       }
       if (MAP == 2) {
-         //SPAWN_RATE = 100;
-         gw.spawn_organisms(amount, org_energy);
          gw.spawn_food_in_rectangle(NUMBER_OF_FOOD / 2, food_energy);
          gw.spawn_random_food(NUMBER_OF_FOOD / 3, food_energy);
       }
       if (MAP == 3) {
-         gw.spawn_organisms(amount, org_energy);
          gw.spawn_food_in_thick_line(NUMBER_OF_LINES , NUMBER_OF_FOOD / 2, food_energy);
          gw.spawn_random_food(NUMBER_OF_FOOD / 3, food_energy);
       }

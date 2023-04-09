@@ -55,7 +55,7 @@ public:
          sf::FloatRect bounds = shape.getGlobalBounds();
          if (bounds.contains(mousePosition))
          {
-            //cout << id;
+            //Define here what buttons do when pressed by id;
             if (id == 0) {
                game.clear_game();
                game.start_game();
@@ -136,9 +136,10 @@ public:
 
    void handleEvent(sf::Event event, sf::RenderWindow& window)
    {
+      // Check if the mouse click is inside the text box and select it
       if (event.type == sf::Event::MouseButtonPressed)
       {
-         // Check if the mouse click is inside the text box
+         
          sf::Vector2f mousePosition = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
          sf::FloatRect bounds = m_textBox.getGlobalBounds();
          if (bounds.contains(mousePosition))
@@ -150,6 +151,8 @@ public:
                isSelected = false;
          }
       }
+      
+      //write text into box
       else if (event.type == sf::Event::TextEntered && isSelected)
       {   
          //cout << "event.text.unicode: " << event.text.unicode << endl; 
@@ -208,6 +211,9 @@ public:
    GameWorld& gw;
    Game& game;
 
+   int last_input_box_coords = 0;
+   int last_button_id = -1;
+
    GUI(GameWorld& gw, Game& game) : gw(gw), game(game) {
       // Create window
       window.create(sf::VideoMode(WINDOW_WIDTH_GUI, WINDOW_HEIGHT_GUI), "SFML Input Boxes");
@@ -220,35 +226,45 @@ public:
       }
 
       // Create input boxes
-      inputBoxes.emplace_back("Map: (1,2,3)", font, sf::Vector2f(10, 50), 170, MAP);
-      inputBoxes.emplace_back("Number of lines:", font, sf::Vector2f(10, 100), 170, NUMBER_OF_LINES);
-      inputBoxes.emplace_back("Organism size:", font, sf::Vector2f(10, 150), 170, ORGANISM_SIZE);
-      inputBoxes.emplace_back("Reroduction E:", font, sf::Vector2f(10, 200), 170, REPRODUCTION_ENERGY);
-      inputBoxes.emplace_back("Spawn rate:", font, sf::Vector2f(10, 250), 170, SPAWN_RATE);
-      inputBoxes.emplace_back("Rand spawn rate:", font, sf::Vector2f(10, 300), 170, RANDOM_SPAWN_RATE);
-      inputBoxes.emplace_back("Number of org:", font, sf::Vector2f(10, 350), 170, NUMBER_OF_ORGANISMS);
-      inputBoxes.emplace_back("Food energy:", font, sf::Vector2f(10, 400), 170, FOOD_ENERGY);
-      inputBoxes.emplace_back("Max num of food:", font, sf::Vector2f(10, 450), 170, NUMBER_OF_FOOD);
-      inputBoxes.emplace_back("Anitibiotic dmg:", font, sf::Vector2f(10, 500), 170, ANTIBIOTIC_ENERGY);
-      inputBoxes.emplace_back("Anti spawn rate:", font, sf::Vector2f(10, 550), 170, ANTIBIOTIC_SPAWN_RATE);
-      inputBoxes.emplace_back("Max num of anti:", font, sf::Vector2f(10, 600), 170, NUMBER_OF_ANTIBIOTIC);
+      create_input_box("Map: (1,2,3)", MAP);
+      create_input_box("Number of lines:", NUMBER_OF_LINES);
+      create_input_box("Organism size:", ORGANISM_SIZE);
+      create_input_box("Reroduction E:", REPRODUCTION_ENERGY);
+      create_input_box("Spawn rate:", SPAWN_RATE);
+      create_input_box("Rand spawn rate:", RANDOM_SPAWN_RATE);
+      create_input_box("Number of org:", NUMBER_OF_ORGANISMS);
+      create_input_box("Food energy:", FOOD_ENERGY);
+      create_input_box("Antibiotic dmg:", ANTIBIOTIC_ENERGY);
+      create_input_box("Max num of food:", NUMBER_OF_FOOD);
+      create_input_box("Max num of anti:", NUMBER_OF_ANTIBIOTIC);
+      create_input_box("Anti spawn rate:", ANTIBIOTIC_SPAWN_RATE);
 
       // Create buttons
-      buttons.emplace_back(550, 36, 100, 50, font, "Start", sf::Color::Green, gw, game, 0);
-      buttons.emplace_back(550, 100, 170, 50, font, "Pause/Resume", sf::Color::Cyan, gw, game, 1);
-      buttons.emplace_back(550, 164, 170, 50, font, "Add organisms", sf::Color::Green, gw, game, 2);
-      buttons.emplace_back(550, 334, 170, 50, font, "Speed up", sf::Color::Green, gw, game, 3);
-      buttons.emplace_back(550, 390, 170, 50, font, "Slow down", sf::Color::Red, gw, game, 4);
-      buttons.emplace_back(550, 500, 170, 50, font, "Show stats", sf::Color::Cyan, gw, game, 5);
-      buttons.emplace_back(550, 600, 170, 50, font, "Add anti", sf::Color::White, gw, game, 6);
-
-
-
+      create_button("Start", sf::Color::Green, 36, 100);
+      create_button("Pause/Resume", sf::Color::Cyan, 100);
+      create_button("Add organisms", sf::Color::Green, 164);
+      create_button("Speed up", sf::Color::Green, 334);
+      create_button("Slow down", sf::Color::Red, 390);
+      create_button("Show stats", sf::Color::Cyan, 500);
+      create_button("Add anti", sf::Color::White, 600);
 
    }
 
+   void create_input_box(std::string description, int asociated_var) {
+      last_input_box_coords += 50; // 50 is offest between input boxes
+      int width = 170;
+      sf::Vector2f position(10, last_input_box_coords);
+
+      inputBoxes.emplace_back(description, font, position, width, asociated_var);
+   }
+
+   void create_button(std::string description, sf::Color color, int y_coord, int width=170) {
+      last_button_id++;
+      buttons.emplace_back(550, y_coord , width, 50, font, description, color, gw, game, last_button_id);
+   }
+
+
    void HandleEvents() {
-      // Handle events
          sf::Event event;
          while (window.pollEvent(event))
          {

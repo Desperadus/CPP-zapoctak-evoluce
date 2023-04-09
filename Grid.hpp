@@ -23,7 +23,7 @@ public:
     void addFood(int x, int y, int size, int energy, const sf::Color color) {
       int xgrid = x / grid_size;
       int ygrid = y / grid_size;
-      //std::cout << x << " " << y << std::endl;
+
       if (xgrid >= 0 && xgrid < width/grid_size && ygrid >= 0 && ygrid < height/grid_size) {
          grid[ygrid][xgrid].push_back(std::make_unique<Food>(x, y, size, energy, color));
          amount_of_food++;
@@ -37,7 +37,7 @@ public:
     void addAntibiotic(int x, int y, int size, int energy, const sf::Color color) {
       int xgrid = x / grid_size;
       int ygrid = y / grid_size;
-      //std::cout << x << " " << y << std::endl;
+      
       if (xgrid >= 0 && xgrid < width/grid_size && ygrid >= 0 && ygrid < height/grid_size) {
          grid[ygrid][xgrid].push_back(std::make_unique<Food>(x, y, size, energy, color));
          amount_of_antibiotic++;

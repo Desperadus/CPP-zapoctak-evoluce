@@ -42,7 +42,7 @@ int main()
       game.RenderScene(game.window);
       game.window.display();
 
-      if (game.stats_win_is_open == true) {
+      if (game.stats_win_is_open == true) { //If the stats window is open, render it
          game.stats->window.clear();
          game.stats->HandleEvents();
          game.stats->RenderScene();

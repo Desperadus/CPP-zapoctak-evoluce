@@ -82,17 +82,13 @@ public:
             int x = (width / amount_of_lines) * i;
             int y = rand() % height;
 
-            int size = FOOD_SIZE;
-            int energy = food_energy;
-            int id = i;
-            grid.addFood(x, y, size, food_energy, sf::Color::Yellow);
+            grid.addFood(x, y, FOOD_SIZE, food_energy, sf::Color::Yellow);
 
 
             x = rand() % width;
             y = (height / amount_of_lines) * i;
 
-            size = FOOD_SIZE;
-            grid.addFood(x, y, size, food_energy, sf::Color::Yellow);
+            grid.addFood(x, y, FOOD_SIZE, food_energy, sf::Color::Yellow);
 
             }
       }
