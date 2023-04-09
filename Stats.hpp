@@ -4,7 +4,7 @@ class Text {
 public:
     sf::Text text;
     sf::Font& font;
-    Text(sf::Font& font, std::string txt, int x, int y, int font_size, sf::Color color) : font(font) {
+    Text(sf::Font& font, const std::string& txt, int x, int y, int font_size, const sf::Color color) : font(font) {
       text.setFont(font);
       text.setCharacterSize(font_size);
       text.setFillColor(color);

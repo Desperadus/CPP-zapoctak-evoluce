@@ -1,8 +1,6 @@
 #pragma once
 
 
-using namespace std;
-
 class Organism{
 public:
    int height, width;
@@ -11,23 +9,21 @@ public:
 
    int size, speed;
 
-   int energy, color, id;
+   int energy;
 
-   int max_size, max_speed, mutation_rate = 3;
+   int max_size, max_speed, mutation_rate = MUTATION_RATE;
 
    int generation;
 
    sf::CircleShape shape;
 
-   vector<int> chances;
-   Organism(int x, int y, int size, int speed, int energy, int color, int id, vector<int> chances, int height, int width, int max_size, int generation = 0) {
+   std::vector<int> chances;
+   Organism(int x, int y, int size, int speed, int energy, std::vector<int> chances, int height, int width, int max_size, int generation = 0) {
       this->x = x;
       this->y = y;
       this->size = size;
       this->speed = speed;
       this->energy = energy;
-      this->color = color;
-      this->id = id;
       this->height = height;
       this->width = width;
 
@@ -46,7 +42,7 @@ public:
       shape.setPosition(x-size, y-size);
    }
 
-   int sum_of_vector(vector<int> & v) {
+   int sum_of_vector(const std::vector<int> & v) {
         int sum = 0;
         for (int i = 0; i < v.size(); i++) {
             sum += v[i];
@@ -54,13 +50,20 @@ public:
         return sum;
     }
 
-
+   //euclidean distance
     bool distance(int x1, int y1, int x2, int y2, int distance) {
         if (sqrt((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2)) < distance) {
             return true;
         }
         return false;
     }
+    //maximal metric
+   bool distance2(int x1, int y1, int x2, int y2, int distance) {
+      if (abs(x1 - x2) < distance && abs(y1 - y2) < distance) {
+            return true;
+      }
+      return false;
+   }
 
 
    void move() {
@@ -140,7 +143,7 @@ public:
       }
    }
 
-   void try_mitosis(vector<unique_ptr<Organism> > & organisms, int needed_energy) {
+   void try_mitosis(std::vector<std::unique_ptr<Organism> > & organisms, int needed_energy) {
       if (energy > needed_energy) {
          energy -= needed_energy/2;
          int x = this->x;
@@ -148,10 +151,8 @@ public:
          int size = this->size;
          int speed = this->speed;
          int new_energy = this->energy/2;
-         int color = this->color;
-         int id = this->id;
-         vector<int> chances = this->chances;
-         organisms.push_back(make_unique<Organism>(x, y, size, speed, new_energy, color, id, chances, height, width, max_size ,generation + 1));
+         std::vector<int> chances = this->chances;
+         organisms.push_back(std::make_unique<Organism>(x, y, size, speed, new_energy, chances, height, width, max_size ,generation + 1));
          generation += 1;
 
          mutate();
@@ -161,7 +162,7 @@ public:
 
    void mutate() {
       int random_number = rand() % 100;
-      if (random_number < 90) {
+      if (random_number < 100 - CHANCE_OF_MUTATION) {
          return;
       }
       random_number = rand() % 4;
