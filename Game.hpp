@@ -3,8 +3,6 @@
 class Game{
 public:
 
-   int height = WINDOW_HEIGHT_GAME;
-   int width = WINDOW_WIDTH_GAME;
    int& amount = NUMBER_OF_ORGANISMS;
    int& org_size = ORGANISM_SIZE;
    int& org_energy = ORGANISM_ENERGY;
@@ -32,17 +30,21 @@ public:
 
    void start_game() const{ //Initialize the game
       gw.spawn_organisms(amount, org_energy);
-      if (MAP == 1) {
-         gw.spawn_food_in_lines(amount_of_lines, NUMBER_OF_FOOD / NUMBER_OF_LINES / 3, food_energy);
-         gw.spawn_random_food(NUMBER_OF_FOOD / NUMBER_OF_LINES / 6, food_energy);
+      if (MAP == 1) { //lines
+         gw.spawn_food_in_lines(amount_of_lines, MAP1_STARTING_FOOD, food_energy);
+         gw.spawn_random_food(MAP1_RAND_STARTING_FOOD, food_energy);
       }
-      if (MAP == 2) {
-         gw.spawn_food_in_rectangle(NUMBER_OF_FOOD / 2, food_energy);
-         gw.spawn_random_food(NUMBER_OF_FOOD / 3, food_energy);
+      if (MAP == 2) { //rectangle
+         gw.spawn_food_in_rectangle(MAP2_STARTING_FOOD, food_energy);
+         gw.spawn_random_food(MAP2_RAND_STARTING_FOOD, food_energy);
       }
-      if (MAP == 3) {
-         gw.spawn_food_in_thick_line(NUMBER_OF_LINES , NUMBER_OF_FOOD / 2, food_energy);
-         gw.spawn_random_food(NUMBER_OF_FOOD / 3, food_energy);
+      if (MAP == 3) { //thick line
+         gw.spawn_food_in_thick_line(NUMBER_OF_LINES , MAP3_STARTING_FOOD, food_energy);
+         gw.spawn_random_food(MAP3_RAND_STARTING_FOOD, food_energy);
+      }
+      if (MAP == 4) { //cross
+         gw.spawn_food_in_thick_line(NUMBER_OF_LINES, MAP4_STARTING_FOOD, food_energy, true);
+         gw.spawn_random_food(MAP4_RAND_STARTING_FOOD, food_energy);
       }
 
    }
@@ -101,10 +103,13 @@ public:
          }
          
          if (MAP == 2) {
-            gw.spawn_food_in_rectangle(SPAWN_RATE*10, food_energy);
+            gw.spawn_food_in_rectangle(SPAWN_RATE*MAP2_SPAWN_RATE_MULTIPLIER, food_energy);
          }
          if (MAP == 3) {
-            gw.spawn_food_in_thick_line(NUMBER_OF_LINES, SPAWN_RATE*10, food_energy); 
+            gw.spawn_food_in_thick_line(NUMBER_OF_LINES, SPAWN_RATE*MAP3_SPAWN_RATE_MULTIPLIER, food_energy); 
+         }
+         if (MAP == 4) {
+            gw.spawn_food_in_thick_line(NUMBER_OF_LINES, SPAWN_RATE*MAP4_SPAWN_RATE_MULTIPLIER, food_energy, true);
          }
          
          gw.spawn_random_food(RANDOM_SPAWN_RATE, food_energy);
@@ -176,7 +181,7 @@ public:
    void InitializeWindow() {
       
       start_game();
-      window.create(sf::VideoMode(width, height), "Evolution game!");
+      window.create(sf::VideoMode(WINDOW_WIDTH_GAME, WINDOW_HEIGHT_GAME), "Evolution game!");
 
    }
 

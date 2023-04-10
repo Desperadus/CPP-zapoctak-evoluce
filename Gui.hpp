@@ -247,7 +247,7 @@ public:
 
    }
 
-   void create_input_box(const std::string& description, int asociated_var) {
+   void create_input_box(const std::string& description, int& asociated_var) {
       last_input_box_coords += 50; // 50 is offest between input boxes
       int width = 170;
       sf::Vector2f position(10, last_input_box_coords);

@@ -1,15 +1,13 @@
 #pragma once
 
+//window settings
 const int WINDOW_WIDTH_GUI = 750;
 const int WINDOW_HEIGHT_GUI = 700;
 
 const int WINDOW_WIDTH_GAME = 1000; 
 const int WINDOW_HEIGHT_GAME = 1000; 
 
-const int MUTATION_RATE = 3;
-
-const float MAX_SIZE_MULTIPLIER = 1.5f;
-
+//default ingame settings
 int ORGANISM_SIZE = 8;
 int ORGANISM_SPEED = 1;
 
@@ -28,16 +26,38 @@ int ANTIBIOTIC_ENERGY = -3;
 const int ANTIBIOTIC_SIZE = 2;
 const int FOOD_SIZE = 2;
 
+//default spawnrates
 int SPAWN_RATE = 25;
 int RANDOM_SPAWN_RATE = 7;
 int ANTIBIOTIC_SPAWN_RATE = 20;
 
 int GAME_SPEED_MULTIPLIER = 4;
 
+//default map
 int MAP = 1;
 
 int GAME_SPEED = 32;
 
+//grid for reducing computational complexity
 int AMOUNT_OF_GRID_CELLS = 66;
 
+//mutation settings
 int CHANCE_OF_MUTATION = 10;
+const int MUTATION_RATE = 3;
+
+const float MAX_SIZE_MULTIPLIER = 1.5f;
+
+//map settings - food spawing
+int MAP1_STARTING_FOOD = NUMBER_OF_FOOD / NUMBER_OF_LINES / 3;
+int MAP2_STARTING_FOOD = NUMBER_OF_FOOD / 2;
+int MAP3_STARTING_FOOD = NUMBER_OF_FOOD / 2;
+int MAP4_STARTING_FOOD = NUMBER_OF_FOOD / 4;
+
+int MAP1_RAND_STARTING_FOOD = NUMBER_OF_FOOD / NUMBER_OF_LINES / 6;
+int MAP2_RAND_STARTING_FOOD = NUMBER_OF_FOOD / 3;
+int MAP3_RAND_STARTING_FOOD = NUMBER_OF_FOOD / 3;
+int MAP4_RAND_STARTING_FOOD = NUMBER_OF_FOOD / 3;
+
+int MAP2_SPAWN_RATE_MULTIPLIER = 10;
+int MAP3_SPAWN_RATE_MULTIPLIER = 10;
+int MAP4_SPAWN_RATE_MULTIPLIER = 5;

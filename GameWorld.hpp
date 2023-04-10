@@ -28,8 +28,8 @@ public:
       this->org_size = org_size;
    }
 
-   
-   int sum_of_vector(const std::vector<int> & v) {
+   template <typename T>
+   int sum_of_vector(const T & v) {
       int sum = 0;
       for (int i = 0; i < v.size(); i++) {
          sum += v[i];
@@ -117,11 +117,15 @@ public:
    }
 
    
-   void spawn_food_in_thick_line(int amount_of_lines, int amount_of_food, int food_energy) {
+   void spawn_food_in_thick_line(int amount_of_lines, int amount_of_food, int food_energy, bool invert  = false) {
          for (int i = 0; i < amount_of_food; i++) {
             if (number_of_food < grid.amount_of_food) return;
                int x = rand() % (width / amount_of_lines) + width / 2 - width / (amount_of_lines * 2);
                int y = rand() % height;
+
+               if (invert) {
+                  grid.addFood(y, x, FOOD_SIZE, food_energy, sf::Color::Yellow);
+               }
 
                grid.addFood(x, y, FOOD_SIZE, food_energy, sf::Color::Yellow);
         }
