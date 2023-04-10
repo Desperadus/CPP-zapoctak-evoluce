@@ -40,7 +40,7 @@ public:
       shape.setPosition(x-size, y-size);
    }
 
-   int sum_of_vector(const std::vector<int> & v) {
+   int sum_of_vector(const std::vector<int> & v) const {
         int sum = 0;
         for (int i = 0; i < v.size(); i++) {
             sum += v[i];
@@ -49,14 +49,14 @@ public:
     }
 
    //euclidean distance
-    bool distance(int x1, int y1, int x2, int y2, int distance) {
+    bool distance(int x1, int y1, int x2, int y2, int distance) const {
         if (sqrt((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2)) < distance) {
             return true;
         }
         return false;
     }
     //maximal metric
-   bool distance2(int x1, int y1, int x2, int y2, int distance) {
+   bool distance2(int x1, int y1, int x2, int y2, int distance) const {
       if (abs(x1 - x2) < distance && abs(y1 - y2) < distance) {
             return true;
       }
