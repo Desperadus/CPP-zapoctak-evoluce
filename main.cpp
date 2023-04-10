@@ -24,9 +24,6 @@
 #include "Maps.hpp"
 
 
-//Linux compile with:
-// g++ -c main.cpp && g++ main.o -o game -lsfml-graphics -lsfml-window -lsfml-system && ./game
-
 int main()
 {
    GameWorld gw(WINDOW_HEIGHT_GAME, WINDOW_WIDTH_GAME, ORGANISM_SIZE, NUMBER_OF_FOOD, NUMBER_OF_ANTIBIOTIC);
