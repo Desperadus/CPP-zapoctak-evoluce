@@ -13,7 +13,6 @@
 #include <cmath>
 
 
-
 #include "Constants.hpp"
 #include "Food.hpp"
 #include "Grid.hpp"

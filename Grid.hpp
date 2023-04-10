@@ -2,17 +2,30 @@
 
 class Grid {
 public:
-    int width, height, grid_size;
+    int& width, height;
+    int grid_size;
     std::vector<std::vector<std::vector<std::shared_ptr<Food> > > > grid;
     size_t amount_of_food = 0;
     size_t amount_of_antibiotic = 0;
 
-    Grid(int width, int height, int grid_size) :
+    Grid(int& width, int& height, int grid_size) :
         width(width), height(height), grid_size(grid_size) {
         // Initialize the grid with empty vectors
         grid.resize(height/grid_size);
         for (auto& row : grid) {
             row.resize(width/grid_size);
+            for (auto& col : row) {
+                col.resize(0);
+            }
+        }
+    }
+
+    void new_gird() {
+        amount_of_food = 0;
+        amount_of_antibiotic = 0;
+        grid.resize(height / grid_size);
+        for (auto& row : grid) {
+            row.resize(width / grid_size);
             for (auto& col : row) {
                 col.resize(0);
             }

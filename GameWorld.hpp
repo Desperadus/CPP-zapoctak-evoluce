@@ -2,8 +2,8 @@
 
 class GameWorld{
 public:
-   int height;
-   int width;
+   int& height;
+   int& width;
    int& org_size;
    int grid_size = AMOUNT_OF_GRID_CELLS;
    int& number_of_food;
@@ -14,9 +14,7 @@ public:
 
    Grid grid;
    
-   GameWorld(const int height, const int width, int& org_size, int& number_of_food, int& number_of_antibiotic) : grid(height, width, grid_size), height(height), width(width), org_size(org_size), number_of_food(number_of_food), number_of_antibiotic(number_of_antibiotic) {
-      this->height = height;
-      this->width = width;
+   GameWorld(int& height, int& width, int& org_size, int& number_of_food, int& number_of_antibiotic) : grid(height, width, grid_size), height(height), width(width), org_size(org_size), number_of_food(number_of_food), number_of_antibiotic(number_of_antibiotic) {
       this->org_size = org_size;
    }
 
@@ -63,28 +61,6 @@ public:
 
    }
 
-   
-   // void spawn_food_in_lines(int amount_of_lines, int amount_of_food_in_line, int food_energy) { 
-   //    std::vector<int> vec1 = createVector(amount_of_lines);
-   //    random_shuffle(vec1.begin(), vec1.end());
-
-   //    for (int i : vec1) {
-   //       for (int j = 0; j < amount_of_food_in_line; j++) {
-   //          if (number_of_food < grid.amount_of_food) return;
-   //          int x = (width / amount_of_lines) * i;
-   //          int y = rand() % height;
-
-   //          grid.addFood(x, y, FOOD_SIZE, food_energy, sf::Color::Yellow);
-
-
-   //          x = rand() % width;
-   //          y = (height / amount_of_lines) * i;
-
-   //          grid.addFood(x, y, FOOD_SIZE, food_energy, sf::Color::Yellow);
-
-   //          }
-   //    }
-   // }
       
    
    void spawn_random_food(int amount_of_food) {

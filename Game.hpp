@@ -40,7 +40,6 @@ public:
       gw.spawn_organisms(amount, org_energy);
       
       test_if_map_exists();
-      
       maps[MAP-1]->initialize();
 
 
@@ -87,7 +86,7 @@ public:
 
    void test_if_map_exists() {
       if (MAP-1 >= maps.size()) {
-         std::cout << "Map does not exist, swicthing to MAP 1" << std::endl;
+         std::cout << "Map does not exist, switching to MAP 1" << std::endl;
          MAP = 1;
          return;
       }
@@ -159,6 +158,14 @@ public:
          {
             gw.create_antibiotic_block(ANTIBIOTIC_ENERGY,event.mouseButton.x, event.mouseButton.y, amount_of_lines);
          }
+         else if (event.Resized) {
+            // sf::Vector2u size = window.getSize();
+            // std::cout << "Resized, might not fit screen correctly. Size x-" << size.x <<" y-" << size.y << std::endl;
+            // WINDOW_WIDTH_GAME = size.x;
+            // WINDOW_HEIGHT_GAME = size.y;
+            // gw.grid.new_gird();
+            // maps[MAP-1]->initialize();
+         }
       }
       
       if (timer.getElapsedTime().asMilliseconds() >= game_speed)
@@ -167,15 +174,12 @@ public:
          timer.restart();
          
       }
-
    }
 
 
    void InitializeWindow() {
-      
       start_game();
       window.create(sf::VideoMode(WINDOW_WIDTH_GAME, WINDOW_HEIGHT_GAME), "Evolution game!");
-
    }
 
    void draw_stats(const sf::Font& font) {

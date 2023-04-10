@@ -1,11 +1,11 @@
 #pragma once
 
 //window settings
-const int WINDOW_WIDTH_GUI = 750;
-const int WINDOW_HEIGHT_GUI = 700;
+int WINDOW_WIDTH_GUI = 750;
+int WINDOW_HEIGHT_GUI = 700;
 
-const int WINDOW_WIDTH_GAME = 1000; 
-const int WINDOW_HEIGHT_GAME = 1000; 
+int WINDOW_WIDTH_GAME = 1000; 
+int WINDOW_HEIGHT_GAME = 1000; 
 
 //default ingame settings
 int ORGANISM_SIZE = 8;
@@ -24,8 +24,8 @@ int REPRODUCTION_ENERGY = 300;
 int FOOD_ENERGY = 5;
 int RAND_FOOD_ENERGY = 4;
 int ANTIBIOTIC_ENERGY = -3;
-const int ANTIBIOTIC_SIZE = 2;
-const int FOOD_SIZE = 2;
+int ANTIBIOTIC_SIZE = 2;
+int FOOD_SIZE = 2;
 
 //default spawnrates
 int SPAWN_RATE = 25;
@@ -44,9 +44,9 @@ int AMOUNT_OF_GRID_CELLS = 66;
 
 //mutation settings
 int CHANCE_OF_MUTATION = 10;
-const int MUTATION_RATE = 3;
+int MUTATION_RATE = 3;
 
-const float MAX_SIZE_MULTIPLIER = 1.5f;
+float MAX_SIZE_MULTIPLIER = 1.5f;
 
 //map settings - food spawing
 int MAP1_STARTING_FOOD = NUMBER_OF_FOOD / NUMBER_OF_LINES / 3;
