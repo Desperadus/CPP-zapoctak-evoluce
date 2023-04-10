@@ -213,7 +213,7 @@ public:
 
    GUI(GameWorld& gw, Game& game) : gw(gw), game(game) {
       // Create window
-      window.create(sf::VideoMode(WINDOW_WIDTH_GUI, WINDOW_HEIGHT_GUI), "SFML Input Boxes");
+      window.create(sf::VideoMode(WINDOW_WIDTH_GUI, WINDOW_HEIGHT_GUI), "Settings");
 
       // Load font
       
