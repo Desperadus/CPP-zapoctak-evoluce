@@ -12,6 +12,8 @@
 #include <memory>
 #include <cmath>
 
+
+
 #include "Constants.hpp"
 #include "Food.hpp"
 #include "Grid.hpp"
@@ -20,6 +22,8 @@
 #include "Stats.hpp"
 #include "Game.hpp"
 #include "Gui.hpp"
+#include "Maps.hpp"
+
 
 //Linux compile with:
 // g++ -c main.cpp && g++ main.o -o game -lsfml-graphics -lsfml-window -lsfml-system && ./game

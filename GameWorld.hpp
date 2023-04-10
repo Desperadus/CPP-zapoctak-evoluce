@@ -1,13 +1,5 @@
 #pragma once
 
-std::vector<int> createVector(int N) {
-    std::vector<int> vec;
-    for(int i=1; i<=N; i++) {
-        vec.push_back(i);
-    }
-    return vec;
-}
-
 class GameWorld{
 public:
    int height;
@@ -29,7 +21,7 @@ public:
    }
 
    template <typename T>
-   int sum_of_vector(const T & v) {
+   int sum_of_vector(const T & v) const {
       int sum = 0;
       for (int i = 0; i < v.size(); i++) {
          sum += v[i];
@@ -72,36 +64,36 @@ public:
    }
 
    
-   void spawn_food_in_lines(int amount_of_lines, int amount_of_food_in_line, int food_energy) { 
-      std::vector<int> vec1 = createVector(amount_of_lines);
-      random_shuffle(vec1.begin(), vec1.end());
+   // void spawn_food_in_lines(int amount_of_lines, int amount_of_food_in_line, int food_energy) { 
+   //    std::vector<int> vec1 = createVector(amount_of_lines);
+   //    random_shuffle(vec1.begin(), vec1.end());
 
-      for (int i : vec1) {
-         for (int j = 0; j < amount_of_food_in_line; j++) {
-            if (number_of_food < grid.amount_of_food) return;
-            int x = (width / amount_of_lines) * i;
-            int y = rand() % height;
+   //    for (int i : vec1) {
+   //       for (int j = 0; j < amount_of_food_in_line; j++) {
+   //          if (number_of_food < grid.amount_of_food) return;
+   //          int x = (width / amount_of_lines) * i;
+   //          int y = rand() % height;
 
-            grid.addFood(x, y, FOOD_SIZE, food_energy, sf::Color::Yellow);
+   //          grid.addFood(x, y, FOOD_SIZE, food_energy, sf::Color::Yellow);
 
 
-            x = rand() % width;
-            y = (height / amount_of_lines) * i;
+   //          x = rand() % width;
+   //          y = (height / amount_of_lines) * i;
 
-            grid.addFood(x, y, FOOD_SIZE, food_energy, sf::Color::Yellow);
+   //          grid.addFood(x, y, FOOD_SIZE, food_energy, sf::Color::Yellow);
 
-            }
-      }
-   }
+   //          }
+   //    }
+   // }
       
    
-   void spawn_random_food(int amount_of_food, int food_energy) {
+   void spawn_random_food(int amount_of_food) {
         for (int i = 0; i < amount_of_food; i++) {
             if (number_of_food < grid.amount_of_food) return;
             int x = rand() % width;
             int y = rand() % height;
 
-            grid.addFood(x, y, FOOD_SIZE, food_energy, sf::Color::Yellow);
+            grid.addFood(x, y, FOOD_SIZE, RAND_FOOD_ENERGY, sf::Color::Yellow);
         }
    }
 
@@ -121,8 +113,8 @@ public:
          for (int i = 0; i < amount_of_food; i++) {
             if (number_of_food < grid.amount_of_food) return;
                int x = rand() % (width / amount_of_lines) + width / 2 - width / (amount_of_lines * 2);
-               int y = rand() % height;
-
+               int y = rand() % height;   
+               
                if (invert) {
                   grid.addFood(y, x, FOOD_SIZE, food_energy, sf::Color::Yellow);
                }

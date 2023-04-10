@@ -1,4 +1,5 @@
 #pragma once
+#include "Maps.hpp"
 
 class Game{
 public:
@@ -17,6 +18,7 @@ public:
    int highest_generation = 0;
    size_t tick_counter = 0;
    
+   std::vector<std::unique_ptr<Map>> maps;
    GameWorld& gw;
    std::unique_ptr<Statistics> stats;
    sf::RenderWindow window;
@@ -28,24 +30,19 @@ public:
       //window.setFramerateLimit(60);
    }
 
-   void start_game() const{ //Initialize the game
+   void start_game() { //Initialize the game
+
+      maps.push_back(std::make_unique<Map1>(gw));
+      maps.push_back(std::make_unique<Map2>(gw));
+      maps.push_back(std::make_unique<Map3>(gw));
+      maps.push_back(std::make_unique<Map4>(gw));
+
       gw.spawn_organisms(amount, org_energy);
-      if (MAP == 1) { //lines
-         gw.spawn_food_in_lines(amount_of_lines, MAP1_STARTING_FOOD, food_energy);
-         gw.spawn_random_food(MAP1_RAND_STARTING_FOOD, food_energy);
-      }
-      if (MAP == 2) { //rectangle
-         gw.spawn_food_in_rectangle(MAP2_STARTING_FOOD, food_energy);
-         gw.spawn_random_food(MAP2_RAND_STARTING_FOOD, food_energy);
-      }
-      if (MAP == 3) { //thick line
-         gw.spawn_food_in_thick_line(NUMBER_OF_LINES , MAP3_STARTING_FOOD, food_energy);
-         gw.spawn_random_food(MAP3_RAND_STARTING_FOOD, food_energy);
-      }
-      if (MAP == 4) { //cross
-         gw.spawn_food_in_thick_line(NUMBER_OF_LINES, MAP4_STARTING_FOOD, food_energy, true);
-         gw.spawn_random_food(MAP4_RAND_STARTING_FOOD, food_energy);
-      }
+      
+      test_if_map_exists();
+      
+      maps[MAP-1]->initialize();
+
 
    }
 
@@ -88,6 +85,14 @@ public:
    
    }
 
+   void test_if_map_exists() {
+      if (MAP-1 >= maps.size()) {
+         std::cout << "Map does not exist, swicthing to MAP 1" << std::endl;
+         MAP = 1;
+         return;
+      }
+   }
+
    void game_tick() {
       if (paused) return;
       tick_counter++;
@@ -98,21 +103,9 @@ public:
       }
       if (tick_counter % 10 == 0) {
          
-         if (MAP == 1) {
-            gw.spawn_food_in_lines(amount_of_lines, SPAWN_RATE, food_energy);
-         }
+         test_if_map_exists();
          
-         if (MAP == 2) {
-            gw.spawn_food_in_rectangle(SPAWN_RATE*MAP2_SPAWN_RATE_MULTIPLIER, food_energy);
-         }
-         if (MAP == 3) {
-            gw.spawn_food_in_thick_line(NUMBER_OF_LINES, SPAWN_RATE*MAP3_SPAWN_RATE_MULTIPLIER, food_energy); 
-         }
-         if (MAP == 4) {
-            gw.spawn_food_in_thick_line(NUMBER_OF_LINES, SPAWN_RATE*MAP4_SPAWN_RATE_MULTIPLIER, food_energy, true);
-         }
-         
-         gw.spawn_random_food(RANDOM_SPAWN_RATE, food_energy);
+         maps[MAP-1]->update();
          natural_selection();
 
          if (gw.antibiotic_block_coords.size() > 0) {

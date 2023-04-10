@@ -223,7 +223,7 @@ public:
       }
 
       // Create input boxes
-      create_input_box("Map: (1,2,3)", MAP);
+      create_input_box("Map: (1,2,3,4)", MAP);
       create_input_box("Number of lines:", NUMBER_OF_LINES);
       create_input_box("Organism size:", ORGANISM_SIZE);
       create_input_box("Reroduction E:", REPRODUCTION_ENERGY);
