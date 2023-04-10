@@ -3,8 +3,8 @@
 class Text {
 public:
     sf::Text text;
-    sf::Font& font;
-    Text(sf::Font& font, const std::string& txt, int x, int y, int font_size, const sf::Color color) : font(font) {
+    const sf::Font& font;
+    Text(const sf::Font& font, const std::string& txt, int x, int y, int font_size, const sf::Color color) : font(font) {
       text.setFont(font);
       text.setCharacterSize(font_size);
       text.setFillColor(color);
@@ -19,13 +19,13 @@ public:
 class Statistics {
 public:
    sf::RenderWindow window;
-   sf::Font& font;
+   const sf::Font& font;
 
    std::vector<Text> texts;
    std::vector<Text> bac_stats; 
 
 
-   Statistics(sf::Font& font) : font(font) {
+   Statistics(const sf::Font& font) : font(font) {
       window.create(sf::VideoMode(500, 250), "Statistics");
       
       texts.emplace_back(font, "Statistics:", 10, 10, 24, sf::Color::Green);
@@ -39,14 +39,9 @@ public:
       texts.emplace_back(font, "Chance of moving in down direction: ", 10, 200, 14, sf::Color::White);
       texts.emplace_back(font, "Chance of moving in up direction: ", 10, 220, 14, sf::Color::White);
 
-      bac_stats.emplace_back(font, "0", 80, 120, 14, sf::Color::White);
-      bac_stats.emplace_back(font, "0", 80, 140, 14, sf::Color::White);
-      bac_stats.emplace_back(font, "0", 320, 160, 14, sf::Color::White);
-      bac_stats.emplace_back(font, "0", 320, 180, 14, sf::Color::White);
-      bac_stats.emplace_back(font, "0", 320, 200, 14, sf::Color::White);
-      bac_stats.emplace_back(font, "0", 320, 220, 14, sf::Color::White);
-
-
+      for (int i = 0; i < 6; i++) {
+         bac_stats.emplace_back(font, "0", 320, 120 + i * 20, 14, sf::Color::White);
+      }
 
    }
 

@@ -98,17 +98,16 @@ public:
          
          if (MAP == 1) {
             gw.spawn_food_in_lines(amount_of_lines, SPAWN_RATE, food_energy);
-            gw.spawn_random_food(RANDOM_SPAWN_RATE, food_energy);
          }
          
          if (MAP == 2) {
             gw.spawn_food_in_rectangle(SPAWN_RATE*10, food_energy);
-            gw.spawn_random_food(RANDOM_SPAWN_RATE, food_energy);
          }
          if (MAP == 3) {
-            gw.spawn_food_in_thick_line(NUMBER_OF_LINES, SPAWN_RATE*10, food_energy);
-            gw.spawn_random_food(RANDOM_SPAWN_RATE, food_energy);
+            gw.spawn_food_in_thick_line(NUMBER_OF_LINES, SPAWN_RATE*10, food_energy); 
          }
+         
+         gw.spawn_random_food(RANDOM_SPAWN_RATE, food_energy);
          natural_selection();
 
          if (gw.antibiotic_block_coords.size() > 0) {
@@ -181,7 +180,7 @@ public:
 
    }
 
-   void draw_stats(sf::Font& font) {
+   void draw_stats(const sf::Font& font) {
       stats_win_is_open = true;
       stats = std::make_unique<Statistics>(font);
    }

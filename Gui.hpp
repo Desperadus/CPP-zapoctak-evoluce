@@ -4,7 +4,7 @@ class Button {
 public:
    sf::RectangleShape shape;
    sf::Text text;
-   sf::Font& font;
+   const sf::Font& font;
    sf::Color idleColor;
    sf::Color hoverColor;
    sf::Color activeColor;
@@ -16,13 +16,12 @@ public:
    //unique_ptr<Statistics> stats;
 
    Button(float x, float y, float width, float height,
-      sf::Font& font, const std::string text, sf::Color Color, GameWorld& gw, Game& game, int id) : font(font), gw(gw), game(game)
+      const sf::Font& font, const std::string text, sf::Color Color, GameWorld& gw, Game& game, int id) : font(font), gw(gw), game(game)
    {
       this->shape.setPosition(sf::Vector2f(x, y));
       this->shape.setSize(sf::Vector2f(width, height));
       this->shape.setFillColor(Color);
 
-      this->font = font;
       this->text.setFont(this->font);
       this->text.setString(text);
       this->text.setFillColor(sf::Color::Black);
@@ -46,8 +45,7 @@ public:
       window.draw(text);
    }
 
-   void handleEvent(sf::Event event, sf::RenderWindow& window)
-   {
+   void handleEvent(sf::Event event, sf::RenderWindow& window) {
       if (event.type == sf::Event::MouseButtonPressed)
       {
          // Check if the mouse click is inside the text box
@@ -99,7 +97,6 @@ public:
 class InputBox
 {
 public:
-   std::string value;
    int& asociated_var;
    int font_size = 16;
    
@@ -250,7 +247,7 @@ public:
 
    }
 
-   void create_input_box(std::string description, int asociated_var) {
+   void create_input_box(const std::string& description, int asociated_var) {
       last_input_box_coords += 50; // 50 is offest between input boxes
       int width = 170;
       sf::Vector2f position(10, last_input_box_coords);
@@ -258,7 +255,7 @@ public:
       inputBoxes.emplace_back(description, font, position, width, asociated_var);
    }
 
-   void create_button(std::string description, sf::Color color, int y_coord, int width=170) {
+   void create_button(const std::string& description, sf::Color color, int y_coord, int width=170) {
       last_button_id++;
       buttons.emplace_back(550, y_coord , width, 50, font, description, color, gw, game, last_button_id);
    }
