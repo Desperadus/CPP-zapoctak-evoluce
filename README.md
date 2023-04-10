@@ -8,7 +8,7 @@ Naklonujte si tento repozitář (tohoto projektu), například pomocí příkazu
 ```bash
 git clone https://github.com/Desperadus/CPP-zapoctak-evoluce.git
 ```
-Pro kompilaci kódy je nutné mít stažnou knihovnu [SMFL-development](https://www.sfml-dev.org/download.php). 
+Pro kompilaci kódu je nutné mít stažnou knihovnu [SMFL-development](https://www.sfml-dev.org/download.php). 
 Na Fedora linuxu se dá stáhnout třeba pomocí
 ```bash
 sudo dnf install SFML-devel
@@ -32,7 +32,7 @@ A nyní pro spuštění programu můžete jen napsat
 
 Ve hře můžete pozorovat bakterie, které se na začátku spawnnují se zcela náhodnými pravděpodobnostmi co do šancí pohybu na danou stranu a náhodnou rychlostí svého pohybu. Pohyb ji stojí energii a tak musí žrát - ty co nemají dostatek energie zemřou. Jakmile má bakterie dostatek jídla, tak se rozmnoží a vzniknou dvě dceřiné buňky. Když dojde k rozmnožení může dojít s malou šancí k náhodné mutaci co do směru pohybu dané bakterie - také může proběhout mutace jež sníží/zvýší bakterii rychlost a její velikost.
 
-Záměrem hry je pozorovat jak se bakterie mění a kdy jaké evoluční tlaky působí s jakou silou. Lze vidět, že standardně první za jakýchkoliv podmínek je evoluční tlak na rychlost (s antibiotekem to může byt tedy spis tlak na směr někdy). A pak tlak na směr pohybu převáží (lze pozorovat po rozkliknutí statistik). Bakterie nejvíce evolučně úspěšné (nejvíce dělění proběhlo), jsou červené - hodnoty jedné z nich se pak zobrazují ve statistikách.
+Záměrem hry je pozorovat jak se bakterie mění a kdy jaké evoluční tlaky působí s jakou silou. Lze vidět, že standardně první za jakýchkoliv podmínek je evoluční tlak na rychlost (s antibiotekem to může byt tedy spis tlak na směr někdy). A pak tlak na směr pohybu převáží (lze pozorovat po rozkliknutí statistik). Bakterie nejvíce evolučně úspěšné (nejvíce dělení proběhlo), jsou červené - hodnoty jedné z nich se pak zobrazují ve statistikách.
 
 
 ## Nastavení v GUI
