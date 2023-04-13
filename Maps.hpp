@@ -37,6 +37,7 @@ public:
     void initialize() override {
         spawn_food_in_lines(NUMBER_OF_LINES, MAP1_STARTING_FOOD);
         gw.spawn_random_food(MAP1_RAND_STARTING_FOOD);
+        //std::cout << gw.grid.amount_of_food << std::endl;
     }
 
     void update() override {
@@ -52,7 +53,7 @@ public:
 
       for (int i : vec1) {
          for (int j = 0; j < amount_of_food_in_line; j++) {
-            if (NUMBER_OF_FOOD < grid.amount_of_food) return;
+            if (NUMBER_OF_FOOD <= grid.amount_of_food) return;
             int x = (WINDOW_WIDTH_GAME / amount_of_lines) * i;
             int y = rand() % WINDOW_HEIGHT_GAME;
 
@@ -92,7 +93,7 @@ public:
 
     void spawn_food_in_rectangle(int amout_of_food) {
         for (int i = 0; i < amout_of_food; i++) {
-            if (NUMBER_OF_FOOD < grid.amount_of_food) return;
+            if (NUMBER_OF_FOOD <= grid.amount_of_food) return;
                int x = rand() % (WINDOW_WIDTH_GAME / 2) + WINDOW_WIDTH_GAME / 4;
                int y = rand() % (WINDOW_WIDTH_GAME / 2) + WINDOW_WIDTH_GAME / 4;
 
@@ -126,7 +127,7 @@ public:
 
     void spawn_food_in_thick_line(int amount_of_lines, int amount_of_food) {
          for (int i = 0; i < amount_of_food; i++) {
-            if (NUMBER_OF_FOOD < grid.amount_of_food) return;
+            if (NUMBER_OF_FOOD <= grid.amount_of_food) return;
                int x = rand() % (WINDOW_WIDTH_GAME / amount_of_lines) + WINDOW_WIDTH_GAME / 2 - WINDOW_WIDTH_GAME / (amount_of_lines * 2);
                int y = rand() % WINDOW_HEIGHT_GAME;   
 
@@ -159,7 +160,7 @@ public:
 
     void spawn_food_in_cross(int amount_of_lines, int amount_of_food) {
         for (int i = 0; i < amount_of_food; i++) {
-            if (NUMBER_OF_FOOD < grid.amount_of_food) return;
+            if (NUMBER_OF_FOOD <= grid.amount_of_food) return;
                 int x = rand() % (WINDOW_WIDTH_GAME / amount_of_lines) + WINDOW_WIDTH_GAME / 2 - WINDOW_WIDTH_GAME / (amount_of_lines * 2);
                 int y = rand() % WINDOW_HEIGHT_GAME;   
 
