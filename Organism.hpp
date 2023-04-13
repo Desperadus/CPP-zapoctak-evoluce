@@ -1,6 +1,5 @@
 #pragma once
 
-
 class Organism{
 public:
    int& height, width;
@@ -50,14 +49,14 @@ public:
 
    //euclidean distance
     bool distance(int x1, int y1, int x2, int y2, int distance) const {
-        if (sqrt((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2)) < distance) {
+        if (sqrt((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2)) <= distance) {
             return true;
         }
         return false;
     }
     //maximal metric
    bool distance2(int x1, int y1, int x2, int y2, int distance) const {
-      if (abs(x1 - x2) < distance && abs(y1 - y2) < distance) {
+      if (abs(x1 - x2) <= distance && abs(y1 - y2) <= distance) {
             return true;
       }
       return false;
@@ -146,7 +145,6 @@ public:
    
    void try_mitosis(std::vector<std::unique_ptr<Organism> > & organisms, int needed_energy) {
       if (energy > needed_energy) {
-         energy -= needed_energy/2;
          int x = this->x;
          int y = this->y;
          int size = this->size;
@@ -158,28 +156,41 @@ public:
 
          mutate();
          organisms[organisms.size() - 1]->mutate();
+         energy = energy/2;
       }
    }
 
    
-   void mutate() {
+   void mutate(bool mutate_for_sure = false) {
+      
       int random_number = rand() % 100;
+      if (mutate_for_sure) {
+         random_number = 101;
+      }
       if (random_number < 100 - CHANCE_OF_MUTATION) {
          return;
       }
+      
       random_number = rand() % 4;
       
-      for (int i = 0; i < 4; i++) {
-         if (chances[i] - mutation_rate >= 0) {
-            //cout << "mutate " << chances[i] <<endl;
-            chances[i] -= mutation_rate;
-            chances[rand() % 4] += mutation_rate;
+      if (chances[random_number] - mutation_rate >= 0) {
+         //cout << "mutate " << chances[i] <<endl;
+         chances[random_number] -= mutation_rate;
+         int rng = rand() % 4;
+         while(rng == random_number) {
+            rng = rand() % 4;
          }
-         else {
-            chances[rand() % 4] += mutation_rate - chances[i];
-            chances[i] = 0;
-         }
+         chances[rng] += mutation_rate;
       }
+      else {
+         int rng = rand() % 4;
+         while(rng == random_number) {
+            rng = rand() % 4;
+         }
+         chances[rng] += chances[random_number];
+         chances[random_number] = 0;
+      }
+
 
       if (random_number == 0 && speed > 1) {
          //cout << "mutate speed" << endl;
