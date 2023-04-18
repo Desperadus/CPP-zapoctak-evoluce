@@ -228,6 +228,8 @@ public:
       {
          exit(EXIT_FAILURE);
       }
+      
+      // ################# GUI CREATIOIN #################
 
       // Create input boxes
       create_input_box("Map: (1,2,3,4)", MAP);
@@ -251,6 +253,8 @@ public:
       create_button("Slow down", sf::Color::Red, 390);
       create_button("Show stats", sf::Color::Cyan, 500);
       create_button("Add anti", sf::Color::White, 600);
+
+      // ################################################
 
    }
 
