@@ -1,0 +1,660 @@
+==13650== Memcheck, a memory error detector
+==13650== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==13650== Using Valgrind-3.20.0-5147d671e4-20221024 and LibVEX; rerun with -h for copyright info
+==13650== Command: ./game
+==13650== Parent PID: 11247
+==13650== 
+--13650-- 
+--13650-- Valgrind options:
+--13650--    --leak-check=full
+--13650--    --log-file=logfile.out
+--13650--    -v
+--13650-- Contents of /proc/version:
+--13650--   Linux version 6.2.9-100.fc36.aarch64 (mockbuild@buildvm-a64-06.iad2.fedoraproject.org) (gcc (GCC) 12.2.1 20221121 (Red Hat 12.2.1-4), GNU ld version 2.37-37.fc36) #1 SMP PREEMPT_DYNAMIC Fri Mar 31 12:50:32 UTC 2023
+--13650-- 
+--13650-- Arch and hwcaps: ARM64, LittleEndian, v8-fhm-dpbcvadp-sha3-rdm-atomics-fp16-vfp16
+--13650-- Page sizes: currently 4096, max supported 65536
+--13650-- Valgrind library directory: /usr/libexec/valgrind
+--13650-- Reading syms from /home/parallels/Desktop/CPP-zapoctak-evoluce/game
+--13650-- Reading syms from /usr/lib/ld-linux-aarch64.so.1
+--13650-- Warning: cross-CU LIMITATION: some inlined fn names
+--13650-- might be shown as UnknownInlinedFun
+--13650-- Reading syms from /usr/libexec/valgrind/memcheck-arm64-linux
+==13650== Downloading debug info for /usr/libexec/valgrind/memcheck-arm64-linux...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/f1a28eed8a68935b0aa83131bdb0d27ff6228497/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/libexec/valgrind/memcheck-arm64-linux
+==13650== Downloading debug info for /home/parallels/.cache/debuginfod_client/f1a28eed8a68935b0aa83131bdb0d27ff6228497/debuginfo...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/d66a68e0c24125f57c18b7b13962c4d73d1203c6/debuginfo ..
+--13650--   .. build-id is valid
+==13650== Successfully downloaded debug file for /home/parallels/.cache/debuginfod_client/f1a28eed8a68935b0aa83131bdb0d27ff6228497/debuginfo
+--13650--    object doesn't have a dynamic symbol table
+--13650-- Scheduler: using generic scheduler lock implementation.
+--13650-- Reading suppressions file: /usr/libexec/valgrind/default.supp
+==13650== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-13650-by-parallels-on-fedora
+==13650== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-13650-by-parallels-on-fedora
+==13650== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-13650-by-parallels-on-fedora
+==13650== 
+==13650== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==13650== don't want to do, unless you know exactly what you're doing,
+==13650== or are doing some strange experiment):
+==13650==   /usr/libexec/valgrind/../../bin/vgdb --pid=13650 ...command...
+==13650== 
+==13650== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==13650==   /path/to/gdb ./game
+==13650== and then give GDB the following command
+==13650==   target remote | /usr/libexec/valgrind/../../bin/vgdb --pid=13650
+==13650== --pid is optional if only one valgrind process is running
+==13650== 
+--13650-- REDIR: 0x401d9c0 (ld-linux-aarch64.so.1:strlen) redirected to 0x580bda9c (vgPlain_arm64_linux_REDIR_FOR_strlen)
+--13650-- REDIR: 0x401d080 (ld-linux-aarch64.so.1:strcmp) redirected to 0x580bdaf0 (vgPlain_arm64_linux_REDIR_FOR_strcmp)
+--13650-- REDIR: 0x401cfc0 (ld-linux-aarch64.so.1:index) redirected to 0x580bdac4 (vgPlain_arm64_linux_REDIR_FOR_index)
+--13650-- Reading syms from /usr/libexec/valgrind/vgpreload_core-arm64-linux.so
+--13650-- Reading syms from /usr/libexec/valgrind/vgpreload_memcheck-arm64-linux.so
+--13650-- Reading syms from /usr/lib64/libsfml-graphics.so.2.5.1
+==13650== Downloading debug info for /usr/lib64/libsfml-graphics.so.2.5.1...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/e80b48778a7a79e359337af26c04294a276fa7eb/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libsfml-graphics.so.2.5.1
+==13650== Downloading debug info for /home/parallels/.cache/debuginfod_client/e80b48778a7a79e359337af26c04294a276fa7eb/debuginfo...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/f951dcae8d6524ecc27f6b8bdffb7d63d0cf2117/debuginfo ..
+--13650--   .. build-id is valid
+==13650== Successfully downloaded debug file for /home/parallels/.cache/debuginfod_client/e80b48778a7a79e359337af26c04294a276fa7eb/debuginfo
+--13650-- Reading syms from /usr/lib64/libsfml-window.so.2.5.1
+==13650== Downloading debug info for /usr/lib64/libsfml-window.so.2.5.1...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/3c0587fa53fc9557ed582704885ab988e6670656/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libsfml-window.so.2.5.1
+==13650== Downloading debug info for /home/parallels/.cache/debuginfod_client/3c0587fa53fc9557ed582704885ab988e6670656/debuginfo...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/f951dcae8d6524ecc27f6b8bdffb7d63d0cf2117/debuginfo ..
+--13650--   .. build-id is valid
+==13650== Successfully downloaded debug file for /home/parallels/.cache/debuginfod_client/3c0587fa53fc9557ed582704885ab988e6670656/debuginfo
+--13650-- Reading syms from /usr/lib64/libsfml-system.so.2.5.1
+==13650== Downloading debug info for /usr/lib64/libsfml-system.so.2.5.1...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/8577d3a5450ad0e88d4b4ae0e3c5940d9ace27d5/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libsfml-system.so.2.5.1
+==13650== Downloading debug info for /home/parallels/.cache/debuginfod_client/8577d3a5450ad0e88d4b4ae0e3c5940d9ace27d5/debuginfo...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/f951dcae8d6524ecc27f6b8bdffb7d63d0cf2117/debuginfo ..
+--13650--   .. build-id is valid
+==13650== Successfully downloaded debug file for /home/parallels/.cache/debuginfod_client/8577d3a5450ad0e88d4b4ae0e3c5940d9ace27d5/debuginfo
+--13650-- Reading syms from /usr/lib64/libstdc++.so.6.0.30
+==13650== Downloading debug info for /usr/lib64/libstdc++.so.6.0.30...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/4a9830d6d1ff9611f2a44d71b87c0cf4e46bcace/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libstdc++.so.6.0.30
+==13650== Downloading debug info for /home/parallels/.cache/debuginfod_client/4a9830d6d1ff9611f2a44d71b87c0cf4e46bcace/debuginfo...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/3336e60c80082c1081a302a953ccf4c70194c8ae/debuginfo ..
+--13650--   .. build-id is valid
+==13650== Successfully downloaded debug file for /home/parallels/.cache/debuginfod_client/4a9830d6d1ff9611f2a44d71b87c0cf4e46bcace/debuginfo
+--13650-- Reading syms from /usr/lib64/libm.so.6
+==13650== Downloading debug info for /usr/lib64/libm.so.6...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/78337de1c3b24a559a8577090e5c8b4e8001da52/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libm.so.6
+--13650-- Reading syms from /usr/lib64/libgcc_s-12-20221121.so.1
+==13650== Downloading debug info for /usr/lib64/libgcc_s-12-20221121.so.1...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/a7b7f02be351cef87d3f497eb90c2bc0c704225c/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libgcc_s-12-20221121.so.1
+==13650== Downloading debug info for /home/parallels/.cache/debuginfod_client/a7b7f02be351cef87d3f497eb90c2bc0c704225c/debuginfo...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/3336e60c80082c1081a302a953ccf4c70194c8ae/debuginfo ..
+--13650--   .. build-id is valid
+==13650== Successfully downloaded debug file for /home/parallels/.cache/debuginfod_client/a7b7f02be351cef87d3f497eb90c2bc0c704225c/debuginfo
+--13650-- Reading syms from /usr/lib64/libc.so.6
+==13650== Downloading debug info for /usr/lib64/libc.so.6...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/10b4c278657371efa1b4540de00ec3d8ad1db81e/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libc.so.6
+==13650== WARNING: new redirection conflicts with existing -- ignoring it
+--13650--     old: 0x04da69b0 (memalign            ) R-> (1011.0) 0x0488aba4 memalign
+--13650--     new: 0x04da69b0 (memalign            ) R-> (1017.0) 0x0488ab58 aligned_alloc
+==13650== WARNING: new redirection conflicts with existing -- ignoring it
+--13650--     old: 0x04da69b0 (memalign            ) R-> (1011.0) 0x0488aba4 memalign
+--13650--     new: 0x04da69b0 (memalign            ) R-> (1017.0) 0x0488ab0c aligned_alloc
+==13650== WARNING: new redirection conflicts with existing -- ignoring it
+--13650--     old: 0x04da69b0 (memalign            ) R-> (1011.0) 0x0488aba4 memalign
+--13650--     new: 0x04da69b0 (memalign            ) R-> (1017.0) 0x0488ab58 aligned_alloc
+==13650== WARNING: new redirection conflicts with existing -- ignoring it
+--13650--     old: 0x04da69b0 (memalign            ) R-> (1011.0) 0x0488aba4 memalign
+--13650--     new: 0x04da69b0 (memalign            ) R-> (1017.0) 0x0488ab0c aligned_alloc
+--13650-- Reading syms from /usr/lib64/libGL.so.1.7.0
+==13650== Downloading debug info for /usr/lib64/libGL.so.1.7.0...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/41f688cd9648f2e7d762b00482170467efb57e55/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libGL.so.1.7.0
+==13650== Downloading debug info for /home/parallels/.cache/debuginfod_client/41f688cd9648f2e7d762b00482170467efb57e55/debuginfo...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/7c5bce9a1d6e0c86bde80ed55b44b117394ed421/debuginfo ..
+--13650--   .. build-id is valid
+==13650== Successfully downloaded debug file for /home/parallels/.cache/debuginfod_client/41f688cd9648f2e7d762b00482170467efb57e55/debuginfo
+--13650-- Reading syms from /usr/lib64/libfreetype.so.6.18.3
+==13650== Downloading debug info for /usr/lib64/libfreetype.so.6.18.3...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/447478313dba5ade979c531d6230a9d52f0795fc/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libfreetype.so.6.18.3
+==13650== Downloading debug info for /home/parallels/.cache/debuginfod_client/447478313dba5ade979c531d6230a9d52f0795fc/debuginfo...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/92a5c9bf471dab177301ab84b03431a7ec523bad/debuginfo ..
+--13650--   .. build-id is valid
+==13650== Successfully downloaded debug file for /home/parallels/.cache/debuginfod_client/447478313dba5ade979c531d6230a9d52f0795fc/debuginfo
+--13650-- Reading syms from /usr/lib64/libX11.so.6.4.0
+==13650== Downloading debug info for /usr/lib64/libX11.so.6.4.0...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/00a16c86413abb43a66019be6c901fe493592e65/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libX11.so.6.4.0
+--13650-- Reading syms from /usr/lib64/libXrandr.so.2.2.0
+==13650== Downloading debug info for /usr/lib64/libXrandr.so.2.2.0...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/88a66c9f2faedc56b9a9ac52c39d1d6e12aa9f9c/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libXrandr.so.2.2.0
+--13650-- Reading syms from /usr/lib64/libudev.so.1.7.4
+==13650== Downloading debug info for /usr/lib64/libudev.so.1.7.4...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/bf0e1fccdc16141cbdb41f4e9e45a2f900899dd0/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libudev.so.1.7.4
+==13650== Downloading debug info for /home/parallels/.cache/debuginfod_client/bf0e1fccdc16141cbdb41f4e9e45a2f900899dd0/debuginfo...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/4bde736a6c0e79a7073b0da57cdf4a37037302d7/debuginfo ..
+--13650--   .. build-id is valid
+==13650== Successfully downloaded debug file for /home/parallels/.cache/debuginfod_client/bf0e1fccdc16141cbdb41f4e9e45a2f900899dd0/debuginfo
+--13650-- Reading syms from /usr/lib64/libGLX.so.0.0.0
+==13650== Downloading debug info for /usr/lib64/libGLX.so.0.0.0...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/939a5eac4fbf239a6cf8b393c4a5185c817a976a/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libGLX.so.0.0.0
+==13650== Downloading debug info for /home/parallels/.cache/debuginfod_client/939a5eac4fbf239a6cf8b393c4a5185c817a976a/debuginfo...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/7c5bce9a1d6e0c86bde80ed55b44b117394ed421/debuginfo ..
+--13650--   .. build-id is valid
+==13650== Successfully downloaded debug file for /home/parallels/.cache/debuginfod_client/939a5eac4fbf239a6cf8b393c4a5185c817a976a/debuginfo
+--13650-- Reading syms from /usr/lib64/libXext.so.6.4.0
+==13650== Downloading debug info for /usr/lib64/libXext.so.6.4.0...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/202fad96f0ca511f7616bf8f74452139da14170f/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libXext.so.6.4.0
+--13650-- Reading syms from /usr/lib64/libGLdispatch.so.0.0.0
+==13650== Downloading debug info for /usr/lib64/libGLdispatch.so.0.0.0...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/a6b46d4d48e129356523fc6098c782e83095c9cb/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libGLdispatch.so.0.0.0
+==13650== Downloading debug info for /home/parallels/.cache/debuginfod_client/a6b46d4d48e129356523fc6098c782e83095c9cb/debuginfo...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/7c5bce9a1d6e0c86bde80ed55b44b117394ed421/debuginfo ..
+--13650--   .. build-id is valid
+==13650== Successfully downloaded debug file for /home/parallels/.cache/debuginfod_client/a6b46d4d48e129356523fc6098c782e83095c9cb/debuginfo
+--13650-- Reading syms from /usr/lib64/libbz2.so.1.0.8
+==13650== Downloading debug info for /usr/lib64/libbz2.so.1.0.8...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/b936b89eff9b83ddc11bbd3f46a0f1e707b777bb/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libbz2.so.1.0.8
+==13650== Downloading debug info for /home/parallels/.cache/debuginfod_client/b936b89eff9b83ddc11bbd3f46a0f1e707b777bb/debuginfo...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/9598a7f46e5493ea54b22b38434d7be595fd4a48/debuginfo ..
+--13650--   .. build-id is valid
+==13650== Successfully downloaded debug file for /home/parallels/.cache/debuginfod_client/b936b89eff9b83ddc11bbd3f46a0f1e707b777bb/debuginfo
+--13650-- Reading syms from /usr/lib64/libpng16.so.16.37.0
+==13650== Downloading debug info for /usr/lib64/libpng16.so.16.37.0...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/77568a0ff174a9d1ded7e95a609216c4a12204ea/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libpng16.so.16.37.0
+--13650-- Reading syms from /usr/lib64/libz.so.1.2.12
+==13650== Downloading debug info for /usr/lib64/libz.so.1.2.12...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/8a7596982e38b2cb686257c378fa77a777dcab6e/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libz.so.1.2.12
+--13650-- Reading syms from /usr/lib64/libharfbuzz.so.0.50200.0
+==13650== Downloading debug info for /usr/lib64/libharfbuzz.so.0.50200.0...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/4eed508846d62165a16bb7f82c4f0c6e7023b018/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libharfbuzz.so.0.50200.0
+==13650== Downloading debug info for /home/parallels/.cache/debuginfod_client/4eed508846d62165a16bb7f82c4f0c6e7023b018/debuginfo...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/f3b9f0c0ddc5140b5b4061e6930271a784a1af41/debuginfo ..
+--13650--   .. build-id is valid
+==13650== Successfully downloaded debug file for /home/parallels/.cache/debuginfod_client/4eed508846d62165a16bb7f82c4f0c6e7023b018/debuginfo
+--13650-- Reading syms from /usr/lib64/libbrotlidec.so.1.0.9
+==13650== Downloading debug info for /usr/lib64/libbrotlidec.so.1.0.9...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/2a77d344f2787e431e954c048171f07fca9d5164/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libbrotlidec.so.1.0.9
+==13650== Downloading debug info for /home/parallels/.cache/debuginfod_client/2a77d344f2787e431e954c048171f07fca9d5164/debuginfo...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/8ef4dc03c06ebdfdb15e973b02e4ffa1ef857aeb/debuginfo ..
+--13650--   .. build-id is valid
+==13650== Successfully downloaded debug file for /home/parallels/.cache/debuginfod_client/2a77d344f2787e431e954c048171f07fca9d5164/debuginfo
+--13650-- Reading syms from /usr/lib64/libxcb.so.1.1.0
+==13650== Downloading debug info for /usr/lib64/libxcb.so.1.1.0...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/cc68c6e8156cd668e2dd6747b58338cbd12da936/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libxcb.so.1.1.0
+--13650-- Reading syms from /usr/lib64/libXrender.so.1.3.0
+==13650== Downloading debug info for /usr/lib64/libXrender.so.1.3.0...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/f018c6554f12e3fcf79e62b1a73e3125eb7fe8d8/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libXrender.so.1.3.0
+--13650-- Reading syms from /usr/lib64/libglib-2.0.so.0.7400.7
+==13650== Downloading debug info for /usr/lib64/libglib-2.0.so.0.7400.7...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/a75100c66c770bdfe478bbd0d0e85c5cda967f71/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libglib-2.0.so.0.7400.7
+==13650== Downloading debug info for /home/parallels/.cache/debuginfod_client/a75100c66c770bdfe478bbd0d0e85c5cda967f71/debuginfo...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/6b494f287876719180541599917dce9f13d0da9b/debuginfo ..
+--13650--   .. build-id is valid
+==13650== Successfully downloaded debug file for /home/parallels/.cache/debuginfod_client/a75100c66c770bdfe478bbd0d0e85c5cda967f71/debuginfo
+--13650-- Reading syms from /usr/lib64/libgraphite2.so.3.2.1
+==13650== Downloading debug info for /usr/lib64/libgraphite2.so.3.2.1...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/78e802b29e2e2d41e51d27125b4035a57cd24ef7/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libgraphite2.so.3.2.1
+--13650-- Reading syms from /usr/lib64/libbrotlicommon.so.1.0.9
+==13650== Downloading debug info for /usr/lib64/libbrotlicommon.so.1.0.9...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/319093e01dcb2e59567584151a5f82c9b1c0a062/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libbrotlicommon.so.1.0.9
+==13650== Downloading debug info for /home/parallels/.cache/debuginfod_client/319093e01dcb2e59567584151a5f82c9b1c0a062/debuginfo...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/8ef4dc03c06ebdfdb15e973b02e4ffa1ef857aeb/debuginfo ..
+--13650--   .. build-id is valid
+==13650== Successfully downloaded debug file for /home/parallels/.cache/debuginfod_client/319093e01dcb2e59567584151a5f82c9b1c0a062/debuginfo
+--13650-- Reading syms from /usr/lib64/libXau.so.6.0.0
+==13650== Downloading debug info for /usr/lib64/libXau.so.6.0.0...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/b64764627c67c5f639cec7ed697fa6c24312759e/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libXau.so.6.0.0
+--13650-- Reading syms from /usr/lib64/libpcre2-8.so.0.11.0
+==13650== Downloading debug info for /usr/lib64/libpcre2-8.so.0.11.0...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/c838864cb7f01ddd5a149c162dca11c50241c9a4/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libpcre2-8.so.0.11.0
+==13650== Downloading debug info for /home/parallels/.cache/debuginfod_client/c838864cb7f01ddd5a149c162dca11c50241c9a4/debuginfo...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/fd1c09ca93487cd7ace393e59d282bc166909fcd/debuginfo ..
+--13650--   .. build-id is valid
+==13650== Successfully downloaded debug file for /home/parallels/.cache/debuginfod_client/c838864cb7f01ddd5a149c162dca11c50241c9a4/debuginfo
+--13650-- REDIR: 0x4da9810 (libc.so.6:memchr) redirected to 0x4850838 (_vgnU_ifunc_wrapper)
+--13650-- REDIR: 0x4dacf00 (libc.so.6:strlen) redirected to 0x4850838 (_vgnU_ifunc_wrapper)
+--13650-- REDIR: 0x4da9a50 (libc.so.6:memcpy) redirected to 0x4850838 (_vgnU_ifunc_wrapper)
+--13650-- REDIR: 0x4daa230 (libc.so.6:memmove) redirected to 0x4850838 (_vgnU_ifunc_wrapper)
+--13650-- REDIR: 0x4daa480 (libc.so.6:memset) redirected to 0x4850838 (_vgnU_ifunc_wrapper)
+--13650-- REDIR: 0x4dad480 (libc.so.6:rindex) redirected to 0x488b2b0 (rindex)
+--13650-- REDIR: 0x4db2740 (libc.so.6:__GI_strlen) redirected to 0x488b920 (__GI_strlen)
+--13650-- REDIR: 0x4da5910 (libc.so.6:malloc) redirected to 0x488525c (malloc)
+--13650-- REDIR: 0x4da60e0 (libc.so.6:free) redirected to 0x4887d20 (free)
+--13650-- REDIR: 0x4da6af4 (libc.so.6:calloc) redirected to 0x488a4c0 (calloc)
+--13650-- REDIR: 0x4da63b0 (libc.so.6:realloc) redirected to 0x488a724 (realloc)
+--13650-- REDIR: 0x4db10c0 (libc.so.6:__GI_memcpy) redirected to 0x488d760 (__GI_memcpy)
+--13650-- REDIR: 0x4db2300 (libc.so.6:__GI_memset) redirected to 0x488f740 (memset)
+--13650-- REDIR: 0x4da9880 (libc.so.6:bcmp) redirected to 0x488eec0 (bcmp)
+--13650-- REDIR: 0x4dab380 (libc.so.6:strcmp) redirected to 0x488caa4 (strcmp)
+--13650-- REDIR: 0x4a735b0 (libstdc++.so.6:operator new(unsigned long)) redirected to 0x4885a3c (operator new(unsigned long))
+--13650-- REDIR: 0x4db2600 (libc.so.6:__strlen_asimd) redirected to 0x488b8f4 (strlen)
+--13650-- REDIR: 0x4dad0a4 (libc.so.6:strncmp) redirected to 0x488c0c0 (strncmp)
+--13650-- REDIR: 0x4dab300 (libc.so.6:strchrnul) redirected to 0x4890230 (strchrnul)
+--13650-- REDIR: 0x4e0eb10 (libc.so.6:__strcpy_chk) redirected to 0x48902c0 (__strcpy_chk)
+--13650-- REDIR: 0x4dadcd4 (libc.so.6:strstr) redirected to 0x4890ab0 (strstr)
+--13650-- REDIR: 0x4db1250 (libc.so.6:__GI_memmove) redirected to 0x488fb24 (__GI_memmove)
+--13650-- REDIR: 0x4dad290 (libc.so.6:strncpy) redirected to 0x488bc00 (strncpy)
+--13650-- REDIR: 0x4dab240 (libc.so.6:index) redirected to 0x488b494 (index)
+--13650-- REDIR: 0x4dad710 (libc.so.6:strspn) redirected to 0x4890db0 (strspn)
+--13650-- REDIR: 0x4dac460 (libc.so.6:strcspn) redirected to 0x4890c90 (strcspn)
+--13650-- Reading syms from /usr/lib64/libGLX_mesa.so.0.0.0
+==13650== Downloading debug info for /usr/lib64/libGLX_mesa.so.0.0.0...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/e9694f89698e3f0025ee7dd444553c88f539c18d/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libGLX_mesa.so.0.0.0
+==13650== Downloading debug info for /home/parallels/.cache/debuginfod_client/e9694f89698e3f0025ee7dd444553c88f539c18d/debuginfo...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/54cffbed8f887bba4a3a743a5439c6d4a0dca8c0/debuginfo ..
+--13650--   .. build-id is valid
+==13650== Successfully downloaded debug file for /home/parallels/.cache/debuginfod_client/e9694f89698e3f0025ee7dd444553c88f539c18d/debuginfo
+--13650-- Reading syms from /usr/lib64/libglapi.so.0.0.0
+==13650== Downloading debug info for /usr/lib64/libglapi.so.0.0.0...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/084fd504994e2f7a303e6ee006b807ad68c3b184/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libglapi.so.0.0.0
+==13650== Downloading debug info for /home/parallels/.cache/debuginfod_client/084fd504994e2f7a303e6ee006b807ad68c3b184/debuginfo...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/54cffbed8f887bba4a3a743a5439c6d4a0dca8c0/debuginfo ..
+--13650--   .. build-id is valid
+==13650== Successfully downloaded debug file for /home/parallels/.cache/debuginfod_client/084fd504994e2f7a303e6ee006b807ad68c3b184/debuginfo
+--13650-- Reading syms from /usr/lib64/libdrm.so.2.4.0
+==13650== Downloading debug info for /usr/lib64/libdrm.so.2.4.0...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/c2a583201d71352f67b3639f9df878a3ac01796c/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libdrm.so.2.4.0
+==13650== Downloading debug info for /home/parallels/.cache/debuginfod_client/c2a583201d71352f67b3639f9df878a3ac01796c/debuginfo...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/bdf359d47800bcc7d3c2a82a06c21fc5f3358a1e/debuginfo ..
+--13650--   .. build-id is valid
+==13650== Successfully downloaded debug file for /home/parallels/.cache/debuginfod_client/c2a583201d71352f67b3639f9df878a3ac01796c/debuginfo
+--13650-- Reading syms from /usr/lib64/libxcb-glx.so.0.0.0
+==13650== Downloading debug info for /usr/lib64/libxcb-glx.so.0.0.0...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/113a0553073502dc8191e2c8cd0cc1bda87749e1/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libxcb-glx.so.0.0.0
+--13650-- Reading syms from /usr/lib64/libX11-xcb.so.1.0.0
+==13650== Downloading debug info for /usr/lib64/libX11-xcb.so.1.0.0...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/9237e7e55ad72923a51c8b2e84f12b7769209add/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libX11-xcb.so.1.0.0
+==13650== Downloading debug info for /home/parallels/.cache/debuginfod_client/9237e7e55ad72923a51c8b2e84f12b7769209add/debuginfo...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/0556e9ac8286f0c727f51836d740cca292c7c8ee/debuginfo ..
+--13650--   .. build-id is valid
+==13650== Successfully downloaded debug file for /home/parallels/.cache/debuginfod_client/9237e7e55ad72923a51c8b2e84f12b7769209add/debuginfo
+--13650-- Reading syms from /usr/lib64/libxcb-dri2.so.0.0.0
+==13650== Downloading debug info for /usr/lib64/libxcb-dri2.so.0.0.0...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/d6487267f512d9b0bc3c1a6210d08b1c8f094a47/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libxcb-dri2.so.0.0.0
+==13650== Downloading debug info for /home/parallels/.cache/debuginfod_client/d6487267f512d9b0bc3c1a6210d08b1c8f094a47/debuginfo...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/c60cd23bf9d6bb9357b96d20f82a2cdd312a8efc/debuginfo ..
+--13650--   .. build-id is valid
+==13650== Successfully downloaded debug file for /home/parallels/.cache/debuginfod_client/d6487267f512d9b0bc3c1a6210d08b1c8f094a47/debuginfo
+--13650-- Reading syms from /usr/lib64/libXfixes.so.3.1.0
+==13650== Downloading debug info for /usr/lib64/libXfixes.so.3.1.0...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/47c5c6a6dcce509a76988d6d7493ebd2bcf0499f/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libXfixes.so.3.1.0
+--13650-- Reading syms from /usr/lib64/libXxf86vm.so.1.0.0
+==13650== Downloading debug info for /usr/lib64/libXxf86vm.so.1.0.0...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/5e39553ddcf6739bb4780ff8ca028a8675d0a63b/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libXxf86vm.so.1.0.0
+--13650-- Reading syms from /usr/lib64/libxcb-shm.so.0.0.0
+==13650== Downloading debug info for /usr/lib64/libxcb-shm.so.0.0.0...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/ec56e98120384b6757ebbc761a15597b16c51ac2/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libxcb-shm.so.0.0.0
+==13650== Downloading debug info for /home/parallels/.cache/debuginfod_client/ec56e98120384b6757ebbc761a15597b16c51ac2/debuginfo...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/c60cd23bf9d6bb9357b96d20f82a2cdd312a8efc/debuginfo ..
+--13650--   .. build-id is valid
+==13650== Successfully downloaded debug file for /home/parallels/.cache/debuginfod_client/ec56e98120384b6757ebbc761a15597b16c51ac2/debuginfo
+--13650-- Reading syms from /usr/lib64/libexpat.so.1.8.10
+==13650== Downloading debug info for /usr/lib64/libexpat.so.1.8.10...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/16a4a5e083c6229dbada018e43046a6844f82bd5/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libexpat.so.1.8.10
+==13650== Downloading debug info for /home/parallels/.cache/debuginfod_client/16a4a5e083c6229dbada018e43046a6844f82bd5/debuginfo...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/c752050c81ef32df1901b7f257854d654c206c9a/debuginfo ..
+--13650--   .. build-id is valid
+==13650== Successfully downloaded debug file for /home/parallels/.cache/debuginfod_client/16a4a5e083c6229dbada018e43046a6844f82bd5/debuginfo
+--13650-- Reading syms from /usr/lib64/libxshmfence.so.1.0.0
+==13650== Downloading debug info for /usr/lib64/libxshmfence.so.1.0.0...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/dee322119da2c291654ac860c03a0fe0fecac2a0/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libxshmfence.so.1.0.0
+--13650-- Reading syms from /usr/lib64/libxcb-dri3.so.0.0.0
+==13650== Downloading debug info for /usr/lib64/libxcb-dri3.so.0.0.0...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/da849e386233250ab2921eeacfa8cdf04564c7b7/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libxcb-dri3.so.0.0.0
+==13650== Downloading debug info for /home/parallels/.cache/debuginfod_client/da849e386233250ab2921eeacfa8cdf04564c7b7/debuginfo...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/c60cd23bf9d6bb9357b96d20f82a2cdd312a8efc/debuginfo ..
+--13650--   .. build-id is valid
+==13650== Successfully downloaded debug file for /home/parallels/.cache/debuginfod_client/da849e386233250ab2921eeacfa8cdf04564c7b7/debuginfo
+--13650-- Reading syms from /usr/lib64/libxcb-present.so.0.0.0
+==13650== Downloading debug info for /usr/lib64/libxcb-present.so.0.0.0...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/ae688214fce1e882bf426fd9290534d388b4fb55/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libxcb-present.so.0.0.0
+==13650== Downloading debug info for /home/parallels/.cache/debuginfod_client/ae688214fce1e882bf426fd9290534d388b4fb55/debuginfo...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/c60cd23bf9d6bb9357b96d20f82a2cdd312a8efc/debuginfo ..
+--13650--   .. build-id is valid
+==13650== Successfully downloaded debug file for /home/parallels/.cache/debuginfod_client/ae688214fce1e882bf426fd9290534d388b4fb55/debuginfo
+--13650-- Reading syms from /usr/lib64/libxcb-sync.so.1.0.0
+==13650== Downloading debug info for /usr/lib64/libxcb-sync.so.1.0.0...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/726bd38cb1a455dd62022b376efaf3fbda42c8fc/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libxcb-sync.so.1.0.0
+==13650== Downloading debug info for /home/parallels/.cache/debuginfod_client/726bd38cb1a455dd62022b376efaf3fbda42c8fc/debuginfo...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/c60cd23bf9d6bb9357b96d20f82a2cdd312a8efc/debuginfo ..
+--13650--   .. build-id is valid
+==13650== Successfully downloaded debug file for /home/parallels/.cache/debuginfod_client/726bd38cb1a455dd62022b376efaf3fbda42c8fc/debuginfo
+--13650-- Reading syms from /usr/lib64/libxcb-xfixes.so.0.0.0
+==13650== Downloading debug info for /usr/lib64/libxcb-xfixes.so.0.0.0...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/6d469e4dbc7718ced2d6e16b26e87bbfa8828d66/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libxcb-xfixes.so.0.0.0
+==13650== Downloading debug info for /home/parallels/.cache/debuginfod_client/6d469e4dbc7718ced2d6e16b26e87bbfa8828d66/debuginfo...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/c60cd23bf9d6bb9357b96d20f82a2cdd312a8efc/debuginfo ..
+--13650--   .. build-id is valid
+==13650== Successfully downloaded debug file for /home/parallels/.cache/debuginfod_client/6d469e4dbc7718ced2d6e16b26e87bbfa8828d66/debuginfo
+--13650-- Reading syms from /usr/lib64/libxcb-randr.so.0.1.0
+==13650== Downloading debug info for /usr/lib64/libxcb-randr.so.0.1.0...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/50aaf8a0011948efc51b47c52ba18eb83ea41d65/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libxcb-randr.so.0.1.0
+--13650-- Reading syms from /usr/lib64/libselinux.so.1
+==13650== Downloading debug info for /usr/lib64/libselinux.so.1...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/e4f3f9804960fecfb56b5e560173e51a83cd5fd6/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libselinux.so.1
+==13650== Downloading debug info for /home/parallels/.cache/debuginfod_client/e4f3f9804960fecfb56b5e560173e51a83cd5fd6/debuginfo...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/bf4aa2ff6b19cf05602928c4d6c47d65543b98b0/debuginfo ..
+--13650--   .. build-id is valid
+==13650== Successfully downloaded debug file for /home/parallels/.cache/debuginfod_client/e4f3f9804960fecfb56b5e560173e51a83cd5fd6/debuginfo
+--13650-- REDIR: 0x4daa680 (libc.so.6:stpcpy) redirected to 0x488eff0 (stpcpy)
+--13650-- REDIR: 0x4dad380 (libc.so.6:strnlen) redirected to 0x488b884 (strnlen)
+--13650-- Reading syms from /usr/lib64/dri/virtio_gpu_dri.so
+==13650== Downloading debug info for /usr/lib64/dri/virtio_gpu_dri.so...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/fe5e99c792a98c7f83127163fba5f58a9c5c2a98/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/dri/virtio_gpu_dri.so
+==13650== Downloading debug info for /home/parallels/.cache/debuginfod_client/fe5e99c792a98c7f83127163fba5f58a9c5c2a98/debuginfo...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/54cffbed8f887bba4a3a743a5439c6d4a0dca8c0/debuginfo ..
+--13650--   .. build-id is valid
+==13650== Successfully downloaded debug file for /home/parallels/.cache/debuginfod_client/fe5e99c792a98c7f83127163fba5f58a9c5c2a98/debuginfo
+--13650-- Reading syms from /usr/lib64/libLLVM-15.so
+==13650== Downloading debug info for /usr/lib64/libLLVM-15.so...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/e961843b57a0b22ff3e935e0f16e5ba1a8dec136/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libLLVM-15.so
+==13650== Downloading debug info for /home/parallels/.cache/debuginfod_client/e961843b57a0b22ff3e935e0f16e5ba1a8dec136/debuginfo...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/b7a62dfc190698c931e7b97db2715a5320802e57/debuginfo ..
+--13650--   .. build-id is valid
+==13650== Successfully downloaded debug file for /home/parallels/.cache/debuginfod_client/e961843b57a0b22ff3e935e0f16e5ba1a8dec136/debuginfo
+--13650-- Reading syms from /usr/lib64/libzstd.so.1.5.5
+==13650== Downloading debug info for /usr/lib64/libzstd.so.1.5.5...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/701f68ff6ad93ee61d47236b3d6b6084b84c8152/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libzstd.so.1.5.5
+==13650== Downloading debug info for /home/parallels/.cache/debuginfod_client/701f68ff6ad93ee61d47236b3d6b6084b84c8152/debuginfo...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/d76714e98971e631c052baea316841d586df3a41/debuginfo ..
+--13650--   .. build-id is valid
+==13650== Successfully downloaded debug file for /home/parallels/.cache/debuginfod_client/701f68ff6ad93ee61d47236b3d6b6084b84c8152/debuginfo
+--13650-- Reading syms from /usr/lib64/libdrm_radeon.so.1.0.1
+==13650== Downloading debug info for /usr/lib64/libdrm_radeon.so.1.0.1...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/f4c801cbcb7d638206847c3dd0ce8283bbf91359/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libdrm_radeon.so.1.0.1
+==13650== Downloading debug info for /home/parallels/.cache/debuginfod_client/f4c801cbcb7d638206847c3dd0ce8283bbf91359/debuginfo...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/bdf359d47800bcc7d3c2a82a06c21fc5f3358a1e/debuginfo ..
+--13650--   .. build-id is valid
+==13650== Successfully downloaded debug file for /home/parallels/.cache/debuginfod_client/f4c801cbcb7d638206847c3dd0ce8283bbf91359/debuginfo
+--13650-- Reading syms from /usr/lib64/libelf-0.189.so
+==13650== Downloading debug info for /usr/lib64/libelf-0.189.so...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/e040f314faac98ae8447120064fe054ec7548d75/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libelf-0.189.so
+==13650== Downloading debug info for /home/parallels/.cache/debuginfod_client/e040f314faac98ae8447120064fe054ec7548d75/debuginfo...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/dbdf6fca8698ebbef0fc7c25e616d918dac71df7/debuginfo ..
+--13650--   .. build-id is valid
+==13650== Successfully downloaded debug file for /home/parallels/.cache/debuginfod_client/e040f314faac98ae8447120064fe054ec7548d75/debuginfo
+--13650-- Reading syms from /usr/lib64/libdrm_amdgpu.so.1.0.0
+==13650== Downloading debug info for /usr/lib64/libdrm_amdgpu.so.1.0.0...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/98581bb406e5a727b54375f8c18bb919d867923a/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libdrm_amdgpu.so.1.0.0
+==13650== Downloading debug info for /home/parallels/.cache/debuginfod_client/98581bb406e5a727b54375f8c18bb919d867923a/debuginfo...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/bdf359d47800bcc7d3c2a82a06c21fc5f3358a1e/debuginfo ..
+--13650--   .. build-id is valid
+==13650== Successfully downloaded debug file for /home/parallels/.cache/debuginfod_client/98581bb406e5a727b54375f8c18bb919d867923a/debuginfo
+--13650-- Reading syms from /usr/lib64/libdrm_nouveau.so.2.0.0
+==13650== Downloading debug info for /usr/lib64/libdrm_nouveau.so.2.0.0...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/f48e1dc1cd1713d2a6282e9c583ebed94b97fbb8/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libdrm_nouveau.so.2.0.0
+==13650== Downloading debug info for /home/parallels/.cache/debuginfod_client/f48e1dc1cd1713d2a6282e9c583ebed94b97fbb8/debuginfo...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/bdf359d47800bcc7d3c2a82a06c21fc5f3358a1e/debuginfo ..
+--13650--   .. build-id is valid
+==13650== Successfully downloaded debug file for /home/parallels/.cache/debuginfod_client/f48e1dc1cd1713d2a6282e9c583ebed94b97fbb8/debuginfo
+--13650-- Reading syms from /usr/lib64/libffi.so.8.1.2
+==13650== Downloading debug info for /usr/lib64/libffi.so.8.1.2...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/ba598b4c7456dfbc03e428b468dd2e1d01092544/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libffi.so.8.1.2
+--13650-- Reading syms from /usr/lib64/libedit.so.0.0.69
+==13650== Downloading debug info for /usr/lib64/libedit.so.0.0.69...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/632b84a16248ee7c5dc3cb5c80a26a86e334b144/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libedit.so.0.0.69
+--13650-- Reading syms from /usr/lib64/libtinfo.so.6.3
+==13650== Downloading debug info for /usr/lib64/libtinfo.so.6.3...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/6863e5bee6d697f5fbe23c6310f553e485ce17aa/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libtinfo.so.6.3
+==13650== Downloading debug info for /home/parallels/.cache/debuginfod_client/6863e5bee6d697f5fbe23c6310f553e485ce17aa/debuginfo...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/fd05a85085f00489c137cfd1019b9720f9eb6993/debuginfo ..
+--13650--   .. build-id is valid
+==13650== Successfully downloaded debug file for /home/parallels/.cache/debuginfod_client/6863e5bee6d697f5fbe23c6310f553e485ce17aa/debuginfo
+--13650-- REDIR: 0x4a713c0 (libstdc++.so.6:operator delete(void*)) redirected to 0x4888350 (operator delete(void*))
+--13650-- REDIR: 0x4a713d0 (libstdc++.so.6:operator delete(void*, unsigned long)) redirected to 0x4888610 (operator delete(void*, unsigned long))
+--13650-- REDIR: 0x4e0e9a0 (libc.so.6:__memcpy_chk) redirected to 0x48909a0 (__memcpy_chk)
+--13650-- REDIR: 0x4db0700 (libc.so.6:__GI_memchr) redirected to 0x488ccc0 (__GI_memchr)
+--13650-- REDIR: 0x4dacf30 (libc.so.6:strncasecmp) redirected to 0x488c3e0 (strncasecmp)
+--13650-- REDIR: 0x4daa5c0 (libc.so.6:rawmemchr) redirected to 0x4890260 (rawmemchr)
+--13650-- REDIR: 0x4da77e0 (libc.so.6:posix_memalign) redirected to 0x488aa34 (posix_memalign)
+--13650-- WARNING: Serious error when reading debug info
+--13650-- When reading debug info from /memfd:xshmfence (deleted):
+--13650-- failed to stat64/stat this file
+--13650-- REDIR: 0x4dac340 (libc.so.6:strcpy) redirected to 0x488ba40 (strcpy)
+--13650-- REDIR: 0x4da71a0 (libc.so.6:malloc_usable_size) redirected to 0x488acd0 (malloc_usable_size)
+--13650-- REDIR: 0x4dab1e0 (libc.so.6:strcat) redirected to 0x488b584 (strcat)
+--13650-- Reading syms from /usr/lib64/libXcursor.so.1.0.2
+==13650== Downloading debug info for /usr/lib64/libXcursor.so.1.0.2...
+--13650--   Considering /home/parallels/.cache/debuginfod_client/40b65612109fd8c66b31dd2622f52fe5efdbe402/debuginfo ..
+--13650--   .. CRC is valid
+==13650== Successfully downloaded debug file for /usr/lib64/libXcursor.so.1.0.2
+--13650-- WARNING: Serious error when reading debug info
+--13650-- When reading debug info from /memfd:xshmfence (deleted):
+--13650-- failed to stat64/stat this file
+--13650-- WARNING: Serious error when reading debug info
+--13650-- When reading debug info from /memfd:xshmfence (deleted):
+--13650-- failed to stat64/stat this file
+--13650-- memcheck GC: 1000 nodes, 254 survivors (25.4%)
+--13650-- memcheck GC: 1014 new table size (driftup)
+--13650-- WARNING: Serious error when reading debug info
+--13650-- When reading debug info from /memfd:xshmfence (deleted):
+--13650-- failed to stat64/stat this file
+==13650== 
+==13650== HEAP SUMMARY:
+==13650==     in use at exit: 905,119 bytes in 2,690 blocks
+==13650==   total heap usage: 85,934 allocs, 83,244 frees, 28,927,027 bytes allocated
+==13650== 
+==13650== Searching for pointers to 2,690 not-freed blocks
+==13650== Checked 3,301,000 bytes
+==13650== 
+==13650== 128 bytes in 1 blocks are possibly lost in loss record 2,042 of 2,133
+==13650==    at 0x48852DC: malloc (vg_replace_malloc.c:393)
+==13650==    by 0x636CE2F: ralloc_size (ralloc.c:117)
+==13650==    by 0x6369EB3: _mesa_hash_table_create (hash_table.c:182)
+==13650==    by 0x6C1DECF: fd_drm_screen_create (freedreno_drm_winsys.c:79)
+==13650==    by 0x635AD77: pipe_virtio_gpu_create_screen (drm_helper.h:288)
+==13650==    by 0x6932DBB: pipe_loader_create_screen_vk (pipe_loader.c:171)
+==13650==    by 0x635D1D7: dri2_init_screen (dri2.c:2265)
+==13650==    by 0x6365C03: driCreateNewScreen2 (dri_util.c:143)
+==13650==    by 0x5E75FBF: dri3_create_screen (dri3_glx.c:924)
+==13650==    by 0x5E66CBB: AllocAndFetchScreenConfigs (glxext.c:839)
+==13650==    by 0x5E66CBB: __glXInitialize (glxext.c:968)
+==13650==    by 0x5E62FB3: GetGLXPrivScreenConfig (glxcmds.c:173)
+==13650==    by 0x5E62FB3: glXQueryExtensionsString (glxcmds.c:1323)
+==13650==    by 0x496A153: UnknownInlinedFun (GlxExtensions.cpp:216)
+==13650==    by 0x496A153: UnknownInlinedFun (GlxContext.cpp:92)
+==13650==    by 0x496A153: UnknownInlinedFun (GlxContext.cpp:83)
+==13650==    by 0x496A153: sf::priv::GlxContext::GlxContext(sf::priv::GlxContext*) (GlxContext.cpp:112)
+==13650== 
+==13650== 128 bytes in 1 blocks are possibly lost in loss record 2,043 of 2,133
+==13650==    at 0x48852DC: malloc (vg_replace_malloc.c:393)
+==13650==    by 0x636CE2F: ralloc_size (ralloc.c:117)
+==13650==    by 0x6369EB3: _mesa_hash_table_create (hash_table.c:182)
+==13650==    by 0x6D4DC9B: virgl_drm_screen_create (virgl_drm_winsys.c:1353)
+==13650==    by 0x635ADEF: pipe_virtio_gpu_create_screen (drm_helper.h:292)
+==13650==    by 0x6932DBB: pipe_loader_create_screen_vk (pipe_loader.c:171)
+==13650==    by 0x635D1D7: dri2_init_screen (dri2.c:2265)
+==13650==    by 0x6365C03: driCreateNewScreen2 (dri_util.c:143)
+==13650==    by 0x5E75FBF: dri3_create_screen (dri3_glx.c:924)
+==13650==    by 0x5E66CBB: AllocAndFetchScreenConfigs (glxext.c:839)
+==13650==    by 0x5E66CBB: __glXInitialize (glxext.c:968)
+==13650==    by 0x5E62FB3: GetGLXPrivScreenConfig (glxcmds.c:173)
+==13650==    by 0x5E62FB3: glXQueryExtensionsString (glxcmds.c:1323)
+==13650==    by 0x496A153: UnknownInlinedFun (GlxExtensions.cpp:216)
+==13650==    by 0x496A153: UnknownInlinedFun (GlxContext.cpp:92)
+==13650==    by 0x496A153: UnknownInlinedFun (GlxContext.cpp:83)
+==13650==    by 0x496A153: sf::priv::GlxContext::GlxContext(sf::priv::GlxContext*) (GlxContext.cpp:112)
+==13650== 
+==13650== 176 bytes in 1 blocks are possibly lost in loss record 2,051 of 2,133
+==13650==    at 0x48852DC: malloc (vg_replace_malloc.c:393)
+==13650==    by 0x636CE2F: ralloc_size (ralloc.c:117)
+==13650==    by 0x636D03B: rzalloc_size (ralloc.c:150)
+==13650==    by 0x636D03B: rzalloc_array_size (ralloc.c:230)
+==13650==    by 0x6369EF3: _mesa_hash_table_init (hash_table.c:163)
+==13650==    by 0x6369EF3: _mesa_hash_table_create (hash_table.c:186)
+==13650==    by 0x6C1DECF: fd_drm_screen_create (freedreno_drm_winsys.c:79)
+==13650==    by 0x635AD77: pipe_virtio_gpu_create_screen (drm_helper.h:288)
+==13650==    by 0x6932DBB: pipe_loader_create_screen_vk (pipe_loader.c:171)
+==13650==    by 0x635D1D7: dri2_init_screen (dri2.c:2265)
+==13650==    by 0x6365C03: driCreateNewScreen2 (dri_util.c:143)
+==13650==    by 0x5E75FBF: dri3_create_screen (dri3_glx.c:924)
+==13650==    by 0x5E66CBB: AllocAndFetchScreenConfigs (glxext.c:839)
+==13650==    by 0x5E66CBB: __glXInitialize (glxext.c:968)
+==13650==    by 0x5E62FB3: GetGLXPrivScreenConfig (glxcmds.c:173)
+==13650==    by 0x5E62FB3: glXQueryExtensionsString (glxcmds.c:1323)
+==13650== 
+==13650== 176 bytes in 1 blocks are possibly lost in loss record 2,052 of 2,133
+==13650==    at 0x48852DC: malloc (vg_replace_malloc.c:393)
+==13650==    by 0x636CE2F: ralloc_size (ralloc.c:117)
+==13650==    by 0x636D03B: rzalloc_size (ralloc.c:150)
+==13650==    by 0x636D03B: rzalloc_array_size (ralloc.c:230)
+==13650==    by 0x6369EF3: _mesa_hash_table_init (hash_table.c:163)
+==13650==    by 0x6369EF3: _mesa_hash_table_create (hash_table.c:186)
+==13650==    by 0x6D4DC9B: virgl_drm_screen_create (virgl_drm_winsys.c:1353)
+==13650==    by 0x635ADEF: pipe_virtio_gpu_create_screen (drm_helper.h:292)
+==13650==    by 0x6932DBB: pipe_loader_create_screen_vk (pipe_loader.c:171)
+==13650==    by 0x635D1D7: dri2_init_screen (dri2.c:2265)
+==13650==    by 0x6365C03: driCreateNewScreen2 (dri_util.c:143)
+==13650==    by 0x5E75FBF: dri3_create_screen (dri3_glx.c:924)
+==13650==    by 0x5E66CBB: AllocAndFetchScreenConfigs (glxext.c:839)
+==13650==    by 0x5E66CBB: __glXInitialize (glxext.c:968)
+==13650==    by 0x5E62FB3: GetGLXPrivScreenConfig (glxcmds.c:173)
+==13650==    by 0x5E62FB3: glXQueryExtensionsString (glxcmds.c:1323)
+==13650== 
+==13650== 272,528 (1,488 direct, 271,040 indirect) bytes in 3 blocks are definitely lost in loss record 2,132 of 2,133
+==13650==    at 0x48852DC: malloc (vg_replace_malloc.c:393)
+==13650==    by 0x636CE2F: ralloc_size (ralloc.c:117)
+==13650==    by 0x636CE97: rzalloc_size (ralloc.c:150)
+==13650==    by 0x6754837: nir_shader_create (nir.c:191)
+==13650==    by 0x66CCA6B: glsl_to_nir (glsl_to_nir.cpp:221)
+==13650==    by 0x65D726B: st_link_nir (st_glsl_to_nir.cpp:737)
+==13650==    by 0x65D4F23: link_shader (st_glsl_to_ir.cpp:97)
+==13650==    by 0x65D4F23: st_link_shader (st_glsl_to_ir.cpp:112)
+==13650==    by 0x65C4BC7: _mesa_glsl_link_shader (link_program.cpp:91)
+==13650==    by 0x651A753: create_new_program (ff_fragment_shader.cpp:1105)
+==13650==    by 0x651A753: _mesa_get_fixed_func_fragment_program (ff_fragment_shader.cpp:1135)
+==13650==    by 0x63C9737: update_program (state.c:228)
+==13650==    by 0x63C9C23: _mesa_update_state_locked (state.c:469)
+==13650==    by 0x63C9D4F: _mesa_update_state (state.c:502)
+==13650== 
+==13650== 406,176 (1,488 direct, 404,688 indirect) bytes in 3 blocks are definitely lost in loss record 2,133 of 2,133
+==13650==    at 0x48852DC: malloc (vg_replace_malloc.c:393)
+==13650==    by 0x636CE2F: ralloc_size (ralloc.c:117)
+==13650==    by 0x636CE97: rzalloc_size (ralloc.c:150)
+==13650==    by 0x6754837: nir_shader_create (nir.c:191)
+==13650==    by 0x675A583: nir_builder_init_simple_shader (nir_builder.c:44)
+==13650==    by 0x65CD89B: prog_to_nir (prog_to_nir.c:1002)
+==13650==    by 0x642B69F: st_translate_prog_to_nir (st_program.c:418)
+==13650==    by 0x642B69F: st_translate_vertex_program (st_program.c:603)
+==13650==    by 0x642B69F: st_program_string_notify (st_program.c:1365)
+==13650==    by 0x651D45F: _mesa_get_fixed_func_vertex_program (ffvertex_prog.c:1779)
+==13650==    by 0x63C95DB: update_program (state.c:280)
+==13650==    by 0x63C9C23: _mesa_update_state_locked (state.c:469)
+==13650==    by 0x63C9D4F: _mesa_update_state (state.c:502)
+==13650==    by 0x6512103: _mesa_DrawArrays (draw.c:1375)
+==13650== 
+==13650== LEAK SUMMARY:
+==13650==    definitely lost: 2,976 bytes in 6 blocks
+==13650==    indirectly lost: 675,728 bytes in 169 blocks
+==13650==      possibly lost: 608 bytes in 4 blocks
+==13650==    still reachable: 225,807 bytes in 2,511 blocks
+==13650==         suppressed: 0 bytes in 0 blocks
+==13650== Reachable blocks (those to which a pointer was found) are not shown.
+==13650== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==13650== 
+==13650== ERROR SUMMARY: 6 errors from 6 contexts (suppressed: 0 from 0)

@@ -30,6 +30,7 @@
 
 
 // #################### LAST RUN RESULTS ####################
+
 // [==========] Running 14 tests from 3 test suites.
 // [----------] Global test environment set-up.
 // [----------] 1 test from Game
@@ -74,6 +75,23 @@
 
 
 
+
+
+// #################### VALGRIND ####################
+// I have tested the program with valgrind:
+//compilation: g++ -c -ggdb3 main.cpp && g++ main.o -o game -lsfml-graphics -lsfml-window -lsfml-system
+//run: valgrind --leak-check=full --log-file="logfile.out" -v ./game
+
+//you can look inside "logfile.out" for the results of the valgrind test.
+//It detects memory leaks, but they dont seem to be in my code, but in the SFML library.
+//I have looked on the internet and i am not alone seeing them - but also people claim it is not really a problem.
+
+
+
+
+
+
+// #################### TESTS ####################
 
 
 
