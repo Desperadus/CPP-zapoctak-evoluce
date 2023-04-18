@@ -83,4 +83,4 @@ Na levé straně vidíte názvy parametrů a vedle nich máte input boxy, kde je
 
 ## Licence
 
-Žádná
+MIT
