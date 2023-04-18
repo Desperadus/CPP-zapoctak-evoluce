@@ -94,7 +94,7 @@ public:
             int sy = std::get<1>(antibiotic_block_coords[j]);
             int x = rand() % (width / amount_of_lines) + sx;
             int y = rand() % (height / amount_of_lines) + sy;
-            grid.addAntibiotic(x, y, ANTIBIOTIC_SIZE, antibiotic_energy, sf::Color::White);
+            grid.addAntibiotic(x, y, ANTIBIOTIC_SIZE, antibiotic_energy*(-1), sf::Color::White);
          }
       }
    }
