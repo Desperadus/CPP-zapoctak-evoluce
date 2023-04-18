@@ -179,9 +179,16 @@ public:
                m_text.setString(m_input);
                try {
                   asociated_var = stoi(m_input);
+                  if (asociated_var < 0) {
+                     std::cout << "Negative value, setting variable to 1" << std::endl;
+                     asociated_var = 1;
+                     m_text.setString(std::to_string(asociated_var));
+                     m_input = std::to_string(asociated_var);
+                  }
                }
                catch (const std::exception& e) {
-                  std::cout << "Invalid input" << std::endl;
+                  std::cout << "Invalid input, changes not applied" << std::endl;
+                  m_text.setString(std::to_string(asociated_var));
                }
          }
          

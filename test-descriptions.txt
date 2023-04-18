@@ -1,4 +1,4 @@
-    NOT EVERYTHING IN THE GAME CAN BE CHECKED VIA AUTOMATED TEST AND SOME THING REQUIRE HUMAN TESTING - DO THESE TESTS TO ENSURE GAME IS FUNCTIONING CORRECTLY.
+    NOT EVERYTHING IN THE GAME CAN BE CHECKED VIA AUTOMATED TEST AND SOME THING REQUIRE HUMAN TESTING - DO THESE TESTS TO ENSURE THE GAME IS FUNCTIONING CORRECTLY.
     
     Test spawning of bacteria:
 
@@ -26,6 +26,7 @@
 
     Test parameters:
 
+    Input incorrect values (such as negative numbers, strings etc.)
     Test the default map and the other three maps, checking that they are created correctly.
     Test the "Number of lines" parameter and verify that it affects the size of the antibiotic block on map 1.
     Test the "Organism size" parameter and verify that the organisms spawn with the correct size.
