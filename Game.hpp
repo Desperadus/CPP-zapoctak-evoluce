@@ -65,6 +65,7 @@ public:
          }
          if (!updated) {
             update_stats(*gw.organisms[i]);
+            gw.organisms[i]->shape.setFillColor(sf::Color::Blue);
             updated = true;
          }
 

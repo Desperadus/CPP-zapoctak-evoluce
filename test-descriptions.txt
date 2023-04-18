@@ -1,0 +1,40 @@
+    NOT EVERYTHING IN THE GAME CAN BE CHECKED VIA AUTOMATED TEST AND SOME THING REQUIRE HUMAN TESTING - DO THESE TESTS TO ENSURE GAME IS FUNCTIONING CORRECTLY.
+    
+    Test spawning of bacteria:
+
+    Test that bacteria spawn with random probabilities for movement direction and random speed by observating them.
+    Test that bacteria require energy for movement and die if they run out of energy (spawn 0 food).
+    Test that bacteria reproduce when they have enough food and that two daughter cells are created (spawn a lot of food and they should multiply rapidly).
+    Test that mutations occur with a small chance when bacteria reproduce - best done by watching stats of the most successful.
+
+    Test evolution pressures:
+
+    Test that the default evolution pressure is on speed and that it shifts to movement direction over time (not necessary - just ensure bacteria overall converge to better life strategy).
+    Test that the most evolutionarily successful bacteria are red and that their values are displayed in the statistics.
+
+    Test GUI:
+
+    Test changing the values in the input boxes and verify that the frame around the value turns green when the input is pushed to game and red when it is not and is changed form current value.
+    Test that pressing enter saves the changed value and game behaves differently.
+    Input incorrect values and verify that the the game does not crash and writes that the values is incorrect into the console.
+    Test that the "Start" button starts the game from scratch.
+    Test that the "Pause/Resume" button pauses and resumes the game.
+    Test that the "Add organisms" button adds more organisms to the game, based on the "Number of org" parameter.
+    Test    that the "Speed up" button speeds up in-game time and that the "Slow down" button slows down in-game time.
+    Test that the "Show stats" button displays the game statistics and corresponds to red bacteria movement.
+    Test that clicking on the game board with a red frame around button "add anti" does nothing, while clicking on the game board with a green frame around the button adds an antibiotic block with the specified size and position.
+
+    Test parameters:
+
+    Test the default map and the other three maps, checking that they are created correctly.
+    Test the "Number of lines" parameter and verify that it affects the size of the antibiotic block on map 1.
+    Test the "Organism size" parameter and verify that the organisms spawn with the correct size.
+    Test the "Reproduction E" parameter and verify that the bacteria reproduce when they have enough energy.
+    Test the "Spawn rate" parameter and verify that food spawns at the correct rate in the specified areas.
+    Test the "Rand spawn rate" parameter and verify that food spawns randomly across the map.
+    Test the "Number of org" parameter and verify that the correct number of organisms are spawned.
+    Test the "Food energy" parameter and verify that the bacteria receive the correct amount of energy from eating.
+    Test the "Max num of food" parameter and verify that food stops spawning when the limit is reached.
+    Test the "Antibiotic dmg" parameter and verify that bacteria lose energy when they come into contact with antibiotics.
+    Test the "Anti spawn rate" parameter and verify that antibiotics are created at the correct rate.
+    Test the "Max num of anti" parameter and verify that the maximum number of antibiotics is enforced.

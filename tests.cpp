@@ -29,6 +29,54 @@
 //run: gcc -I/usr/include -I/usr/local/include -L/usr/lib64 -L/usr/local/lib tests.cpp -o tests -lgtest -lgtest_main -pthread -lsfml-graphics -lsfml-window -lsfml-system -lstdc++ && ./tests
 
 
+// #################### LAST RUN RESULTS ####################
+// [==========] Running 14 tests from 3 test suites.
+// [----------] Global test environment set-up.
+// [----------] 1 test from Game
+// [ RUN      ] Game.test_if_map_exists
+// [       OK ] Game.test_if_map_exists (82 ms)
+// [----------] 1 test from Game (82 ms total)
+
+// [----------] 5 tests from GameWorld
+// [ RUN      ] GameWorld.test_if_map1_initilazies
+// [       OK ] GameWorld.test_if_map1_initilazies (79 ms)
+// [ RUN      ] GameWorld.test_if_map2_initilazies
+// [       OK ] GameWorld.test_if_map2_initilazies (65 ms)
+// [ RUN      ] GameWorld.test_if_map3_initilazies
+// [       OK ] GameWorld.test_if_map3_initilazies (68 ms)
+// [ RUN      ] GameWorld.test_if_map4_initilazies
+// [       OK ] GameWorld.test_if_map4_initilazies (61 ms)
+// [ RUN      ] GameWorld.natural_selection_org_doesnt_die
+// [       OK ] GameWorld.natural_selection_org_doesnt_die (60 ms)
+// [----------] 5 tests from GameWorld (334 ms total)
+
+// [----------] 8 tests from Organism
+// [ RUN      ] Organism.test_eating_food_at_same_location
+// [       OK ] Organism.test_eating_food_at_same_location (58 ms)
+// [ RUN      ] Organism.test_eating_food_is_at_reach1
+// [       OK ] Organism.test_eating_food_is_at_reach1 (56 ms)
+// [ RUN      ] Organism.test_eating_food_is_at_reach_max_distance
+// [       OK ] Organism.test_eating_food_is_at_reach_max_distance (53 ms)
+// [ RUN      ] Organism.test_eating_food_is_over_max_possible_distance
+// [       OK ] Organism.test_eating_food_is_over_max_possible_distance (53 ms)
+// [ RUN      ] Organism.do_mitosis
+// [       OK ] Organism.do_mitosis (56 ms)
+// [ RUN      ] Organism.try_mitosis_not_enough_energy
+// [       OK ] Organism.try_mitosis_not_enough_energy (54 ms)
+// [ RUN      ] Organism.mutate
+// [       OK ] Organism.mutate (58 ms)
+// [ RUN      ] Organism.mutate_with_value_lower_than_mutation_value
+// [       OK ] Organism.mutate_with_value_lower_than_mutation_value (54 ms)
+// [----------] 8 tests from Organism (445 ms total)
+
+// [----------] Global test environment tear-down
+// [==========] 14 tests from 3 test suites ran. (862 ms total)
+
+
+
+
+
+
 std::string print_vector(const std::vector<int>& v) {
     std::string s = "";
     for (int i = 0; i < v.size(); i++) {
@@ -357,7 +405,7 @@ TEST(Organism, mutate_with_value_lower_than_mutation_value) {
     std::vector<int> chances_after = gw.organisms[0]->chances;
 
     ASSERT_NE(chances, chances_after) << print_vector(chances) <<" " <<print_vector(chances_after) << std::endl;
-    ASSERT_EQ(sum_of_vector(chances_after),100) << print_vector(chances) <<" " <<print_vector(chances_after) << std::endl;;
+    ASSERT_EQ(sum_of_vector(chances_after),100) << print_vector(chances) <<" " << print_vector(chances_after) << std::endl;;
 
 }
 
