@@ -11,8 +11,8 @@ int sum_of_vector(const T & v) {
 
 class GameWorld{
 public:
-   int& height;
-   int& width;
+   const int height;
+   const int width;
    int& org_size;
    int grid_size = AMOUNT_OF_GRID_CELLS;
    int& number_of_food;
@@ -23,7 +23,7 @@ public:
 
    Grid grid;
    
-   GameWorld(int& height, int& width, int& org_size, int& number_of_food, int& number_of_antibiotic) : grid(height, width, grid_size), height(height), width(width), org_size(org_size), number_of_food(number_of_food), number_of_antibiotic(number_of_antibiotic) {
+   GameWorld(const int height, const int width, int& org_size, int& number_of_food, int& number_of_antibiotic) : grid(height, width, grid_size), height(height), width(width) , org_size(org_size), number_of_food(number_of_food), number_of_antibiotic(number_of_antibiotic) {
       this->org_size = org_size;
    }
 

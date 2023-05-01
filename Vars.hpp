@@ -1,11 +1,11 @@
 #pragma once
 
 //window settings
-int WINDOW_WIDTH_GUI = 750;
-int WINDOW_HEIGHT_GUI = 700;
+constexpr int WINDOW_WIDTH_GUI = 750;
+constexpr int WINDOW_HEIGHT_GUI = 700;
 
-int WINDOW_WIDTH_GAME = 930; 
-int WINDOW_HEIGHT_GAME = 930; 
+constexpr int WINDOW_WIDTH_GAME = 930; 
+constexpr int WINDOW_HEIGHT_GAME = 930; 
 
 //default ingame settings
 int ORGANISM_SIZE = 8;

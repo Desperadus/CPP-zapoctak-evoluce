@@ -2,7 +2,7 @@
 
 class Organism{
 public:
-   int& height, width;
+   const int height, width;
 
    int x, y;
 
@@ -17,7 +17,7 @@ public:
    sf::CircleShape shape;
 
    std::vector<int> chances;
-   Organism(int x, int y, int size, int speed, int energy, std::vector<int> chances, int& height, int& width, int max_size, int generation = 0) : height(height), width(width) {
+   Organism(int x, int y, int size, int speed, int energy, std::vector<int> chances, const int height, const int width, int max_size, int generation = 0) : height(height), width(width) {
       this->x = x;
       this->y = y;
       this->size = size;
