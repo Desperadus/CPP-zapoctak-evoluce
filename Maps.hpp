@@ -29,9 +29,9 @@ public:
 
 
 
-class Map1 : public Map {
+class Map1Lines : public Map {
 public:
-    Map1(GameWorld& gw) : Map(gw) {
+    Map1Lines(GameWorld& gw) : Map(gw) {
     }
 
     void initialize() override {
@@ -75,9 +75,9 @@ public:
 
 
 
-class Map2 : public Map {
+class Map2Rectangle : public Map {
 public:
-    Map2(GameWorld& gw) : Map(gw) {
+    Map2Rectangle(GameWorld& gw) : Map(gw) {
     }
 
     void initialize() override {
@@ -109,9 +109,9 @@ public:
 
 
 
-class Map3 : public Map {
+class Map3ThickLine : public Map {
 public:
-    Map3(GameWorld& gw) : Map(gw) {
+    Map3ThickLine(GameWorld& gw) : Map(gw) {
     }
 
     void initialize() override {
@@ -142,9 +142,9 @@ public:
 
 
 
-class Map4 : public Map {
+class Map4Cross : public Map {
 public:
-    Map4(GameWorld& gw) : Map(gw) {
+    Map4Cross(GameWorld& gw) : Map(gw) {
     }
 
     void initialize() override {

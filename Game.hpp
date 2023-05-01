@@ -32,10 +32,10 @@ public:
 
    void start_game() { //Initialize the game
 
-      maps.push_back(std::make_unique<Map1>(gw));
-      maps.push_back(std::make_unique<Map2>(gw));
-      maps.push_back(std::make_unique<Map3>(gw));
-      maps.push_back(std::make_unique<Map4>(gw));
+      maps.push_back(std::make_unique<Map1Lines>(gw));
+      maps.push_back(std::make_unique<Map2Rectangle>(gw));
+      maps.push_back(std::make_unique<Map3ThickLine>(gw));
+      maps.push_back(std::make_unique<Map4Cross>(gw));
 
       gw.spawn_organisms(amount, org_energy);
       
