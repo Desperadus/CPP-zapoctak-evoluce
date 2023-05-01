@@ -1,14 +1,5 @@
 #pragma once
 
-template <typename T>
-int sum_of_vector(const T & v) {
-   int sum = 0;
-   for (int i = 0; i < v.size(); i++) {
-      sum += v[i];
-   }
-   return sum;
-}
-
 class GameWorld{
 public:
    const int height;
@@ -24,7 +15,15 @@ public:
    Grid grid;
    
    GameWorld(const int height, const int width, int& org_size, int& number_of_food, int& number_of_antibiotic) : grid(height, width, grid_size), height(height), width(width) , org_size(org_size), number_of_food(number_of_food), number_of_antibiotic(number_of_antibiotic) {
-      this->org_size = org_size;
+   }
+
+   template <typename T>
+   int sum_of_vector(const T & v) const {
+      int sum = 0;
+      for (int i = 0; i < v.size(); i++) {
+         sum += v[i];
+      }
+      return sum;
    }
 
    
