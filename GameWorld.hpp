@@ -54,7 +54,7 @@ public:
          
          //chances = {100,0,0,0};
          //y = 143;
-         organisms.push_back(std::make_unique<Organism>(x, y, size, speed, energy, chances, height, width, size*MAX_SIZE_MULTIPLIER, 0));
+         organisms.push_back(std::make_unique<Organism>(x, y, size, speed, energy, chances, height, width, size*MAX_SIZE_MULTIPLIER, MUTATION_RATE, CHANCE_OF_MUTATION, 0));
 
          //break;
       }
