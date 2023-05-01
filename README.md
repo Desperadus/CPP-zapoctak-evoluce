@@ -21,7 +21,16 @@ sudo apt-get install libsfml-dev
 
 Nyní kód zkompilujte
 ```bash
-g++ -c main.cpp && g++ main.o -o game -lsfml-graphics -lsfml-window -lsfml-system
+g++ -c main.cpp -I./headers -o ./source/main.o
+g++ -c ./source/Grid.cpp -I./headers -o ./source/Grid.o
+g++ -c ./source/Organism.cpp -I./headers -o ./source/Organism.o
+g++ -c ./source/Game.cpp -I./headers -o ./source/Game.o
+g++ -c ./source/Vars.cpp -I./headers -o ./source/Vars.o
+g++ -c ./source/Gui.cpp -I./headers -o ./source/Gui.o
+g++ -c ./source/Stats.cpp -I./headers -o ./source/Stats.o
+g++ -c ./source/Food.cpp -I./headers -o ./source/Food.o
+g++ -c ./source/GameWorld.cpp -I./headers -o ./source/GameWorld.o
+g++ ./source/main.o ./source/Grid.o ./source/Organism.o ./source/Game.o ./source/Vars.o ./source/Gui.o ./source/Stats.o ./source/Food.o ./source/GameWorld.o -o game -lsfml-graphics -lsfml-window -lsfml-system
 ```
 A nyní pro spuštění programu můžete jen napsat
 ```bash
