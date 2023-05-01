@@ -1,12 +1,16 @@
 #pragma once
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
+#include <sstream>
+#include <iostream>
+#include <string>
+#include <vector>
+#include "GameWorld.hpp"
+#include "Stats.hpp"
+#include "Vars.hpp"
+#include "Organism.hpp"
+#include "Grid.hpp"
 
-std::vector<int> createVector(int N) {
-    std::vector<int> vec;
-    for(int i=1; i<=N; i++) {
-        vec.push_back(i);
-    }
-    return vec;
-}
 
 
 class Map {
@@ -22,6 +26,14 @@ public:
     virtual void update() = 0;
 
     virtual ~Map() = default;
+
+    std::vector<int> createVector(int N) {
+        std::vector<int> vec;
+        for(int i=1; i<=N; i++) {
+            vec.push_back(i);
+        }
+        return vec;
+    }
 };
 
 

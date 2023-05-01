@@ -1,64 +1,68 @@
-#pragma once
+#ifndef VARS_HPP
+#define VARS_HPP
 
-//window settings
-constexpr int WINDOW_WIDTH_GUI = 750;
-constexpr int WINDOW_HEIGHT_GUI = 700;
+extern const int WINDOW_WIDTH_GUI;
+extern const int WINDOW_HEIGHT_GUI;
 
-constexpr int WINDOW_WIDTH_GAME = 930; 
-constexpr int WINDOW_HEIGHT_GAME = 930; 
+extern const int WINDOW_WIDTH_GAME;
+extern const int WINDOW_HEIGHT_GAME;
 
 //default ingame settings
-int ORGANISM_SIZE = 8;
-int ORGANISM_SPEED = 1;
+extern int ORGANISM_SIZE;
+extern int ORGANISM_SPEED;
 
-int ORGANISM_MAX_SIZE = 10;
-int ORGANISM_MAX_SPEED = 10;
+extern int ORGANISM_MAX_SIZE;
+extern int ORGANISM_MAX_SPEED;
 
-int NUMBER_OF_ORGANISMS = 50;
-int NUMBER_OF_FOOD = 5500;
-int NUMBER_OF_LINES = 7;
-int NUMBER_OF_ANTIBIOTIC = 1000;
+extern int NUMBER_OF_ORGANISMS;
+extern int NUMBER_OF_FOOD;
+extern int NUMBER_OF_LINES;
+extern int NUMBER_OF_ANTIBIOTIC;
 
-int ORGANISM_ENERGY = 200;
-int REPRODUCTION_ENERGY = 300;
-int FOOD_ENERGY = 5;
-int RAND_FOOD_ENERGY = 4;
-int ANTIBIOTIC_ENERGY = 3;
-int ANTIBIOTIC_SIZE = 2;
-int FOOD_SIZE = 2;
+extern int ORGANISM_ENERGY;
+extern int REPRODUCTION_ENERGY;
+extern int FOOD_ENERGY;
+extern int RAND_FOOD_ENERGY;
+extern int ANTIBIOTIC_ENERGY;
+extern int ANTIBIOTIC_SIZE;
+extern int FOOD_SIZE;
 
 //default spawnrates
-int SPAWN_RATE = 25;
-int RANDOM_SPAWN_RATE = 25;
-int ANTIBIOTIC_SPAWN_RATE = 20;
+extern int SPAWN_RATE;
+extern int RANDOM_SPAWN_RATE;
+extern int ANTIBIOTIC_SPAWN_RATE;
 
-int GAME_SPEED_MULTIPLIER = 4;
+extern int GAME_SPEED_MULTIPLIER;
 
 //default map
-int MAP = 1;
+extern int MAP;
 
-int GAME_SPEED = 32;
+extern int GAME_SPEED;
 
 //grid for reducing computational complexity
-int AMOUNT_OF_GRID_CELLS = 66;
+extern const int AMOUNT_OF_GRID_CELLS;
 
 //mutation settings
-int CHANCE_OF_MUTATION = 10;
-int MUTATION_RATE = 3;
+extern int CHANCE_OF_MUTATION;
+extern int MUTATION_RATE;
 
-float MAX_SIZE_MULTIPLIER = 1.5f;
+extern float MAX_SIZE_MULTIPLIER;
 
 //map settings - food spawing
-int MAP1_STARTING_FOOD = NUMBER_OF_FOOD / NUMBER_OF_LINES / 3;
-int MAP2_STARTING_FOOD = NUMBER_OF_FOOD / 2;
-int MAP3_STARTING_FOOD = NUMBER_OF_FOOD / 2;
-int MAP4_STARTING_FOOD = NUMBER_OF_FOOD / 4;
+extern int MAP1_STARTING_FOOD;
+extern int MAP2_STARTING_FOOD;
+extern int MAP3_STARTING_FOOD;
+extern int MAP4_STARTING_FOOD;
 
-int MAP1_RAND_STARTING_FOOD = NUMBER_OF_FOOD / NUMBER_OF_LINES / 6;
-int MAP2_RAND_STARTING_FOOD = NUMBER_OF_FOOD / 3;
-int MAP3_RAND_STARTING_FOOD = NUMBER_OF_FOOD / 3;
-int MAP4_RAND_STARTING_FOOD = NUMBER_OF_FOOD / 3;
+extern int MAP1_RAND_STARTING_FOOD;
+extern int MAP2_RAND_STARTING_FOOD;
+extern int MAP3_RAND_STARTING_FOOD;
+extern int MAP4_RAND_STARTING_FOOD;
 
-int MAP2_SPAWN_RATE_MULTIPLIER = 10;
-int MAP3_SPAWN_RATE_MULTIPLIER = 10;
-int MAP4_SPAWN_RATE_MULTIPLIER = 5;
+extern int MAP2_SPAWN_RATE_MULTIPLIER;
+extern int MAP3_SPAWN_RATE_MULTIPLIER;
+extern int MAP4_SPAWN_RATE_MULTIPLIER;
+
+void initializeVars();
+
+#endif
