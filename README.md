@@ -31,7 +31,7 @@ g++ -c ./source/Stats.cpp -I./headers -o ./source/Stats.o
 g++ -c ./source/Food.cpp -I./headers -o ./source/Food.o
 g++ -c ./source/GameWorld.cpp -I./headers -o ./source/GameWorld.o
 g++ -c ./source/Maps.cpp -I./headers -o ./source/Maps.o
-g++ ./source/main.o ./source/Grid.o ./source/Organism.o ./source/Game.o ./source/Vars.o ./source/Gui.o ./source/Stats.o ./source/Food.o ./source/GameWorld.o -o game -lsfml-graphics -lsfml-window -lsfml-system
+g++ ./source/main.o ./source/Grid.o ./source/Organism.o ./source/Game.o ./source/Vars.o ./source/Gui.o ./source/Stats.o ./source/Food.o ./source/GameWorld.o ./source/Maps.o -o game -lsfml-graphics -lsfml-window -lsfml-system
 ```
 A nyní pro spuštění programu můžete jen napsat
 ```bash
