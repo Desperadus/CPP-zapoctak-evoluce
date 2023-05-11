@@ -1,33 +1,32 @@
-#include <gtest/gtest.h>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
-#include <sstream>
-#include <iostream>
-#include <string>
-#include <vector>
 #include <algorithm>
-#include <random>
+#include <cmath>
 #include <cstdlib>
 #include <ctime>
-#include <stdlib.h>
+#include <gtest/gtest.h>
+#include <iostream>
 #include <memory>
-#include <cmath>
+#include <random>
+#include <sstream>
+#include <stdlib.h>
+#include <string>
+#include <vector>
 
-
-#include "../headers/Vars.hpp"
 #include "../headers/Food.hpp"
-#include "../headers/Grid.hpp"
-#include "../headers/Organism.hpp"
-#include "../headers/GameWorld.hpp"
-#include "../headers/Stats.hpp"
 #include "../headers/Game.hpp"
+#include "../headers/GameWorld.hpp"
+#include "../headers/Grid.hpp"
 #include "../headers/Gui.hpp"
 #include "../headers/Maps.hpp"
+#include "../headers/Organism.hpp"
+#include "../headers/Stats.hpp"
+#include "../headers/Vars.hpp"
 
-//sudo dnf install gtest-devel
-//sudo dnf install gtest
-//run:
-//g++ -I/usr/include -I./headers -I/usr/local/include -L/usr/lib64 -L/usr/local/lib ../source/Grid.o ../source/Organism.o ../source/Game.o ../source/Vars.o ../source/Gui.o ../source/Stats.o ../source/Food.o ../source/GameWorld.o tests.cpp -o tests -lgtest -lgtest_main -pthread -lsfml-graphics -lsfml-window -lsfml-system -lstdc++ && ./tests
+// sudo dnf install gtest-devel
+// sudo dnf install gtest
+// run:
+// g++ -I/usr/include -I./headers -I/usr/local/include -L/usr/lib64 -L/usr/local/lib ../source/Grid.o ../source/Organism.o ../source/Game.o ../source/Vars.o ../source/Gui.o ../source/Stats.o ../source/Food.o ../source/GameWorld.o ../source/Maps.o tests.cpp -o tests -lgtest -lgtest_main -pthread -lsfml-graphics -lsfml-window -lsfml-system -lstdc++ &&
 
 
 // #################### LAST RUN RESULTS ####################
@@ -74,348 +73,360 @@
 // [----------] Global test environment tear-down
 // [==========] 14 tests from 3 test suites ran. (862 ms total)
 
-
-
-
-
 // #################### VALGRIND ####################
 // I have tested the program with valgrind:
-//compilation: g++ -c -ggdb3 main.cpp && g++ main.o -o game -lsfml-graphics -lsfml-window -lsfml-system
-//run: valgrind --leak-check=full --log-file="logfile.out" -v ./game
+// run: valgrind --leak-check=full --log-file="logfile.out" -v ./game
 
-//you can look inside "logfile.out" for the results of the valgrind test.
-//It detects memory leaks, but they dont seem to be in my code, but in the SFML library.
-//I have looked on the internet and i am not alone seeing them - but also people claim it is not really a problem.
-
-
-
-
-
+// you can look inside "logfile.out" for the results of the valgrind test.
+// It detects memory leaks, but they dont seem to be in my code, but in the SFML
+// library. I have looked on the internet and i am not alone seeing them - but
+// also people claim it is not really a problem.
 
 // #################### TESTS ####################
 
-
-
-std::string print_vector(const std::vector<int>& v) {
-    std::string s = "";
-    for (int i = 0; i < v.size(); i++) {
-        s += std::to_string(v[i]) + " ";
-    }
-    return s;
+std::string print_vector(const std::vector<int> &v) {
+  std::string s = "";
+  for (int i = 0; i < v.size(); i++) {
+    s += std::to_string(v[i]) + " ";
+  }
+  return s;
 }
 
 TEST(Game, test_if_map_exists) {
-    GameWorld gw(WINDOW_HEIGHT_GAME, WINDOW_WIDTH_GAME, ORGANISM_SIZE, NUMBER_OF_FOOD, NUMBER_OF_ANTIBIOTIC);
-    Game game(gw);
-    //game.test_if_map_exists();
-    ASSERT_EQ(game.maps.size(), 4); //maps have been loaded
+  GameWorld gw(WINDOW_HEIGHT_GAME, WINDOW_WIDTH_GAME, ORGANISM_SIZE,
+               NUMBER_OF_FOOD, NUMBER_OF_ANTIBIOTIC);
+  Game game(gw);
+  // game.test_if_map_exists();
+  ASSERT_EQ(game.maps.size(), 4); // maps have been loaded
 }
 
 TEST(GameWorld, test_if_map1_initilazies) {
-    GameWorld gw(WINDOW_HEIGHT_GAME, WINDOW_WIDTH_GAME, ORGANISM_SIZE, NUMBER_OF_FOOD, NUMBER_OF_ANTIBIOTIC);
-    Game game(gw);
-    game.maps[MAP-1]->initialize();
-    ASSERT_GT(gw.organisms.size(), 0); //organism spawn
-    ASSERT_EQ(gw.organisms.size(), NUMBER_OF_ORGANISMS); //organism spawn correct amount
-    ASSERT_GT(gw.grid.amount_of_food, 0); //food spawns
+  GameWorld gw(WINDOW_HEIGHT_GAME, WINDOW_WIDTH_GAME, ORGANISM_SIZE,
+               NUMBER_OF_FOOD, NUMBER_OF_ANTIBIOTIC);
+  Game game(gw);
+  game.maps[MAP - 1]->initialize();
+  ASSERT_GT(gw.organisms.size(), 0); // organism spawn
+  ASSERT_EQ(gw.organisms.size(),
+            NUMBER_OF_ORGANISMS);       // organism spawn correct amount
+  ASSERT_GT(gw.grid.amount_of_food, 0); // food spawns
 }
 
 TEST(GameWorld, test_if_map2_initilazies) {
-    GameWorld gw(WINDOW_HEIGHT_GAME, WINDOW_WIDTH_GAME, ORGANISM_SIZE, NUMBER_OF_FOOD, NUMBER_OF_ANTIBIOTIC);
-    Game game(gw);
-    gw.grid.new_gird();
+  GameWorld gw(WINDOW_HEIGHT_GAME, WINDOW_WIDTH_GAME, ORGANISM_SIZE,
+               NUMBER_OF_FOOD, NUMBER_OF_ANTIBIOTIC);
+  Game game(gw);
+  gw.grid.new_gird();
 
-
-    game.maps[1]->initialize();
-    ASSERT_GT(gw.organisms.size(), 0); //organism spawn
-    ASSERT_EQ(gw.organisms.size(), NUMBER_OF_ORGANISMS); //organism spawn correct amount
-    ASSERT_GT(gw.grid.amount_of_food, 0); //food spawns
+  game.maps[1]->initialize();
+  ASSERT_GT(gw.organisms.size(), 0); // organism spawn
+  ASSERT_EQ(gw.organisms.size(),
+            NUMBER_OF_ORGANISMS);       // organism spawn correct amount
+  ASSERT_GT(gw.grid.amount_of_food, 0); // food spawns
 }
 
 TEST(GameWorld, test_if_map3_initilazies) {
-    GameWorld gw(WINDOW_HEIGHT_GAME, WINDOW_WIDTH_GAME, ORGANISM_SIZE, NUMBER_OF_FOOD, NUMBER_OF_ANTIBIOTIC);
-    Game game(gw);
-    gw.grid.new_gird();
+  GameWorld gw(WINDOW_HEIGHT_GAME, WINDOW_WIDTH_GAME, ORGANISM_SIZE,
+               NUMBER_OF_FOOD, NUMBER_OF_ANTIBIOTIC);
+  Game game(gw);
+  gw.grid.new_gird();
 
-    game.maps[2]->initialize();
-    ASSERT_GT(gw.organisms.size(), 0); //organism spawn
-    ASSERT_EQ(gw.organisms.size(), NUMBER_OF_ORGANISMS); //organism spawn correct amount
-    ASSERT_GT(gw.grid.amount_of_food, 0); //food spawns
-
+  game.maps[2]->initialize();
+  ASSERT_GT(gw.organisms.size(), 0); // organism spawn
+  ASSERT_EQ(gw.organisms.size(),
+            NUMBER_OF_ORGANISMS);       // organism spawn correct amount
+  ASSERT_GT(gw.grid.amount_of_food, 0); // food spawns
 }
 
 TEST(GameWorld, test_if_map4_initilazies) {
-    GameWorld gw(WINDOW_HEIGHT_GAME, WINDOW_WIDTH_GAME, ORGANISM_SIZE, NUMBER_OF_FOOD, NUMBER_OF_ANTIBIOTIC);
-    Game game(gw);
-    gw.grid.new_gird();
+  GameWorld gw(WINDOW_HEIGHT_GAME, WINDOW_WIDTH_GAME, ORGANISM_SIZE,
+               NUMBER_OF_FOOD, NUMBER_OF_ANTIBIOTIC);
+  Game game(gw);
+  gw.grid.new_gird();
 
-    game.maps[3]->initialize();
-    ASSERT_GT(gw.organisms.size(), 0); //organism spawn
-    ASSERT_EQ(gw.organisms.size(), NUMBER_OF_ORGANISMS); //organism spawn correct amount
-    ASSERT_GT(gw.grid.amount_of_food, 0); //food spawns
-
+  game.maps[3]->initialize();
+  ASSERT_GT(gw.organisms.size(), 0); // organism spawn
+  ASSERT_EQ(gw.organisms.size(),
+            NUMBER_OF_ORGANISMS);       // organism spawn correct amount
+  ASSERT_GT(gw.grid.amount_of_food, 0); // food spawns
 }
 
 TEST(GameWorld, natural_selection_org_doesnt_die) {
-    GameWorld gw(WINDOW_HEIGHT_GAME, WINDOW_WIDTH_GAME, ORGANISM_SIZE, NUMBER_OF_FOOD, NUMBER_OF_ANTIBIOTIC);
-    Game game(gw);
-    
-    int x = WINDOW_WIDTH_GAME/2;
-    int y = WINDOW_HEIGHT_GAME/2;
-    int size = 3;
-    int speed = 1;
-    int energy = 100;
-    std::vector<int> chances = {25, 25, 25, 25};
-    int height = WINDOW_HEIGHT_GAME;
-    int width = WINDOW_WIDTH_GAME;
+  GameWorld gw(WINDOW_HEIGHT_GAME, WINDOW_WIDTH_GAME, ORGANISM_SIZE,
+               NUMBER_OF_FOOD, NUMBER_OF_ANTIBIOTIC);
+  Game game(gw);
 
+  int x = WINDOW_WIDTH_GAME / 2;
+  int y = WINDOW_HEIGHT_GAME / 2;
+  int size = 3;
+  int speed = 1;
+  int energy = 100;
+  std::vector<int> chances = {25, 25, 25, 25};
+  int height = WINDOW_HEIGHT_GAME;
+  int width = WINDOW_WIDTH_GAME;
 
-    gw.organisms.push_back(std::make_unique<Organism>(x, y, size, speed, energy, chances, height, width, size*MAX_SIZE_MULTIPLIER, MUTATION_RATE, CHANCE_OF_MUTATION,  0));
-
-
-
+  gw.organisms.push_back(std::make_unique<Organism>(
+      x, y, size, speed, energy, chances, height, width,
+      size * MAX_SIZE_MULTIPLIER, MUTATION_RATE, CHANCE_OF_MUTATION, 0));
 }
 
 TEST(Organism, test_eating_food_at_same_location) {
-    GameWorld gw(WINDOW_HEIGHT_GAME, WINDOW_WIDTH_GAME, ORGANISM_SIZE, NUMBER_OF_FOOD, NUMBER_OF_ANTIBIOTIC);
-    Game game(gw);
-   
-    gw.organisms.clear();
-    gw.grid.new_gird();
-   
-    int starting_amount_od_food = gw.grid.amount_of_food;
-    ASSERT_EQ(gw.grid.amount_of_food, 0);
-    gw.grid.addFood(WINDOW_WIDTH_GAME/2, WINDOW_HEIGHT_GAME/2, 3, 3, sf::Color::Yellow);
-    ASSERT_EQ(gw.grid.amount_of_food, 1);
+  GameWorld gw(WINDOW_HEIGHT_GAME, WINDOW_WIDTH_GAME, ORGANISM_SIZE,
+               NUMBER_OF_FOOD, NUMBER_OF_ANTIBIOTIC);
+  Game game(gw);
 
-    int x = WINDOW_WIDTH_GAME/2;
-    int y = WINDOW_HEIGHT_GAME/2;
-    int size = 3;
-    int speed = 1;
-    int energy = 100;
-    std::vector<int> chances = {25, 25, 25, 25};
-    int height = WINDOW_HEIGHT_GAME;
-    int width = WINDOW_WIDTH_GAME;
+  gw.organisms.clear();
+  gw.grid.new_gird();
 
+  int starting_amount_od_food = gw.grid.amount_of_food;
+  ASSERT_EQ(gw.grid.amount_of_food, 0);
+  gw.grid.addFood(WINDOW_WIDTH_GAME / 2, WINDOW_HEIGHT_GAME / 2, 3, 3,
+                  sf::Color::Yellow);
+  ASSERT_EQ(gw.grid.amount_of_food, 1);
 
-    gw.organisms.push_back(std::make_unique<Organism>(x, y, size, speed, energy, chances, height, width, size*MAX_SIZE_MULTIPLIER, MUTATION_RATE, CHANCE_OF_MUTATION,  0));
+  int x = WINDOW_WIDTH_GAME / 2;
+  int y = WINDOW_HEIGHT_GAME / 2;
+  int size = 3;
+  int speed = 1;
+  int energy = 100;
+  std::vector<int> chances = {25, 25, 25, 25};
+  int height = WINDOW_HEIGHT_GAME;
+  int width = WINDOW_WIDTH_GAME;
 
-    gw.organisms[0]->try_to_eat(gw.grid);
+  gw.organisms.push_back(std::make_unique<Organism>(
+      x, y, size, speed, energy, chances, height, width,
+      size * MAX_SIZE_MULTIPLIER, MUTATION_RATE, CHANCE_OF_MUTATION, 0));
 
-    ASSERT_EQ(gw.organisms[0]->energy, 103); //has eaten food and gained energy
-    ASSERT_EQ(gw.grid.amount_of_food, 0);
+  gw.organisms[0]->try_to_eat(gw.grid);
 
+  ASSERT_EQ(gw.organisms[0]->energy, 103); // has eaten food and gained energy
+  ASSERT_EQ(gw.grid.amount_of_food, 0);
 }
 
 TEST(Organism, test_eating_food_is_at_reach1) {
-    GameWorld gw(WINDOW_HEIGHT_GAME, WINDOW_WIDTH_GAME, ORGANISM_SIZE, NUMBER_OF_FOOD, NUMBER_OF_ANTIBIOTIC);
-    Game game(gw);
-   
-    gw.organisms.clear();
-    gw.grid.new_gird();
-   
-    int starting_amount_od_food = gw.grid.amount_of_food;
-    ASSERT_EQ(gw.grid.amount_of_food, 0);
-    gw.grid.addFood(WINDOW_WIDTH_GAME/2, WINDOW_HEIGHT_GAME/2, 3, 3, sf::Color::Yellow);
-    ASSERT_EQ(gw.grid.amount_of_food, 1);
+  GameWorld gw(WINDOW_HEIGHT_GAME, WINDOW_WIDTH_GAME, ORGANISM_SIZE,
+               NUMBER_OF_FOOD, NUMBER_OF_ANTIBIOTIC);
+  Game game(gw);
 
-    int x = WINDOW_WIDTH_GAME/2 + 5;
-    int y = WINDOW_HEIGHT_GAME/2 + 7;
-    int size = 10;
-    int speed = 1;
-    int energy = 100;
-    std::vector<int> chances = {25, 25, 25, 25};
-    int height = WINDOW_HEIGHT_GAME;
-    int width = WINDOW_WIDTH_GAME;
+  gw.organisms.clear();
+  gw.grid.new_gird();
 
+  int starting_amount_od_food = gw.grid.amount_of_food;
+  ASSERT_EQ(gw.grid.amount_of_food, 0);
+  gw.grid.addFood(WINDOW_WIDTH_GAME / 2, WINDOW_HEIGHT_GAME / 2, 3, 3,
+                  sf::Color::Yellow);
+  ASSERT_EQ(gw.grid.amount_of_food, 1);
 
-    gw.organisms.push_back(std::make_unique<Organism>(x, y, size, speed, energy, chances, height, width, size*MAX_SIZE_MULTIPLIER, MUTATION_RATE, CHANCE_OF_MUTATION,  0));
+  int x = WINDOW_WIDTH_GAME / 2 + 5;
+  int y = WINDOW_HEIGHT_GAME / 2 + 7;
+  int size = 10;
+  int speed = 1;
+  int energy = 100;
+  std::vector<int> chances = {25, 25, 25, 25};
+  int height = WINDOW_HEIGHT_GAME;
+  int width = WINDOW_WIDTH_GAME;
 
-    gw.organisms[0]->try_to_eat(gw.grid);
+  gw.organisms.push_back(std::make_unique<Organism>(
+      x, y, size, speed, energy, chances, height, width,
+      size * MAX_SIZE_MULTIPLIER, MUTATION_RATE, CHANCE_OF_MUTATION, 0));
 
-    ASSERT_EQ(gw.organisms[0]->energy, 103); //has eaten food and gained energy
-    ASSERT_EQ(gw.grid.amount_of_food, 0);
+  gw.organisms[0]->try_to_eat(gw.grid);
 
+  ASSERT_EQ(gw.organisms[0]->energy, 103); // has eaten food and gained energy
+  ASSERT_EQ(gw.grid.amount_of_food, 0);
 }
 
 TEST(Organism, test_eating_food_is_at_reach_max_distance) {
-    GameWorld gw(WINDOW_HEIGHT_GAME, WINDOW_WIDTH_GAME, ORGANISM_SIZE, NUMBER_OF_FOOD, NUMBER_OF_ANTIBIOTIC);
-    Game game(gw);
-   
-    gw.organisms.clear();
-    gw.grid.new_gird();
-   
-    int starting_amount_od_food = gw.grid.amount_of_food;
-    ASSERT_EQ(gw.grid.amount_of_food, 0);
-    gw.grid.addFood(WINDOW_WIDTH_GAME/2, WINDOW_HEIGHT_GAME/2, 3, 3, sf::Color::Yellow);
-    ASSERT_EQ(gw.grid.amount_of_food, 1);
+  GameWorld gw(WINDOW_HEIGHT_GAME, WINDOW_WIDTH_GAME, ORGANISM_SIZE,
+               NUMBER_OF_FOOD, NUMBER_OF_ANTIBIOTIC);
+  Game game(gw);
 
-    int x = WINDOW_WIDTH_GAME/2 + 10;
-    int y = WINDOW_HEIGHT_GAME/2 - 3;
-    int size = 10;
-    int speed = 1;
-    int energy = 100;
-    std::vector<int> chances = {25, 25, 25, 25};
-    int height = WINDOW_HEIGHT_GAME;
-    int width = WINDOW_WIDTH_GAME;
+  gw.organisms.clear();
+  gw.grid.new_gird();
 
+  int starting_amount_od_food = gw.grid.amount_of_food;
+  ASSERT_EQ(gw.grid.amount_of_food, 0);
+  gw.grid.addFood(WINDOW_WIDTH_GAME / 2, WINDOW_HEIGHT_GAME / 2, 3, 3,
+                  sf::Color::Yellow);
+  ASSERT_EQ(gw.grid.amount_of_food, 1);
 
-    gw.organisms.push_back(std::make_unique<Organism>(x, y, size, speed, energy, chances, height, width, size*MAX_SIZE_MULTIPLIER, MUTATION_RATE, CHANCE_OF_MUTATION,  0));
-    
-    gw.organisms[0]->try_to_eat(gw.grid);
+  int x = WINDOW_WIDTH_GAME / 2 + 10;
+  int y = WINDOW_HEIGHT_GAME / 2 - 3;
+  int size = 10;
+  int speed = 1;
+  int energy = 100;
+  std::vector<int> chances = {25, 25, 25, 25};
+  int height = WINDOW_HEIGHT_GAME;
+  int width = WINDOW_WIDTH_GAME;
 
-    ASSERT_EQ(gw.organisms[0]->energy, 103); //has eaten food and gained energy
-    ASSERT_EQ(gw.grid.amount_of_food, 0);
+  gw.organisms.push_back(std::make_unique<Organism>(
+      x, y, size, speed, energy, chances, height, width,
+      size * MAX_SIZE_MULTIPLIER, MUTATION_RATE, CHANCE_OF_MUTATION, 0));
 
+  gw.organisms[0]->try_to_eat(gw.grid);
+
+  ASSERT_EQ(gw.organisms[0]->energy, 103); // has eaten food and gained energy
+  ASSERT_EQ(gw.grid.amount_of_food, 0);
 }
 
 TEST(Organism, test_eating_food_is_over_max_possible_distance) {
-    GameWorld gw(WINDOW_HEIGHT_GAME, WINDOW_WIDTH_GAME, ORGANISM_SIZE, NUMBER_OF_FOOD, NUMBER_OF_ANTIBIOTIC);
-    Game game(gw);
-   
-    gw.organisms.clear();
-    gw.grid.new_gird();
-   
-    int starting_amount_od_food = gw.grid.amount_of_food;
-    ASSERT_EQ(gw.grid.amount_of_food, 0);
-    gw.grid.addFood(WINDOW_WIDTH_GAME/2, WINDOW_HEIGHT_GAME/2, 3, 3, sf::Color::Yellow);
-    ASSERT_EQ(gw.grid.amount_of_food, 1);
+  GameWorld gw(WINDOW_HEIGHT_GAME, WINDOW_WIDTH_GAME, ORGANISM_SIZE,
+               NUMBER_OF_FOOD, NUMBER_OF_ANTIBIOTIC);
+  Game game(gw);
 
-    int x = WINDOW_WIDTH_GAME/2 + 11;
-    int y = WINDOW_HEIGHT_GAME/2 - 3;
-    int size = 10;
-    int speed = 1;
-    int energy = 100;
-    std::vector<int> chances = {25, 25, 25, 25};
-    int height = WINDOW_HEIGHT_GAME;
-    int width = WINDOW_WIDTH_GAME;
+  gw.organisms.clear();
+  gw.grid.new_gird();
 
+  int starting_amount_od_food = gw.grid.amount_of_food;
+  ASSERT_EQ(gw.grid.amount_of_food, 0);
+  gw.grid.addFood(WINDOW_WIDTH_GAME / 2, WINDOW_HEIGHT_GAME / 2, 3, 3,
+                  sf::Color::Yellow);
+  ASSERT_EQ(gw.grid.amount_of_food, 1);
 
-    gw.organisms.push_back(std::make_unique<Organism>(x, y, size, speed, energy, chances, height, width, size*MAX_SIZE_MULTIPLIER, MUTATION_RATE, CHANCE_OF_MUTATION,  0));
+  int x = WINDOW_WIDTH_GAME / 2 + 11;
+  int y = WINDOW_HEIGHT_GAME / 2 - 3;
+  int size = 10;
+  int speed = 1;
+  int energy = 100;
+  std::vector<int> chances = {25, 25, 25, 25};
+  int height = WINDOW_HEIGHT_GAME;
+  int width = WINDOW_WIDTH_GAME;
 
-    gw.spawn_organisms(1,0);
-    gw.organisms[0]->try_to_eat(gw.grid);
+  gw.organisms.push_back(std::make_unique<Organism>(
+      x, y, size, speed, energy, chances, height, width,
+      size * MAX_SIZE_MULTIPLIER, MUTATION_RATE, CHANCE_OF_MUTATION, 0));
 
-    ASSERT_EQ(gw.organisms[0]->energy, 100); //has not eaten food and gained energy
-    ASSERT_EQ(gw.grid.amount_of_food, 1);
+  gw.spawn_organisms(1, 0);
+  gw.organisms[0]->try_to_eat(gw.grid);
 
+  ASSERT_EQ(gw.organisms[0]->energy,
+            100); // has not eaten food and gained energy
+  ASSERT_EQ(gw.grid.amount_of_food, 1);
 }
 
 TEST(Organism, do_mitosis) {
-    GameWorld gw(WINDOW_HEIGHT_GAME, WINDOW_WIDTH_GAME, ORGANISM_SIZE, NUMBER_OF_FOOD, NUMBER_OF_ANTIBIOTIC);
-    Game game(gw);
-   
-    gw.organisms.clear();
-    gw.grid.new_gird();
+  GameWorld gw(WINDOW_HEIGHT_GAME, WINDOW_WIDTH_GAME, ORGANISM_SIZE,
+               NUMBER_OF_FOOD, NUMBER_OF_ANTIBIOTIC);
+  Game game(gw);
 
-    int x = WINDOW_WIDTH_GAME/2;
-    int y = WINDOW_HEIGHT_GAME/2;
-    int size = 10;
-    int speed = 1;
-    int energy = 287;
-    std::vector<int> chances = {25, 25, 25, 25};
-    int height = WINDOW_HEIGHT_GAME;
-    int width = WINDOW_WIDTH_GAME;
+  gw.organisms.clear();
+  gw.grid.new_gird();
 
-    REPRODUCTION_ENERGY = 200;
+  int x = WINDOW_WIDTH_GAME / 2;
+  int y = WINDOW_HEIGHT_GAME / 2;
+  int size = 10;
+  int speed = 1;
+  int energy = 287;
+  std::vector<int> chances = {25, 25, 25, 25};
+  int height = WINDOW_HEIGHT_GAME;
+  int width = WINDOW_WIDTH_GAME;
 
+  REPRODUCTION_ENERGY = 200;
 
-    gw.organisms.push_back(std::make_unique<Organism>(x, y, size, speed, energy, chances, height, width, size*MAX_SIZE_MULTIPLIER, MUTATION_RATE, CHANCE_OF_MUTATION,  0));
+  gw.organisms.push_back(std::make_unique<Organism>(
+      x, y, size, speed, energy, chances, height, width,
+      size * MAX_SIZE_MULTIPLIER, MUTATION_RATE, CHANCE_OF_MUTATION, 0));
 
-    gw.organisms[0]->try_to_eat(gw.grid);
-    gw.organisms[0]->try_mitosis(gw.organisms, REPRODUCTION_ENERGY);
+  gw.organisms[0]->try_to_eat(gw.grid);
+  gw.organisms[0]->try_mitosis(gw.organisms, REPRODUCTION_ENERGY);
 
-    ASSERT_EQ(gw.organisms.size(), 2);
-    ASSERT_EQ(gw.organisms[0]->energy, energy / 2); //daughter cell
-    ASSERT_EQ(gw.organisms[1]->energy, energy / 2); //daughter cell
-
+  ASSERT_EQ(gw.organisms.size(), 2);
+  ASSERT_EQ(gw.organisms[0]->energy, energy / 2); // daughter cell
+  ASSERT_EQ(gw.organisms[1]->energy, energy / 2); // daughter cell
 }
 
 TEST(Organism, try_mitosis_not_enough_energy) {
-    GameWorld gw(WINDOW_HEIGHT_GAME, WINDOW_WIDTH_GAME, ORGANISM_SIZE, NUMBER_OF_FOOD, NUMBER_OF_ANTIBIOTIC);
-    Game game(gw);
-   
-    gw.organisms.clear();
-    gw.grid.new_gird();
+  GameWorld gw(WINDOW_HEIGHT_GAME, WINDOW_WIDTH_GAME, ORGANISM_SIZE,
+               NUMBER_OF_FOOD, NUMBER_OF_ANTIBIOTIC);
+  Game game(gw);
 
-    int x = WINDOW_WIDTH_GAME/2;
-    int y = WINDOW_HEIGHT_GAME/2;
-    int size = 10;
-    int speed = 1;
-    int energy = 187;
-    std::vector<int> chances = {25, 25, 25, 25};
-    int height = WINDOW_HEIGHT_GAME;
-    int width = WINDOW_WIDTH_GAME;
+  gw.organisms.clear();
+  gw.grid.new_gird();
 
-    REPRODUCTION_ENERGY = 200;
+  int x = WINDOW_WIDTH_GAME / 2;
+  int y = WINDOW_HEIGHT_GAME / 2;
+  int size = 10;
+  int speed = 1;
+  int energy = 187;
+  std::vector<int> chances = {25, 25, 25, 25};
+  int height = WINDOW_HEIGHT_GAME;
+  int width = WINDOW_WIDTH_GAME;
 
+  REPRODUCTION_ENERGY = 200;
 
-    gw.organisms.push_back(std::make_unique<Organism>(x, y, size, speed, energy, chances, height, width, size*MAX_SIZE_MULTIPLIER, MUTATION_RATE, CHANCE_OF_MUTATION,  0));
+  gw.organisms.push_back(std::make_unique<Organism>(
+      x, y, size, speed, energy, chances, height, width,
+      size * MAX_SIZE_MULTIPLIER, MUTATION_RATE, CHANCE_OF_MUTATION, 0));
 
-    gw.organisms[0]->try_to_eat(gw.grid);
-    gw.organisms[0]->try_mitosis(gw.organisms, REPRODUCTION_ENERGY);
+  gw.organisms[0]->try_to_eat(gw.grid);
+  gw.organisms[0]->try_mitosis(gw.organisms, REPRODUCTION_ENERGY);
 
-    ASSERT_EQ(gw.organisms.size(), 1);
-    ASSERT_EQ(gw.organisms[0]->energy, energy); //same cell
-
+  ASSERT_EQ(gw.organisms.size(), 1);
+  ASSERT_EQ(gw.organisms[0]->energy, energy); // same cell
 }
 
 TEST(Organism, mutate) {
-    GameWorld gw(WINDOW_HEIGHT_GAME, WINDOW_WIDTH_GAME, ORGANISM_SIZE, NUMBER_OF_FOOD, NUMBER_OF_ANTIBIOTIC);
-    Game game(gw);
-   
-    gw.organisms.clear();
-    gw.grid.new_gird();
+  GameWorld gw(WINDOW_HEIGHT_GAME, WINDOW_WIDTH_GAME, ORGANISM_SIZE,
+               NUMBER_OF_FOOD, NUMBER_OF_ANTIBIOTIC);
+  Game game(gw);
 
-    int x = WINDOW_WIDTH_GAME/2;
-    int y = WINDOW_HEIGHT_GAME/2;
-    int size = 10;
-    int speed = 1;
-    int energy = 287;
-    std::vector<int> chances = {25, 25, 25, 25};
-    int height = WINDOW_HEIGHT_GAME;
-    int width = WINDOW_WIDTH_GAME;
+  gw.organisms.clear();
+  gw.grid.new_gird();
 
-    gw.organisms.push_back(std::make_unique<Organism>(x, y, size, speed, energy, chances, height, width, size*MAX_SIZE_MULTIPLIER, MUTATION_RATE, CHANCE_OF_MUTATION,  0));
-    gw.organisms[0]->mutate(true);
+  int x = WINDOW_WIDTH_GAME / 2;
+  int y = WINDOW_HEIGHT_GAME / 2;
+  int size = 10;
+  int speed = 1;
+  int energy = 287;
+  std::vector<int> chances = {25, 25, 25, 25};
+  int height = WINDOW_HEIGHT_GAME;
+  int width = WINDOW_WIDTH_GAME;
 
-    std::vector<int> chances_after = gw.organisms[0]->chances;
+  gw.organisms.push_back(std::make_unique<Organism>(
+      x, y, size, speed, energy, chances, height, width,
+      size * MAX_SIZE_MULTIPLIER, MUTATION_RATE, CHANCE_OF_MUTATION, 0));
+  gw.organisms[0]->mutate(true);
 
-    ASSERT_NE(chances, chances_after);
-    ASSERT_EQ(gw.sum_of_vector(chances_after),100);
+  std::vector<int> chances_after = gw.organisms[0]->chances;
 
+  ASSERT_NE(chances, chances_after);
+  ASSERT_EQ(gw.sum_of_vector(chances_after), 100);
 }
 
 TEST(Organism, mutate_with_value_lower_than_mutation_value) {
-    GameWorld gw(WINDOW_HEIGHT_GAME, WINDOW_WIDTH_GAME, ORGANISM_SIZE, NUMBER_OF_FOOD, NUMBER_OF_ANTIBIOTIC);
-    Game game(gw);
-   
-    gw.organisms.clear();
-    gw.grid.new_gird();
+  GameWorld gw(WINDOW_HEIGHT_GAME, WINDOW_WIDTH_GAME, ORGANISM_SIZE,
+               NUMBER_OF_FOOD, NUMBER_OF_ANTIBIOTIC);
+  Game game(gw);
 
-    int x = WINDOW_WIDTH_GAME/2;
-    int y = WINDOW_HEIGHT_GAME/2;
-    int size = 10;
-    int speed = 1;
-    int energy = 287;
-    std::vector<int> chances = {2, 2, 2, 94};
-    int height = WINDOW_HEIGHT_GAME;
-    int width = WINDOW_WIDTH_GAME;
+  gw.organisms.clear();
+  gw.grid.new_gird();
 
-    MUTATION_RATE = 5;
+  int x = WINDOW_WIDTH_GAME / 2;
+  int y = WINDOW_HEIGHT_GAME / 2;
+  int size = 10;
+  int speed = 1;
+  int energy = 287;
+  std::vector<int> chances = {2, 2, 2, 94};
+  int height = WINDOW_HEIGHT_GAME;
+  int width = WINDOW_WIDTH_GAME;
 
-    gw.organisms.push_back(std::make_unique<Organism>(x, y, size, speed, energy, chances, height, width, size*MAX_SIZE_MULTIPLIER, MUTATION_RATE, CHANCE_OF_MUTATION,  0));
-    gw.organisms[0]->mutate(true);
+  MUTATION_RATE = 5;
 
-    std::vector<int> chances_after = gw.organisms[0]->chances;
+  gw.organisms.push_back(std::make_unique<Organism>(
+      x, y, size, speed, energy, chances, height, width,
+      size * MAX_SIZE_MULTIPLIER, MUTATION_RATE, CHANCE_OF_MUTATION, 0));
+  gw.organisms[0]->mutate(true);
 
-    ASSERT_NE(chances, chances_after) << print_vector(chances) <<" " <<print_vector(chances_after) << std::endl;
-    ASSERT_EQ(gw.sum_of_vector(chances_after),100) << print_vector(chances) <<" " << print_vector(chances_after) << std::endl;;
+  std::vector<int> chances_after = gw.organisms[0]->chances;
 
+  ASSERT_NE(chances, chances_after) << print_vector(chances) << " "
+                                    << print_vector(chances_after) << std::endl;
+  ASSERT_EQ(gw.sum_of_vector(chances_after), 100)
+      << print_vector(chances) << " " << print_vector(chances_after)
+      << std::endl;
+  ;
 }
 
-
 int main(int argc, char **argv) {
-    testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
+  testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
 }
