@@ -20,6 +20,9 @@ sudo apt-get install libsfml-dev
 ## Kompilace a spuštění
 
 Nyní kód zkompilujte
+
+buď napiště ```make``` nebo to zkompilujte ručně:
+
 ```bash
 g++ -c main.cpp -I./headers -o ./source/main.o
 g++ -c ./source/Grid.cpp -I./headers -o ./source/Grid.o
